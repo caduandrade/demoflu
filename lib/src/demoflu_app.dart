@@ -1,7 +1,11 @@
 import 'package:demoflu/demoflu.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
 import 'package:multi_split_view/multi_split_view.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+const _url = 'https://flutter.dev';
 
 class DemoFluApp extends StatefulWidget {
   const DemoFluApp({required this.title, required this.menuSections});
@@ -49,8 +53,10 @@ class _DemoFluAppState extends State<DemoFluApp> {
             primarySwatch: Colors.blueGrey,
             scaffoldBackgroundColor: Colors.white),
         home: Scaffold(
-            appBar:
-                AppBar(title: Text(widget.title), actions: [_DemoFluLogo()]),
+            appBar: AppBar(
+                title: Text(widget.title),
+                backgroundColor: Colors.blueGrey[900],
+                actions: [_DemoFluLogo()]),
             body: _DemoFluAppInheritedWidget(state: this, child: _Body())));
   }
 
@@ -76,33 +82,37 @@ class _DemoFluLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Column column = Column(children: [
-      Text('Built with', style: TextStyle(color: Colors.black, fontSize: 12)),
-      Text('DemoFlu', style: TextStyle(color: Colors.black, fontSize: 14))
+      Text('built with', style: TextStyle(fontSize: 12)),
+      Text('DemoFlu', style: TextStyle(fontSize: 14))
     ], mainAxisAlignment: MainAxisAlignment.center);
     FittedBox fittedBox = FittedBox(child: column, fit: BoxFit.scaleDown);
     EdgeInsets padding = EdgeInsets.fromLTRB(16, 8, 16, 8);
-    Container container = Container(
-        child: fittedBox,
-        padding: padding,
-        color: Colors.white.withOpacity(.7));
+    Container container = Container(child: fittedBox, padding: padding);
     return InkWell(
         child: LimitedBox(child: container, maxHeight: kToolbarHeight),
-        onTap: () => print('Tap'));
+        onTap: () => _launchURL());
   }
+
+  void _launchURL() async => await canLaunch(_url)
+      ? await launch(_url)
+      : throw 'Could not launch $_url';
 }
 
 class _MenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _DemoFluAppState state = _DemoFluAppState.of(context)!;
-    ThemeData theme = Theme.of(context);
     List<Widget> children = [];
     for (DemoFluMenuSection menuSection in state.menuSections) {
       children.add(_MenuSectionWidget(menuSection));
     }
-    return SingleChildScrollView(
-        child: Container(
-            child: Column(children: children), color: theme.accentColor));
+    return Container(
+        child: SingleChildScrollView(
+            padding: EdgeInsets.all(8), child: Column(children: children)),
+        decoration: BoxDecoration(
+            color: Colors.blueGrey[800],
+            border: Border(
+                right: BorderSide(width: 1, color: Colors.blueGrey[900]!))));
   }
 }
 
@@ -130,7 +140,25 @@ class _MenuItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     _DemoFluAppState state = _DemoFluAppState.of(context)!;
     return InkWell(
-        child: Text(menuItem.text), onTap: () => state.updateFor(menuItem));
+        child: Text(menuItem.text, style: TextStyle(color: Colors.white)),
+        onTap: () => state.updateFor(menuItem));
+  }
+}
+
+class _ExampleBar extends StatelessWidget {
+  const _ExampleBar(this.menuItem);
+
+  final DemoFluMenuItem menuItem;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: Text(menuItem.text),
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+            color: Colors.blueGrey[100],
+            border: Border(
+                bottom: BorderSide(width: 1, color: Colors.blueGrey[500]!))));
   }
 }
 
@@ -140,7 +168,11 @@ class _Body extends StatelessWidget {
     _DemoFluAppState state = _DemoFluAppState.of(context)!;
     ThemeData theme = Theme.of(context);
     Widget content = Container();
+    List<Widget> children = [LayoutId(id: 1, child: _MenuWidget())];
     if (state._currentMenuItem != null) {
+      children
+          .add(LayoutId(id: 3, child: _ExampleBar(state._currentMenuItem!)));
+
       DemoFluMenuItem menuItem = state._currentMenuItem!;
       content = menuItem.builder(context);
 
@@ -193,8 +225,41 @@ class _Body extends StatelessWidget {
             )));
       }
     }
-    return Row(
-        children: [_MenuWidget(), Expanded(child: content)],
-        crossAxisAlignment: CrossAxisAlignment.stretch);
+    children.add(LayoutId(id: 2, child: content));
+
+    return CustomMultiChildLayout(delegate: _BodyLayout(), children: children);
+  }
+}
+
+class _BodyLayout extends MultiChildLayoutDelegate {
+  @override
+  void performLayout(Size size) {
+    Size menuSize = layoutChild(
+        1,
+        BoxConstraints(
+            maxWidth: 250,
+            minWidth: 100,
+            maxHeight: size.height,
+            minHeight: size.height));
+    positionChild(1, Offset.zero);
+
+    Size exampleBarSize = Size.zero;
+    if (hasChild(3)) {
+      exampleBarSize = layoutChild(
+          3, BoxConstraints.tightFor(width: size.width - menuSize.width));
+      positionChild(3, Offset(menuSize.width, 0));
+    }
+
+    layoutChild(
+        2,
+        BoxConstraints.tightFor(
+            width: size.width - menuSize.width,
+            height: size.height - exampleBarSize.height));
+    positionChild(2, Offset(menuSize.width, exampleBarSize.height));
+  }
+
+  @override
+  bool shouldRelayout(covariant MultiChildLayoutDelegate oldDelegate) {
+    return false;
   }
 }
