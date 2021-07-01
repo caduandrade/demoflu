@@ -1,30 +1,29 @@
 import 'package:demoflu/src/demoflu_app.dart';
 import 'package:demoflu/src/example.dart';
+import 'package:demoflu/src/example/bar/name_bar.dart';
+import 'package:demoflu/src/example/bar/size_bar.dart';
 import 'package:demoflu/src/menu_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:multi_split_view/multi_split_view.dart';
 
 class ExampleBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DemoFluAppState state = DemoFluAppState.of(context)!;
 
-    String? sectionName = state.currentMenuItem!.sectionName;
     DFExample example = state.currentMenuItem!.example;
 
-    String name = example.name;
-    if (sectionName != null) {
-      name = '$sectionName > $name';
+    List<Widget> children = [NameBar()];
+    if (example.resizable || example.maxSize != null) {
+      children.add(SizeBar());
     }
 
-    return Container(
-        child: Text(name),
-        padding: EdgeInsets.all(8),
-        decoration: BoxDecoration(
-            color: Colors.blueGrey[100],
-            border: Border(
-                bottom: BorderSide(width: 1, color: Colors.blueGrey[500]!))));
+    if (children.length == 1) {
+      return children.first;
+    }
+
+    return Column(
+        children: children, crossAxisAlignment: CrossAxisAlignment.stretch);
   }
 }
 
@@ -41,42 +40,7 @@ class ExampleBody extends StatelessWidget {
       DFExample example = state.currentMenuItem!.example;
       content = example.builder(context);
 
-      if (example.resizable) {
-        var dividerPainter =
-            (Axis axis, bool resizable, Canvas canvas, Size size) {
-          var paint = Paint()
-            ..style = PaintingStyle.stroke
-            ..color = Colors.black
-            ..isAntiAlias = true;
-          if (axis == Axis.vertical) {
-            double dashHeight = 9, dashSpace = 5, startY = 0;
-            while (startY < size.height) {
-              canvas.drawLine(Offset(size.width / 2, startY),
-                  Offset(size.width / 2, startY + dashHeight), paint);
-              startY += dashHeight + dashSpace;
-            }
-          } else {
-            double dashWidth = 9, dashSpace = 5, startX = 0;
-            while (startX < size.width) {
-              canvas.drawLine(Offset(startX, size.height / 2),
-                  Offset(startX + dashWidth, size.height / 2), paint);
-              startX += dashWidth + dashSpace;
-            }
-          }
-        };
-        content = MultiSplitView(
-            axis: Axis.vertical,
-            children: [
-              SizedBox(height: 30),
-              MultiSplitView(
-                  children: [SizedBox(width: 30), content, SizedBox(width: 30)],
-                  dividerThickness: 10,
-                  dividerPainter: dividerPainter),
-              SizedBox(height: 30)
-            ],
-            dividerThickness: 10,
-            dividerPainter: dividerPainter);
-      }
+      if (example.resizable) {}
       content = Container(child: content, color: theme.scaffoldBackgroundColor);
       if (example.maxSize != null) {
         //TODO min layout builder size

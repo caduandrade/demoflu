@@ -1,4 +1,4 @@
-import 'package:demoflu/src/example_widget.dart';
+import 'package:demoflu/src/example/example_widget.dart';
 import 'package:demoflu/src/example.dart';
 import 'package:demoflu/src/section.dart';
 import 'package:flutter/services.dart' show rootBundle;
