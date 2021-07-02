@@ -1,5 +1,5 @@
-import 'package:demoflu/src/example/example_bar.dart';
-import 'package:demoflu/src/example/example_widget.dart';
+import 'package:demoflu/src/example_bar_widget.dart';
+import 'package:demoflu/src/example_widget.dart';
 import 'package:demoflu/src/example.dart';
 import 'package:demoflu/src/menu_widget.dart';
 import 'package:demoflu/src/section.dart';
@@ -151,11 +151,13 @@ class _BodyLayout extends MultiChildLayoutDelegate {
     Size menuSize = layoutChild(
         1,
         BoxConstraints(
-            maxWidth: 250,
+            maxWidth: 200,
             minWidth: 100,
             maxHeight: size.height,
             minHeight: size.height));
     positionChild(1, Offset.zero);
+
+    print(menuSize);
 
     Size exampleBarSize = Size.zero;
     if (hasChild(3)) {
