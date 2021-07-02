@@ -4,6 +4,8 @@ import 'package:demoflu/src/demoflu_app.dart';
 import 'package:demoflu/src/example.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_highlight/flutter_highlight.dart';
+import 'package:flutter_highlight/themes/github.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 
 class ExampleWidget extends StatelessWidget {
@@ -59,6 +61,15 @@ class ExampleWidget extends StatelessWidget {
   }
 
   Widget _buildCodeWidget(DemoFluAppState state) {
-    return Text(state.code!);
+    return Container(
+        color: Color(0xfff8f8f8),
+        child: SingleChildScrollView(
+            child: HighlightView(
+          state.code!,
+          language: 'dart',
+          theme: githubTheme,
+          padding: EdgeInsets.all(16),
+          textStyle: TextStyle(fontSize: 16),
+        )));
   }
 }
