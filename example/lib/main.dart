@@ -12,7 +12,7 @@ void main() {
         maxSize: Size(600, 450),
         codeFile: 'lib/example1.dart',
       ),
-      DFExample(
+      DFExample(resizable: true,
           name: 'Menu 2', builder: (context) => Center(child: Text('Text 2')))
     ])
   ]));

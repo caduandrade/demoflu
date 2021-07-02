@@ -1,5 +1,7 @@
+import 'package:demoflu/src/example/example_bar.dart';
 import 'package:demoflu/src/example/example_widget.dart';
 import 'package:demoflu/src/example.dart';
+import 'package:demoflu/src/menu_widget.dart';
 import 'package:demoflu/src/section.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
@@ -28,6 +30,26 @@ class DemoFluAppState extends State<DemoFluApp> {
   DemoFluMenuItem? _currentMenuItem;
 
   DemoFluMenuItem? get currentMenuItem => _currentMenuItem;
+
+  double _widthWeight = 1;
+
+  double get widthWeight => _widthWeight;
+
+  set widthWeight(double value) {
+    setState(() {
+      _widthWeight = value;
+    });
+  }
+
+  double _heightWeight = 1;
+
+  double get heightWeight => _heightWeight;
+
+  set heightWeight(double value) {
+    setState(() {
+      _heightWeight = value;
+    });
+  }
 
   @override
   void initState() {
@@ -67,8 +89,7 @@ class DemoFluAppState extends State<DemoFluApp> {
                 title: Text(widget.title),
                 backgroundColor: Colors.blueGrey[900],
                 actions: [_DemoFluLogo()]),
-            body:
-                _DemoFluAppInheritedWidget(state: this, child: ExampleBody())));
+            body: _DemoFluAppInheritedWidget(state: this, child: _Body())));
   }
 
   static DemoFluAppState? of(BuildContext context) {
@@ -107,4 +128,52 @@ class _DemoFluLogo extends StatelessWidget {
   void _launchURL() async => await canLaunch(_url)
       ? await launch(_url)
       : throw 'Could not launch $_url';
+}
+
+class _Body extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    DemoFluAppState state = DemoFluAppState.of(context)!;
+    Widget exampleContent = Container();
+    List<Widget> children = [LayoutId(id: 1, child: MenuWidget())];
+    if (state.currentMenuItem != null) {
+      children.add(LayoutId(id: 3, child: ExampleBar()));
+      exampleContent = ExampleWidget();
+    }
+    children.add(LayoutId(id: 2, child: exampleContent));
+    return CustomMultiChildLayout(delegate: _BodyLayout(), children: children);
+  }
+}
+
+class _BodyLayout extends MultiChildLayoutDelegate {
+  @override
+  void performLayout(Size size) {
+    Size menuSize = layoutChild(
+        1,
+        BoxConstraints(
+            maxWidth: 250,
+            minWidth: 100,
+            maxHeight: size.height,
+            minHeight: size.height));
+    positionChild(1, Offset.zero);
+
+    Size exampleBarSize = Size.zero;
+    if (hasChild(3)) {
+      exampleBarSize = layoutChild(
+          3, BoxConstraints.tightFor(width: size.width - menuSize.width));
+      positionChild(3, Offset(menuSize.width, 0));
+    }
+
+    layoutChild(
+        2,
+        BoxConstraints.tightFor(
+            width: size.width - menuSize.width,
+            height: size.height - exampleBarSize.height));
+    positionChild(2, Offset(menuSize.width, exampleBarSize.height));
+  }
+
+  @override
+  bool shouldRelayout(covariant MultiChildLayoutDelegate oldDelegate) {
+    return false;
+  }
 }

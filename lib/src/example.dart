@@ -10,7 +10,7 @@ class DFExample {
 
   final String name;
   final WidgetBuilder builder;
-  final bool resizable;
   final String? codeFile;
+  final bool resizable;
   final Size? maxSize;
 }
