@@ -19,7 +19,21 @@ class ExampleBar extends StatelessWidget {
       SizedBox(width: 32)
     ];
 
-    if (example.resizable) {
+    if (example.codeFile != null) {
+      children.add(Text('code'));
+      children.add(Switch(
+          value: state.codeVisible,
+          onChanged: (value) => state.codeVisible = value));
+      children.add(SizedBox(width: 32));
+
+      children.add(Text('result'));
+      children.add(Switch(
+          value: state.resultVisible,
+          onChanged: (value) => state.resultVisible = value));
+      children.add(SizedBox(width: 32));
+    }
+
+    if (state.resultVisible && example.resizable) {
       children.add(Text('width:'));
       children.add(LimitedBox(
           child: Slider(
@@ -54,6 +68,6 @@ class ExampleBar extends StatelessWidget {
         decoration: BoxDecoration(
             color: Colors.blueGrey[100],
             border: Border(
-                bottom: BorderSide(width: 1, color: Colors.blueGrey[500]!))));
+                bottom: BorderSide(width: 1, color: Colors.blueGrey[700]!))));
   }
 }

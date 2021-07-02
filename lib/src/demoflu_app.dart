@@ -1,10 +1,10 @@
+import 'package:demoflu/src/example.dart';
 import 'package:demoflu/src/example_bar_widget.dart';
 import 'package:demoflu/src/example_widget.dart';
-import 'package:demoflu/src/example.dart';
 import 'package:demoflu/src/menu_widget.dart';
 import 'package:demoflu/src/section.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:url_launcher/url_launcher.dart';
 
 const _url = 'https://flutter.dev';
@@ -27,9 +27,37 @@ class DemoFluMenuItem {
 }
 
 class DemoFluAppState extends State<DemoFluApp> {
+  bool _loading = false;
+
+  bool get loading => _loading;
+
   DemoFluMenuItem? _currentMenuItem;
 
   DemoFluMenuItem? get currentMenuItem => _currentMenuItem;
+
+  String? _code;
+
+  String? get code => _code;
+
+  bool _codeVisible = false;
+
+  bool get codeVisible => _codeVisible;
+
+  set codeVisible(bool visible) {
+    setState(() {
+      _codeVisible = visible;
+    });
+  }
+
+  bool _resultVisible = true;
+
+  bool get resultVisible => _resultVisible;
+
+  set resultVisible(bool visible) {
+    setState(() {
+      _resultVisible = visible;
+    });
+  }
 
   double _widthWeight = 1;
 
@@ -57,20 +85,24 @@ class DemoFluAppState extends State<DemoFluApp> {
     if (widget.sections.isNotEmpty) {
       DFSection section = widget.sections.first;
       if (section.examples.isNotEmpty) {
-        _currentMenuItem =
-            DemoFluMenuItem(section.name, section.examples.first);
+        updateFor(section.name, section.examples.first);
       }
     }
   }
 
   void updateFor(String? sectionName, DFExample example) async {
-    String? code;
+    setState(() {
+      _loading = true;
+      _code = null;
+    });
     if (example.codeFile != null) {
-      code = await rootBundle.loadString(example.codeFile!);
-      print(code);
+      _code = await rootBundle.loadString(example.codeFile!);
     }
     setState(() {
+      _widthWeight = 1;
+      _heightWeight = 1;
       _currentMenuItem = DemoFluMenuItem(sectionName, example);
+      _loading = false;
     });
   }
 
@@ -156,8 +188,6 @@ class _BodyLayout extends MultiChildLayoutDelegate {
             maxHeight: size.height,
             minHeight: size.height));
     positionChild(1, Offset.zero);
-
-    print(menuSize);
 
     Size exampleBarSize = Size.zero;
     if (hasChild(3)) {

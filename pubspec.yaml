@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   url_launcher: ^6.0.7
+  multi_split_view: ^1.4.0
 
 dev_dependencies:
   flutter_test:
