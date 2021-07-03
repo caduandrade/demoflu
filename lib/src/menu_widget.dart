@@ -13,8 +13,9 @@ class MenuWidget extends StatelessWidget {
       if (section.name != null) {
         left += 8;
         children.add(Padding(
-            child:
-                Text(section.name!, style: TextStyle(color: Colors.grey[300])),
+            child: Text(section.name!,
+                style: TextStyle(
+                    fontStyle: FontStyle.italic, color: Colors.grey[300])),
             padding: EdgeInsets.only(left: 8, right: 8, top: 8)));
       }
       for (DFExample example in section.examples) {

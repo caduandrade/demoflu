@@ -1,6 +1,7 @@
 name: demoflu
-description: A package demo builder.
-version: 0.0.1
+description: Demo builder for Flutter widgets.
+version: 0.1.0
+homepage: https://github.com/caduandrade/demoflu
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

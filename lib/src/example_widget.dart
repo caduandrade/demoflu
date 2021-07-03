@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:demoflu/src/demoflu_app.dart';
 import 'package:demoflu/src/example.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_highlight/flutter_highlight.dart';
@@ -45,19 +46,32 @@ class ExampleWidget extends StatelessWidget {
                   color: theme.scaffoldBackgroundColor)));
     });
 
-    if (example.codeFile != null) {
-      if (state.codeVisible && state.resultVisible) {
-        return MultiSplitView(
-            children: [_buildCodeWidget(state), layoutBuilder],
-            dividerColor: Colors.blueGrey[700]);
-      } else if (state.codeVisible) {
-        return _buildCodeWidget(state);
-      } else if (state.resultVisible) {
-        return layoutBuilder;
-      }
-      return Container();
+    Widget? widgetAndOrConsole;
+    if (state.widgetVisible && state.consoleVisible) {
+      widgetAndOrConsole = MultiSplitView(
+          axis: Axis.vertical,
+          children: [layoutBuilder, _buildConsoleWidget(state)],
+          dividerColor: Colors.blueGrey[700],
+          controller: MultiSplitViewController(weights: [.9, .1]));
+    } else if (state.widgetVisible) {
+      widgetAndOrConsole = layoutBuilder;
+    } else if (state.consoleVisible) {
+      widgetAndOrConsole = _buildConsoleWidget(state);
     }
-    return layoutBuilder;
+
+    if (example.codeFile != null && state.codeVisible) {
+      if (widgetAndOrConsole != null) {
+        return MultiSplitView(
+            children: [_buildCodeWidget(state), widgetAndOrConsole],
+            dividerColor: Colors.blueGrey[700],
+            controller: MultiSplitViewController(weights: [.5, .5]));
+      } else {
+        return _buildCodeWidget(state);
+      }
+    } else if (widgetAndOrConsole != null) {
+      return widgetAndOrConsole;
+    }
+    return Container();
   }
 
   Widget _buildCodeWidget(DemoFluAppState state) {
@@ -71,5 +85,10 @@ class ExampleWidget extends StatelessWidget {
           padding: EdgeInsets.all(16),
           textStyle: TextStyle(fontSize: 16),
         )));
+  }
+
+  Widget _buildConsoleWidget(DemoFluAppState state) {
+    return SingleChildScrollView(
+        child: Text(state.console), padding: EdgeInsets.all(16));
   }
 }

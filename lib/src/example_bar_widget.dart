@@ -25,15 +25,21 @@ class ExampleBar extends StatelessWidget {
           value: state.codeVisible,
           onChanged: (value) => state.codeVisible = value));
       children.add(SizedBox(width: 32));
-
-      children.add(Text('result'));
-      children.add(Switch(
-          value: state.resultVisible,
-          onChanged: (value) => state.resultVisible = value));
-      children.add(SizedBox(width: 32));
     }
 
-    if (state.resultVisible && example.resizable) {
+    children.add(Text('widget'));
+    children.add(Switch(
+        value: state.widgetVisible,
+        onChanged: (value) => state.widgetVisible = value));
+    children.add(SizedBox(width: 32));
+
+    children.add(Text('console'));
+    children.add(Switch(
+        value: state.consoleVisible,
+        onChanged: (value) => state.consoleVisible = value));
+    children.add(SizedBox(width: 32));
+
+    if (state.widgetVisible && example.resizable) {
       children.add(Text('width:'));
       children.add(LimitedBox(
           child: Slider(

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:url_launcher/url_launcher.dart';
 
-const _url = 'https://flutter.dev';
+const _url = 'https://pub.dev/packages/demoflu';
 
 class DemoFluApp extends StatefulWidget {
   const DemoFluApp({required this.title, required this.sections});
@@ -19,21 +19,41 @@ class DemoFluApp extends StatefulWidget {
   State<StatefulWidget> createState() => DemoFluAppState();
 }
 
-class DemoFluMenuItem {
-  DemoFluMenuItem(this.sectionName, this.example);
+class _DemoFluMenuItem {
+  _DemoFluMenuItem(this.sectionName, this.example);
 
   final String? sectionName;
   final DFExample example;
 }
 
+abstract class DemoState<T extends StatefulWidget> extends State<T> {
+  demoConsole(String text) {
+    DemoFluAppState? state = DemoFluAppState.of(context);
+    state?.console = text;
+  }
+}
+
 class DemoFluAppState extends State<DemoFluApp> {
-  bool _loading = false;
+  String? _consoleText;
+  String? _consoleTime;
 
-  bool get loading => _loading;
+  String get console {
+    if (_consoleText != null && _consoleTime != null) {
+      return '[$_consoleTime]  $_consoleText';
+    }
+    return '';
+  }
 
-  DemoFluMenuItem? _currentMenuItem;
+  set console(String text) {
+    setState(() {
+      _consoleText = text;
+      _consoleTime = DateTime.now().toIso8601String();
+    });
+  }
 
-  DemoFluMenuItem? get currentMenuItem => _currentMenuItem;
+  _DemoFluMenuItem? _currentMenuItem;
+
+  _DemoFluMenuItem? get currentMenuItem => _currentMenuItem;
 
   String? _code;
 
@@ -49,13 +69,26 @@ class DemoFluAppState extends State<DemoFluApp> {
     });
   }
 
-  bool _resultVisible = true;
+  bool _widgetVisible = true;
 
-  bool get resultVisible => _resultVisible;
+  bool get widgetVisible => _widgetVisible;
 
-  set resultVisible(bool visible) {
+  set widgetVisible(bool visible) {
     setState(() {
-      _resultVisible = visible;
+      _widgetVisible = visible;
+      if (!visible) {
+        _consoleVisible = false;
+      }
+    });
+  }
+
+  bool _consoleVisible = true;
+
+  bool get consoleVisible => _consoleVisible;
+
+  set consoleVisible(bool visible) {
+    setState(() {
+      _consoleVisible = visible;
     });
   }
 
@@ -92,17 +125,18 @@ class DemoFluAppState extends State<DemoFluApp> {
 
   void updateFor(String? sectionName, DFExample example) async {
     setState(() {
-      _loading = true;
+      _currentMenuItem = null;
       _code = null;
     });
     if (example.codeFile != null) {
       _code = await rootBundle.loadString(example.codeFile!);
     }
     setState(() {
+      _consoleText = null;
+      _consoleTime = null;
       _widthWeight = 1;
       _heightWeight = 1;
-      _currentMenuItem = DemoFluMenuItem(sectionName, example);
-      _loading = false;
+      _currentMenuItem = _DemoFluMenuItem(sectionName, example);
     });
   }
 
@@ -166,11 +200,13 @@ class _Body extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DemoFluAppState state = DemoFluAppState.of(context)!;
-    Widget exampleContent = Container();
+    Widget? exampleContent;
     List<Widget> children = [LayoutId(id: 1, child: MenuWidget())];
     if (state.currentMenuItem != null) {
       children.add(LayoutId(id: 3, child: ExampleBar()));
       exampleContent = ExampleWidget();
+    } else {
+      exampleContent = Center(child: Text('Loading...'));
     }
     children.add(LayoutId(id: 2, child: exampleContent));
     return CustomMultiChildLayout(delegate: _BodyLayout(), children: children);
