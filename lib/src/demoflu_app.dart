@@ -82,7 +82,7 @@ class DemoFluAppState extends State<DemoFluApp> {
     });
   }
 
-  bool _consoleVisible = true;
+  bool _consoleVisible = false;
 
   bool get consoleVisible => _consoleVisible;
 
