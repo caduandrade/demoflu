@@ -12,11 +12,15 @@ const _url = 'https://pub.dev/packages/demoflu';
 
 class DemoFluApp extends StatefulWidget {
   const DemoFluApp(
-      {required this.title, required this.sections, this.widgetBackground});
+      {required this.title,
+      required this.sections,
+      this.widgetBackground,
+      this.consoleViewEnabled = true});
 
   final String title;
   final List<DFSection> sections;
   final Color? widgetBackground;
+  final bool consoleViewEnabled;
 
   @override
   State<StatefulWidget> createState() => DemoFluAppState();
@@ -44,6 +48,8 @@ class DemoFluAppState extends State<DemoFluApp> {
 
   Color? get widgetBackground => widget.widgetBackground;
 
+  bool get consoleViewEnable => widget.consoleViewEnabled;
+
   String? _consoleText;
   String? _consoleTime;
 
@@ -55,10 +61,12 @@ class DemoFluAppState extends State<DemoFluApp> {
   }
 
   set console(String text) {
-    setState(() {
-      _consoleText = text;
-      _consoleTime = DateTime.now().toIso8601String();
-    });
+    if (consoleViewEnable) {
+      setState(() {
+        _consoleText = text;
+        _consoleTime = DateTime.now().toIso8601String();
+      });
+    }
   }
 
   _DemoFluMenuItem? _currentMenuItem;

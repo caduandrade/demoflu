@@ -19,7 +19,6 @@ class ExampleWidget extends StatelessWidget {
 
   Widget _build(
       BuildContext context, DemoFluAppState state, DFExample example) {
-    ThemeData theme = Theme.of(context);
     Widget content = example.builder(context);
     LayoutBuilder layoutBuilder = LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {

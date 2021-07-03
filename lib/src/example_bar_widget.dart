@@ -34,11 +34,13 @@ class ExampleBar extends StatelessWidget {
         onChanged: (value) => state.widgetVisible = value));
     children.add(SizedBox(width: 32));
 
-    children.add(Text('console'));
-    children.add(Switch(
-        value: state.consoleVisible,
-        onChanged: (value) => state.consoleVisible = value));
-    children.add(SizedBox(width: 32));
+    if (state.consoleViewEnable) {
+      children.add(Text('console'));
+      children.add(Switch(
+          value: state.consoleVisible,
+          onChanged: (value) => state.consoleVisible = value));
+      children.add(SizedBox(width: 32));
+    }
 
     if (state.widgetVisible && example.resizable) {
       children.add(Text('width:'));
