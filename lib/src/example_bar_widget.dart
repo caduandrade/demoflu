@@ -1,5 +1,6 @@
 import 'package:demoflu/src/demoflu_app.dart';
 import 'package:demoflu/src/example.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 

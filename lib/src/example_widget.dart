@@ -39,11 +39,8 @@ class ExampleWidget extends StatelessWidget {
               BoxConstraints.tightFor(width: maxWidth, height: maxHeight));
 
       return Container(
-          color: Colors.grey[200],
-          child: Center(
-              child: Container(
-                  child: constrainedBox,
-                  color: theme.scaffoldBackgroundColor)));
+          color: state.widgetBackground, //theme.scaffoldBackgroundColor,
+          child: Center(child: Container(child: constrainedBox)));
     });
 
     Widget? widgetAndOrConsole;

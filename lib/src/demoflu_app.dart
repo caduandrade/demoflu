@@ -11,10 +11,12 @@ import 'package:url_launcher/url_launcher.dart';
 const _url = 'https://pub.dev/packages/demoflu';
 
 class DemoFluApp extends StatefulWidget {
-  const DemoFluApp({required this.title, required this.sections});
+  const DemoFluApp(
+      {required this.title, required this.sections, this.widgetBackground});
 
   final String title;
   final List<DFSection> sections;
+  final Color? widgetBackground;
 
   @override
   State<StatefulWidget> createState() => DemoFluAppState();
@@ -39,6 +41,8 @@ class DemoFluAppState extends State<DemoFluApp> {
       MultiSplitViewController(weights: [.9, .1]);
   final MultiSplitViewController horizontalDividerController =
       MultiSplitViewController(weights: [.5, .5]);
+
+  Color? get widgetBackground => widget.widgetBackground;
 
   String? _consoleText;
   String? _consoleTime;
