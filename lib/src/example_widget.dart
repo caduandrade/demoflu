@@ -52,7 +52,7 @@ class ExampleWidget extends StatelessWidget {
           axis: Axis.vertical,
           children: [layoutBuilder, _buildConsoleWidget(state)],
           dividerColor: Colors.blueGrey[700],
-          controller: MultiSplitViewController(weights: [.9, .1]));
+          controller: state.verticalDividerController);
     } else if (state.widgetVisible) {
       widgetAndOrConsole = layoutBuilder;
     } else if (state.consoleVisible) {
@@ -64,7 +64,7 @@ class ExampleWidget extends StatelessWidget {
         return MultiSplitView(
             children: [_buildCodeWidget(state), widgetAndOrConsole],
             dividerColor: Colors.blueGrey[700],
-            controller: MultiSplitViewController(weights: [.5, .5]));
+            controller: state.horizontalDividerController);
       } else {
         return _buildCodeWidget(state);
       }

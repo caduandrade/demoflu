@@ -5,6 +5,7 @@ import 'package:demoflu/src/menu_widget.dart';
 import 'package:demoflu/src/section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:multi_split_view/multi_split_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const _url = 'https://pub.dev/packages/demoflu';
@@ -34,6 +35,11 @@ abstract class DemoState<T extends StatefulWidget> extends State<T> {
 }
 
 class DemoFluAppState extends State<DemoFluApp> {
+  final MultiSplitViewController verticalDividerController =
+      MultiSplitViewController(weights: [.9, .1]);
+  final MultiSplitViewController horizontalDividerController =
+      MultiSplitViewController(weights: [.5, .5]);
+
   String? _consoleText;
   String? _consoleTime;
 
