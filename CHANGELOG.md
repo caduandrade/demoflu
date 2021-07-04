@@ -1,3 +1,8 @@
+## 0.3.0
+
+* New menu style
+* Improving performance
+
 ## 0.2.0
 
 * Configurable menu item

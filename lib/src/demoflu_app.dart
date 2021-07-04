@@ -1,3 +1,4 @@
+import 'package:demoflu/src/console_widget.dart';
 import 'package:demoflu/src/example.dart';
 import 'package:demoflu/src/example_bar_widget.dart';
 import 'package:demoflu/src/example_widget.dart';
@@ -31,7 +32,6 @@ class DemoFluApp extends StatefulWidget {
     sections.forEach((section) {
       section.examples.forEach((example) {
         example.index = index++;
-        print(example.index);
       });
     });
     return DemoFluApp._(
@@ -54,7 +54,7 @@ class DemoFluApp extends StatefulWidget {
 abstract class DemoStatelessWidget extends StatelessWidget {
   demoConsole(BuildContext context, String text) {
     DemoFluAppState? state = DemoFluAppState.of(context);
-    state?.console = text;
+    state?.consoleNotifier.update(text);
   }
 }
 
@@ -62,7 +62,7 @@ abstract class DemoStatelessWidget extends StatelessWidget {
 abstract class DemoState<T extends StatefulWidget> extends State<T> {
   demoConsole(String text) {
     DemoFluAppState? state = DemoFluAppState.of(context);
-    state?.console = text;
+    state?.consoleNotifier.update(text);
   }
 }
 
@@ -80,27 +80,13 @@ class DemoFluAppState extends State<DemoFluApp> {
     return example.consoleEnabled ?? widget.consoleEnabled;
   }
 
-  String? _consoleText;
-  String? _consoleTime;
+  ConsoleNotifier _consoleNotifier = ConsoleNotifier();
 
-  /// Gets the console text.
-  String get console {
-    if (_consoleText != null && _consoleTime != null) {
-      return '[$_consoleTime]  $_consoleText';
-    }
-    return '';
-  }
-
-  /// Sets the console text.
-  set console(String text) {
-    setState(() {
-      _consoleText = text;
-      _consoleTime = DateTime.now().toIso8601String();
-    });
-  }
+  ConsoleNotifier get consoleNotifier => _consoleNotifier;
 
   DFExample? _currentExample;
 
+  /// Gets the current selected example.
   DFExample? get currentExample => _currentExample;
 
   String? _code;
@@ -189,8 +175,7 @@ class DemoFluAppState extends State<DemoFluApp> {
         _consoleVisible = false;
       }
       _code = newCode;
-      _consoleText = null;
-      _consoleTime = null;
+      _consoleNotifier = ConsoleNotifier();
       _widthWeight = 1;
       _heightWeight = 1;
       _currentExample = example;

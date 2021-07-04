@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:demoflu/src/console_widget.dart';
 import 'package:demoflu/src/demoflu_app.dart';
 import 'package:demoflu/src/example.dart';
 import 'package:flutter/cupertino.dart';
@@ -47,13 +48,13 @@ class ExampleWidget extends StatelessWidget {
     if (state.widgetVisible && state.consoleVisible) {
       widgetAndOrConsole = MultiSplitView(
           axis: Axis.vertical,
-          children: [layoutBuilder, _buildConsoleWidget(state)],
+          children: [layoutBuilder, ConsoleWidget()],
           dividerColor: Colors.blueGrey[700],
           controller: state.verticalDividerController);
     } else if (state.widgetVisible) {
       widgetAndOrConsole = layoutBuilder;
     } else if (state.consoleVisible) {
-      widgetAndOrConsole = _buildConsoleWidget(state);
+      widgetAndOrConsole = ConsoleWidget();
     }
 
     if (example.codeFile != null && state.codeVisible) {
@@ -104,10 +105,5 @@ class ExampleWidget extends StatelessWidget {
     //_scaffoldKey.currentState?.showSnackBar(SnackBar(  content: Text('Copied to clipboard'),));
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text('Copied to clipboard')));
-  }
-
-  Widget _buildConsoleWidget(DemoFluAppState state) {
-    return SingleChildScrollView(
-        child: Text(state.console), padding: EdgeInsets.all(16));
   }
 }
