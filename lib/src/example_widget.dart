@@ -14,7 +14,7 @@ class ExampleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DemoFluAppState state = DemoFluAppState.of(context)!;
-    DFExample example = state.currentMenuItem!.example;
+    DFExample example = state.currentExample!;
     return _build(context, state, example);
   }
 

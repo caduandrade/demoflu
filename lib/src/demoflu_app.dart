@@ -16,11 +16,30 @@ class DemoFluApp extends StatefulWidget {
   ///
   /// The [widgetBackground] defines the default widget background for all
   /// examples.
-  const DemoFluApp(
+  const DemoFluApp._(
       {required this.title,
       required this.sections,
       this.widgetBackground,
-      this.consoleEnabled = false});
+      required this.consoleEnabled});
+
+  factory DemoFluApp(
+      {required String title,
+      required List<DFSection> sections,
+      Color? widgetBackground,
+      bool consoleEnabled = false}) {
+    int index = 1;
+    sections.forEach((section) {
+      section.examples.forEach((example) {
+        example.index = index++;
+        print(example.index);
+      });
+    });
+    return DemoFluApp._(
+        title: title,
+        sections: sections,
+        consoleEnabled: consoleEnabled,
+        widgetBackground: widgetBackground);
+  }
 
   final String title;
   final List<DFSection> sections;
@@ -29,13 +48,6 @@ class DemoFluApp extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() => DemoFluAppState();
-}
-
-class _DemoFluMenuItem {
-  _DemoFluMenuItem(this.sectionName, this.example);
-
-  final String? sectionName;
-  final DFExample example;
 }
 
 /// Abstract demo [StatelessWidget] to code reuse.
@@ -87,9 +99,9 @@ class DemoFluAppState extends State<DemoFluApp> {
     });
   }
 
-  _DemoFluMenuItem? _currentMenuItem;
+  DFExample? _currentExample;
 
-  _DemoFluMenuItem? get currentMenuItem => _currentMenuItem;
+  DFExample? get currentExample => _currentExample;
 
   String? _code;
 
@@ -157,29 +169,31 @@ class DemoFluAppState extends State<DemoFluApp> {
     if (widget.sections.isNotEmpty) {
       DFSection section = widget.sections.first;
       if (section.examples.isNotEmpty) {
-        updateFor(section.name, section.examples.first);
+        updateCurrentExample(section.examples.first);
       }
     }
   }
 
   /// Updates the current example.
-  void updateFor(String? sectionName, DFExample example) async {
+  void updateCurrentExample(DFExample example) async {
     setState(() {
-      _currentMenuItem = null;
+      _currentExample = null;
       _code = null;
+    });
+    String? newCode;
+    if (example.codeFile != null) {
+      newCode = await rootBundle.loadString(example.codeFile!);
+    }
+    setState(() {
       if (!isConsoleEnabled(example)) {
         _consoleVisible = false;
       }
-    });
-    if (example.codeFile != null) {
-      _code = await rootBundle.loadString(example.codeFile!);
-    }
-    setState(() {
+      _code = newCode;
       _consoleText = null;
       _consoleTime = null;
       _widthWeight = 1;
       _heightWeight = 1;
-      _currentMenuItem = _DemoFluMenuItem(sectionName, example);
+      _currentExample = example;
     });
   }
 
@@ -246,7 +260,7 @@ class _Body extends StatelessWidget {
     DemoFluAppState state = DemoFluAppState.of(context)!;
     Widget? exampleContent;
     List<Widget> children = [LayoutId(id: 1, child: MenuWidget())];
-    if (state.currentMenuItem != null) {
+    if (state.currentExample != null) {
       children.add(LayoutId(id: 3, child: ExampleBar()));
       exampleContent = ExampleWidget();
     } else {

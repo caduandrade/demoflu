@@ -8,17 +8,10 @@ class ExampleBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DemoFluAppState state = DemoFluAppState.of(context)!;
-    String? sectionName = state.currentMenuItem!.sectionName;
-    DFExample example = state.currentMenuItem!.example;
 
-    String name = example.name;
-    if (sectionName != null) {
-      name = '$sectionName > $name';
-    }
-    List<Widget> children = [
-      Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
-      SizedBox(width: 32)
-    ];
+    DFExample example = state.currentExample!;
+
+    List<Widget> children = [];
 
     if (example.codeFile != null) {
       children.add(Text('code'));
