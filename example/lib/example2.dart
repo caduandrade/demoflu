@@ -7,7 +7,7 @@ class Example2 extends StatefulWidget {
   Example2State createState() => Example2State();
 }
 
-class Example2State extends DemoState<Example2> {
+class Example2State extends DemoExampleState<Example2> {
   @override
   Widget build(BuildContext context) {
     return Center(

@@ -4,7 +4,8 @@ import 'package:demoflu/src/example_widget.dart';
 import 'package:demoflu/src/menu_widget.dart';
 import 'package:demoflu/src/section.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart'
+    show Clipboard, ClipboardData, rootBundle;
 import 'package:multi_split_view/multi_split_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -33,7 +34,7 @@ class _DemoFluMenuItem {
   final DFExample example;
 }
 
-abstract class DemoState<T extends StatefulWidget> extends State<T> {
+abstract class DemoExampleState<T extends StatefulWidget> extends State<T> {
   demoConsole(String text) {
     DemoFluAppState? state = DemoFluAppState.of(context);
     state?.console = text;
