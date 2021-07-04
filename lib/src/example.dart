@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// Represents a menu item for a widget example.
 class DFExample {
+  /// Buils a [DFExample].
   const DFExample(
       {required this.name,
       required this.builder,

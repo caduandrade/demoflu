@@ -10,7 +10,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 const _url = 'https://pub.dev/packages/demoflu';
 
+/// Demo app to be instantiated.
 class DemoFluApp extends StatefulWidget {
+  /// Builds a [DemoFluApp].
+  ///
+  /// The [widgetBackground] defines the default widget background for all
+  /// examples.
   const DemoFluApp(
       {required this.title,
       required this.sections,
@@ -33,6 +38,7 @@ class _DemoFluMenuItem {
   final DFExample example;
 }
 
+/// Abstract demo [StatelessWidget] to code reuse.
 abstract class DemoStatelessWidget extends StatelessWidget {
   demoConsole(BuildContext context, String text) {
     DemoFluAppState? state = DemoFluAppState.of(context);
@@ -40,6 +46,7 @@ abstract class DemoStatelessWidget extends StatelessWidget {
   }
 }
 
+/// Abstract demo [State] to code reuse.
 abstract class DemoState<T extends StatefulWidget> extends State<T> {
   demoConsole(String text) {
     DemoFluAppState? state = DemoFluAppState.of(context);
@@ -47,6 +54,7 @@ abstract class DemoState<T extends StatefulWidget> extends State<T> {
   }
 }
 
+/// The [DemoFluApp] state.
 class DemoFluAppState extends State<DemoFluApp> {
   final MultiSplitViewController verticalDividerController =
       MultiSplitViewController(weights: [.9, .1]);
@@ -55,6 +63,7 @@ class DemoFluAppState extends State<DemoFluApp> {
 
   Color? get widgetBackground => widget.widgetBackground;
 
+  /// Indicates whether console view is enabled.
   bool isConsoleEnabled(DFExample example) {
     return example.consoleEnabled ?? widget.consoleEnabled;
   }
@@ -62,6 +71,7 @@ class DemoFluAppState extends State<DemoFluApp> {
   String? _consoleText;
   String? _consoleTime;
 
+  /// Gets the console text.
   String get console {
     if (_consoleText != null && _consoleTime != null) {
       return '[$_consoleTime]  $_consoleText';
@@ -69,6 +79,7 @@ class DemoFluAppState extends State<DemoFluApp> {
     return '';
   }
 
+  /// Sets the console text.
   set console(String text) {
     setState(() {
       _consoleText = text;
@@ -86,6 +97,7 @@ class DemoFluAppState extends State<DemoFluApp> {
 
   bool _codeVisible = false;
 
+  /// Indicates whether code view is visible.
   bool get codeVisible => _codeVisible;
 
   set codeVisible(bool visible) {
@@ -96,6 +108,7 @@ class DemoFluAppState extends State<DemoFluApp> {
 
   bool _widgetVisible = true;
 
+  /// Indicates whether widget view is visible.
   bool get widgetVisible => _widgetVisible;
 
   set widgetVisible(bool visible) {
@@ -109,6 +122,7 @@ class DemoFluAppState extends State<DemoFluApp> {
 
   bool _consoleVisible = false;
 
+  /// Indicates whether console view is visible.
   bool get consoleVisible => _consoleVisible;
 
   set consoleVisible(bool visible) {
@@ -148,6 +162,7 @@ class DemoFluAppState extends State<DemoFluApp> {
     }
   }
 
+  /// Updates the current example.
   void updateFor(String? sectionName, DFExample example) async {
     setState(() {
       _currentMenuItem = null;
@@ -204,6 +219,7 @@ class _DemoFluAppInheritedWidget extends InheritedWidget {
       true;
 }
 
+/// The DemoFlu logo widget.
 class _DemoFluLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
