@@ -17,7 +17,8 @@ void main() {
           resizable: true,
           name: 'Example 2',
           builder: (context) => Example2(),
-          codeFile: 'lib/example2.dart')
+          codeFile: 'lib/example2.dart',
+          consoleEnabled: true)
     ])
   ]));
 }

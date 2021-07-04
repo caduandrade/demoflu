@@ -2,19 +2,14 @@ import 'package:demoflu/demoflu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class Example2 extends StatefulWidget {
-  @override
-  Example2State createState() => Example2State();
-}
-
-class Example2State extends DemoExampleState<Example2> {
+class Example2 extends DemoStatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
         child: ElevatedButton(
             onPressed: () {
-              demoConsole('hi!');
+              demoConsole(context, 'Hi!');
             },
-            child: Text('Text 2')));
+            child: Text('Example 2')));
   }
 }

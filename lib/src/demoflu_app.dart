@@ -4,8 +4,7 @@ import 'package:demoflu/src/example_widget.dart';
 import 'package:demoflu/src/menu_widget.dart';
 import 'package:demoflu/src/section.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart'
-    show Clipboard, ClipboardData, rootBundle;
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:multi_split_view/multi_split_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -16,12 +15,12 @@ class DemoFluApp extends StatefulWidget {
       {required this.title,
       required this.sections,
       this.widgetBackground,
-      this.consoleViewEnabled = true});
+      this.consoleEnabled = false});
 
   final String title;
   final List<DFSection> sections;
   final Color? widgetBackground;
-  final bool consoleViewEnabled;
+  final bool consoleEnabled;
 
   @override
   State<StatefulWidget> createState() => DemoFluAppState();
@@ -34,7 +33,14 @@ class _DemoFluMenuItem {
   final DFExample example;
 }
 
-abstract class DemoExampleState<T extends StatefulWidget> extends State<T> {
+abstract class DemoStatelessWidget extends StatelessWidget {
+  demoConsole(BuildContext context, String text) {
+    DemoFluAppState? state = DemoFluAppState.of(context);
+    state?.console = text;
+  }
+}
+
+abstract class DemoState<T extends StatefulWidget> extends State<T> {
   demoConsole(String text) {
     DemoFluAppState? state = DemoFluAppState.of(context);
     state?.console = text;
@@ -49,7 +55,9 @@ class DemoFluAppState extends State<DemoFluApp> {
 
   Color? get widgetBackground => widget.widgetBackground;
 
-  bool get consoleViewEnable => widget.consoleViewEnabled;
+  bool isConsoleEnabled(DFExample example) {
+    return example.consoleEnabled ?? widget.consoleEnabled;
+  }
 
   String? _consoleText;
   String? _consoleTime;
@@ -62,12 +70,10 @@ class DemoFluAppState extends State<DemoFluApp> {
   }
 
   set console(String text) {
-    if (consoleViewEnable) {
-      setState(() {
-        _consoleText = text;
-        _consoleTime = DateTime.now().toIso8601String();
-      });
-    }
+    setState(() {
+      _consoleText = text;
+      _consoleTime = DateTime.now().toIso8601String();
+    });
   }
 
   _DemoFluMenuItem? _currentMenuItem;
@@ -146,6 +152,9 @@ class DemoFluAppState extends State<DemoFluApp> {
     setState(() {
       _currentMenuItem = null;
       _code = null;
+      if (!isConsoleEnabled(example)) {
+        _consoleVisible = false;
+      }
     });
     if (example.codeFile != null) {
       _code = await rootBundle.loadString(example.codeFile!);
