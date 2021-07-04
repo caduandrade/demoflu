@@ -69,7 +69,9 @@ class ExampleBar extends StatelessWidget {
 
     return Container(
         child: SliderTheme(
-            child: Row(children: children),
+            child: SingleChildScrollView(
+                child: Row(children: children),
+                scrollDirection: Axis.horizontal),
             data: SliderThemeData(
                 overlayShape: SliderComponentShape.noOverlay,
                 thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8))),

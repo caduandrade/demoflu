@@ -9,8 +9,6 @@ void main() {
       DFExample(
         name: 'Example 1',
         builder: (context) => Example1(),
-        resizable: true,
-        maxSize: Size(600, 450),
         codeFile: 'lib/example1.dart',
       ),
       DFExample(
