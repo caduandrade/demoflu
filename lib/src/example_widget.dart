@@ -12,6 +12,11 @@ import 'package:flutter_highlight/themes/github.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 
 class ExampleWidget extends StatelessWidget {
+  const ExampleWidget({Key? key, required this.buttonClickNotifier})
+      : super(key: key);
+
+  final ButtonClickNotifier buttonClickNotifier;
+
   @override
   Widget build(BuildContext context) {
     DemoFluAppState state = DemoFluAppState.of(context)!;
@@ -21,16 +26,17 @@ class ExampleWidget extends StatelessWidget {
 
   Widget _build(
       BuildContext context, DemoFluAppState state, DFExample example) {
-    Widget content = example.builder(context);
+    Widget content = example.builder(buttonClickNotifier);
     LayoutBuilder layoutBuilder = LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       double maxWidth = constraints.maxWidth;
       double maxHeight = constraints.maxHeight;
-      if (example.maxSize != null) {
-        maxWidth = math.min(maxWidth, example.maxSize!.width);
-        maxHeight = math.min(maxHeight, example.maxSize!.height);
+      Size? maxSize = state.getMaxSize(example);
+      if (maxSize != null) {
+        maxWidth = math.min(maxWidth, maxSize.width);
+        maxHeight = math.min(maxHeight, maxSize.height);
       }
-      if (example.resizable) {
+      if (state.isResizable(example)) {
         maxWidth = maxWidth * state.widthWeight;
         maxHeight = maxHeight * state.heightWeight;
       }

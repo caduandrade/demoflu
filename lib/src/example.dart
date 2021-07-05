@@ -1,15 +1,39 @@
 import 'package:flutter/material.dart';
 
+typedef ExampleWidgetBuilder = Widget Function(
+    ButtonClickNotifier buttonClickNotifier);
+
+typedef OnButtonClick = void Function(int buttonIndex);
+
+class ButtonClickNotifier {
+  OnButtonClick? _onClick;
+
+  void register(OnButtonClick onClick) {
+    _onClick = onClick;
+  }
+
+  void unregister() {
+    _onClick = null;
+  }
+
+  void notifyClick(int buttonIndex) {
+    if (_onClick != null) {
+      _onClick!(buttonIndex);
+    }
+  }
+}
+
 /// Represents a menu item for a widget example.
 class DFExample {
   /// Buils a [DFExample].
   DFExample(
       {required this.name,
       required this.builder,
-      this.resizable = false,
+      this.resizable,
       this.codeFile,
       this.maxSize,
-      this.consoleEnabled});
+      this.consoleEnabled,
+      this.buttons});
 
   int _index = -1;
   int get index => _index;
@@ -21,11 +45,12 @@ class DFExample {
   }
 
   final String name;
-  final WidgetBuilder builder;
+  final ExampleWidgetBuilder builder;
   final String? codeFile;
-  final bool resizable;
+  final bool? resizable;
   final Size? maxSize;
   final bool? consoleEnabled;
+  final List<String>? buttons;
 
   @override
   bool operator ==(Object other) =>

@@ -47,7 +47,7 @@ class ExampleMenu extends StatelessWidget {
       row++;
     }
 
-    if (state.widgetVisible && example.resizable) {
+    if (state.widgetVisible && state.isResizable(example)) {
       children.add(LayoutConf(
           conf: Conf(row: row, widget: false), child: Text('width')));
       children.add(LayoutConf(
@@ -78,6 +78,23 @@ class ExampleMenu extends StatelessWidget {
               constraints: BoxConstraints.tightFor(width: 100))));
       row++;
     }
+
+    int index = 0;
+    example.buttons?.forEach((buttonName) {
+      final i = index;
+      children.add(LayoutConf(
+          conf: Conf(row: row, widget: true, span: true),
+          child: Padding(
+              child: ElevatedButton(
+                child: Text(buttonName),
+                onPressed: () {
+                  DemoFlu.notifyMenuButtonClick(context, i);
+                },
+              ),
+              padding: EdgeInsets.only(bottom: 8))));
+      row++;
+      index++;
+    });
 
     return Container(
         child: SingleChildScrollView(

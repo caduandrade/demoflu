@@ -20,13 +20,17 @@ class DemoFluApp extends StatefulWidget {
   const DemoFluApp._(
       {required this.title,
       required this.sections,
+      required this.resizable,
       this.widgetBackground,
+      this.maxSize,
       required this.consoleEnabled});
 
   factory DemoFluApp(
       {required String title,
       required List<DFSection> sections,
       Color? widgetBackground,
+      Size? maxSize,
+      bool resizable = false,
       bool consoleEnabled = false}) {
     int index = 1;
     sections.forEach((section) {
@@ -38,36 +42,40 @@ class DemoFluApp extends StatefulWidget {
         title: title,
         sections: sections,
         consoleEnabled: consoleEnabled,
-        widgetBackground: widgetBackground);
+        widgetBackground: widgetBackground,
+        resizable: resizable,
+        maxSize: maxSize);
   }
 
   final String title;
   final List<DFSection> sections;
   final Color? widgetBackground;
+  final Size? maxSize;
+  final bool resizable;
   final bool consoleEnabled;
 
   @override
   State<StatefulWidget> createState() => DemoFluAppState();
 }
 
-/// Abstract demo [StatelessWidget] to code reuse.
-abstract class DemoStatelessWidget extends StatelessWidget {
-  demoConsole(BuildContext context, String text) {
+/// Utilities.
+class DemoFlu {
+  /// Prints on demo console.
+  static void printOnConsole(BuildContext context, String text) {
     DemoFluAppState? state = DemoFluAppState.of(context);
     state?.consoleNotifier.update(text);
   }
-}
 
-/// Abstract demo [State] to code reuse.
-abstract class DemoState<T extends StatefulWidget> extends State<T> {
-  demoConsole(String text) {
+  static void notifyMenuButtonClick(BuildContext context, int buttonIndex) {
     DemoFluAppState? state = DemoFluAppState.of(context);
-    state?.consoleNotifier.update(text);
+    state?._buttonClickNotifier.notifyClick(buttonIndex);
   }
 }
 
 /// The [DemoFluApp] state.
 class DemoFluAppState extends State<DemoFluApp> {
+  final ButtonClickNotifier _buttonClickNotifier = ButtonClickNotifier();
+
   final MultiSplitViewController verticalDividerController =
       MultiSplitViewController(weights: [.9, .1]);
   final MultiSplitViewController horizontalDividerController =
@@ -75,9 +83,18 @@ class DemoFluAppState extends State<DemoFluApp> {
 
   Color? get widgetBackground => widget.widgetBackground;
 
+  Size? getMaxSize(DFExample example) {
+    return example.maxSize ?? widget.maxSize;
+  }
+
   /// Indicates whether console view is enabled.
   bool isConsoleEnabled(DFExample example) {
     return example.consoleEnabled ?? widget.consoleEnabled;
+  }
+
+  /// Indicates whether example is resizable.
+  bool isResizable(DFExample example) {
+    return example.resizable ?? widget.resizable;
   }
 
   ConsoleNotifier _consoleNotifier = ConsoleNotifier();
@@ -163,6 +180,7 @@ class DemoFluAppState extends State<DemoFluApp> {
   /// Updates the current example.
   void updateCurrentExample(DFExample example) async {
     setState(() {
+      _buttonClickNotifier.unregister();
       _currentExample = null;
       _code = null;
     });
@@ -247,7 +265,8 @@ class _Body extends StatelessWidget {
     List<Widget> children = [LayoutId(id: 1, child: AppMenuWidget())];
     if (state.currentExample != null) {
       children.add(LayoutId(id: 3, child: ExampleMenu()));
-      exampleContent = ExampleWidget();
+      exampleContent =
+          ExampleWidget(buttonClickNotifier: state._buttonClickNotifier);
     } else {
       exampleContent = Center(child: Text('Loading...'));
     }

@@ -1,3 +1,7 @@
+## 0.4.0
+
+* Custom buttons on the example menu.
+
 ## 0.3.0
 
 * New menu style

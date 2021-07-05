@@ -90,6 +90,8 @@ class _MenuLayoutRenderBox extends RenderBox
     Map<int, RenderBox> texts = Map<int, RenderBox>();
     Map<int, RenderBox> widgets = Map<int, RenderBox>();
 
+    List<RenderBox> buttons = [];
+
     while (child != null) {
       final MenuLayoutParentData childParentData =
           child.parentData! as MenuLayoutParentData;
@@ -99,6 +101,7 @@ class _MenuLayoutRenderBox extends RenderBox
       }
       Conf conf = childParentData.conf!;
       if (conf.span) {
+        buttons.add(child);
       } else {
         if (conf.widget) {
           widgets[conf.row] = child;
@@ -133,6 +136,17 @@ class _MenuLayoutRenderBox extends RenderBox
       totalHeight += rowHeight;
     }
 
+    buttons.forEach((widgetRenderBox) {
+      widgetRenderBox.layout(constraints, parentUsesSize: true);
+      Size widgetSize = widgetRenderBox.size;
+      double rowHeight = widgetSize.height;
+      maxWidgetWidth = math.max(maxWidgetWidth, widgetSize.width);
+
+      maxWidth = math.max(maxWidth, widgetSize.width);
+
+      totalHeight += rowHeight;
+    });
+
     double y = 0;
     for (int i = 1; i <= texts.length; i++) {
       RenderBox textRenderBox = texts[i]!;
@@ -154,6 +168,16 @@ class _MenuLayoutRenderBox extends RenderBox
           math.max(widgetRenderBox.size.height, textRenderBox.size.height);
       y += mh;
     }
+
+    buttons.forEach((widgetRenderBox) {
+      MenuLayoutParentData widgetParentData =
+          widgetRenderBox.parentData! as MenuLayoutParentData;
+
+      widgetParentData.offset =
+          Offset((maxWidth - widgetRenderBox.size.width) / 2, y);
+
+      y += widgetRenderBox.size.height;
+    });
 
     size = Size(maxWidth, totalHeight);
   }
