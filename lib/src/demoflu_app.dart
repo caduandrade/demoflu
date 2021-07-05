@@ -1,8 +1,8 @@
 import 'package:demoflu/src/console_widget.dart';
 import 'package:demoflu/src/example.dart';
-import 'package:demoflu/src/example_bar_widget.dart';
+import 'package:demoflu/src/example_menu_widget.dart';
 import 'package:demoflu/src/example_widget.dart';
-import 'package:demoflu/src/menu_widget.dart';
+import 'package:demoflu/src/app_menu_widget.dart';
 import 'package:demoflu/src/section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -244,9 +244,9 @@ class _Body extends StatelessWidget {
   Widget build(BuildContext context) {
     DemoFluAppState state = DemoFluAppState.of(context)!;
     Widget? exampleContent;
-    List<Widget> children = [LayoutId(id: 1, child: MenuWidget())];
+    List<Widget> children = [LayoutId(id: 1, child: AppMenuWidget())];
     if (state.currentExample != null) {
-      children.add(LayoutId(id: 3, child: ExampleBar()));
+      children.add(LayoutId(id: 3, child: ExampleMenu()));
       exampleContent = ExampleWidget();
     } else {
       exampleContent = Center(child: Text('Loading...'));
@@ -259,28 +259,33 @@ class _Body extends StatelessWidget {
 class _BodyLayout extends MultiChildLayoutDelegate {
   @override
   void performLayout(Size size) {
-    Size menuSize = layoutChild(
+    Size appMenuSize = layoutChild(
         1,
         BoxConstraints(
+            minWidth: 0,
             maxWidth: 200,
-            minWidth: 100,
-            maxHeight: size.height,
-            minHeight: size.height));
+            minHeight: size.height,
+            maxHeight: size.height));
     positionChild(1, Offset.zero);
 
-    Size exampleBarSize = Size.zero;
+    Size exampleMenuSize = Size.zero;
     if (hasChild(3)) {
-      exampleBarSize = layoutChild(
-          3, BoxConstraints.tightFor(width: size.width - menuSize.width));
-      positionChild(3, Offset(menuSize.width, 0));
+      exampleMenuSize = layoutChild(
+          3,
+          BoxConstraints(
+              minWidth: 0,
+              maxWidth: size.width - appMenuSize.width,
+              minHeight: size.height,
+              maxHeight: size.height));
+      positionChild(3, Offset(appMenuSize.width, 0));
     }
 
     layoutChild(
         2,
-        BoxConstraints.tightFor(
-            width: size.width - menuSize.width,
-            height: size.height - exampleBarSize.height));
-    positionChild(2, Offset(menuSize.width, exampleBarSize.height));
+        BoxConstraints.tight(Size(
+            size.width - appMenuSize.width - exampleMenuSize.width,
+            size.height)));
+    positionChild(2, Offset(appMenuSize.width + exampleMenuSize.width, 0));
   }
 
   @override

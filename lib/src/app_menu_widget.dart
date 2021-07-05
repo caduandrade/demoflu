@@ -5,26 +5,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class MenuWidget extends StatelessWidget {
+class AppMenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DemoFluAppState state = DemoFluAppState.of(context)!;
     List<Widget> children = [];
     for (DFSection section in state.sections) {
       if (section.name != null) {
-        children.add(Padding(
+        children.add(Container(
             child: Text(section.name!,
                 style: TextStyle(
                     fontStyle: FontStyle.italic, color: Colors.grey[300])),
-            padding: EdgeInsets.only(left: 8, right: 8, top: 8)));
+            padding: EdgeInsets.only(left: 8, right: 16, top: 8)));
       }
       for (DFExample example in section.examples) {
         children.add(_MenuItem(state.currentExample == example, example));
       }
     }
     return Container(
-        child:
-            ListView(children: children, padding: EdgeInsets.only(bottom: 8)),
+        child: SingleChildScrollView(
+            child: Column(
+                children: children,
+                crossAxisAlignment: CrossAxisAlignment.start)),
         decoration: BoxDecoration(
             color: Colors.blueGrey[800],
             border: Border(
@@ -51,7 +53,7 @@ class _MenuItemState extends State<_MenuItem> {
         onEnter: _onEnter,
         onExit: _onExit,
         child: Container(
-            margin: EdgeInsets.only(top: 8, bottom: 0, right: 8),
+            margin: EdgeInsets.only(top: 8, bottom: 0, right: 16),
             decoration: BoxDecoration(
                 border:
                     Border(left: BorderSide(width: 8, color: _borderColor()))),

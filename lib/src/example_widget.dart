@@ -40,7 +40,7 @@ class ExampleWidget extends StatelessWidget {
               BoxConstraints.tightFor(width: maxWidth, height: maxHeight));
 
       return Container(
-          color: state.widgetBackground, //theme.scaffoldBackgroundColor,
+          color: state.widgetBackground,
           child: Center(child: Container(child: constrainedBox)));
     });
 
@@ -102,8 +102,7 @@ class ExampleWidget extends StatelessWidget {
 
   Future<void> copyToClipboard(BuildContext context, String text) async {
     await Clipboard.setData(ClipboardData(text: text));
-    //_scaffoldKey.currentState?.showSnackBar(SnackBar(  content: Text('Copied to clipboard'),));
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text('Copied to clipboard')));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Copied to clipboard'), duration: Duration(seconds: 2)));
   }
 }
