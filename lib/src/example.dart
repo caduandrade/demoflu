@@ -24,9 +24,9 @@ class ButtonClickNotifier {
 }
 
 /// Represents a menu item for a widget example.
-class DFExample {
-  /// Buils a [DFExample].
-  DFExample(
+class Example {
+  /// Buils a [Example].
+  Example(
       {required this.name,
       required this.builder,
       this.resizable,
@@ -55,7 +55,7 @@ class DFExample {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is DFExample &&
+      other is Example &&
           runtimeType == other.runtimeType &&
           _index == other._index;
 

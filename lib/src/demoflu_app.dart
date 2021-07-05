@@ -27,7 +27,7 @@ class DemoFluApp extends StatefulWidget {
 
   factory DemoFluApp(
       {required String title,
-      required List<DFSection> sections,
+      required List<Section> sections,
       Color? widgetBackground,
       Size? maxSize,
       bool resizable = false,
@@ -48,7 +48,7 @@ class DemoFluApp extends StatefulWidget {
   }
 
   final String title;
-  final List<DFSection> sections;
+  final List<Section> sections;
   final Color? widgetBackground;
   final Size? maxSize;
   final bool resizable;
@@ -83,17 +83,17 @@ class DemoFluAppState extends State<DemoFluApp> {
 
   Color? get widgetBackground => widget.widgetBackground;
 
-  Size? getMaxSize(DFExample example) {
+  Size? getMaxSize(Example example) {
     return example.maxSize ?? widget.maxSize;
   }
 
   /// Indicates whether console view is enabled.
-  bool isConsoleEnabled(DFExample example) {
+  bool isConsoleEnabled(Example example) {
     return example.consoleEnabled ?? widget.consoleEnabled;
   }
 
   /// Indicates whether example is resizable.
-  bool isResizable(DFExample example) {
+  bool isResizable(Example example) {
     return example.resizable ?? widget.resizable;
   }
 
@@ -101,10 +101,10 @@ class DemoFluAppState extends State<DemoFluApp> {
 
   ConsoleNotifier get consoleNotifier => _consoleNotifier;
 
-  DFExample? _currentExample;
+  Example? _currentExample;
 
   /// Gets the current selected example.
-  DFExample? get currentExample => _currentExample;
+  Example? get currentExample => _currentExample;
 
   String? _code;
 
@@ -170,7 +170,7 @@ class DemoFluAppState extends State<DemoFluApp> {
   void initState() {
     super.initState();
     if (widget.sections.isNotEmpty) {
-      DFSection section = widget.sections.first;
+      Section section = widget.sections.first;
       if (section.examples.isNotEmpty) {
         updateCurrentExample(section.examples.first);
       }
@@ -178,7 +178,7 @@ class DemoFluAppState extends State<DemoFluApp> {
   }
 
   /// Updates the current example.
-  void updateCurrentExample(DFExample example) async {
+  void updateCurrentExample(Example example) async {
     setState(() {
       _buttonClickNotifier.unregister();
       _currentExample = null;
@@ -200,7 +200,7 @@ class DemoFluAppState extends State<DemoFluApp> {
     });
   }
 
-  List<DFSection> get sections => widget.sections;
+  List<Section> get sections => widget.sections;
 
   @override
   Widget build(BuildContext context) {

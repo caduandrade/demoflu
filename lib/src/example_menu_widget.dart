@@ -11,7 +11,7 @@ class ExampleMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     DemoFluAppState state = DemoFluAppState.of(context)!;
 
-    DFExample example = state.currentExample!;
+    Example example = state.currentExample!;
 
     List<LayoutConf> children = [];
 

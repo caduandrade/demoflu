@@ -20,12 +20,11 @@ class ExampleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DemoFluAppState state = DemoFluAppState.of(context)!;
-    DFExample example = state.currentExample!;
+    Example example = state.currentExample!;
     return _build(context, state, example);
   }
 
-  Widget _build(
-      BuildContext context, DemoFluAppState state, DFExample example) {
+  Widget _build(BuildContext context, DemoFluAppState state, Example example) {
     Widget content = example.builder(buttonClickNotifier);
     LayoutBuilder layoutBuilder = LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {

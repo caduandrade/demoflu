@@ -7,21 +7,20 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(DemoFluApp(title: 'Example Demo', sections: [
-    DFSection(name: 'Section', examples: [
-      DFExample(
+    Section(name: 'Section', examples: [
+      Example(
         name: 'Example 1',
         builder: (buttonClickNotifier) => Example1(),
         codeFile: 'lib/example1.dart',
       ),
-      DFExample(
-          resizable: true,
+      Example(
           name: 'Example 2',
           builder: (buttonClickNotifier) => Example2(),
           codeFile: 'lib/example2.dart',
-          consoleEnabled: true),
-      DFExample(
-          name: 'Example 3', builder: (buttonClickNotifier) => Example3()),
-      DFExample(
+          consoleEnabled: true,
+          resizable: true),
+      Example(name: 'Example 3', builder: (buttonClickNotifier) => Example3()),
+      Example(
           name: 'Example 4',
           builder: (buttonClickNotifier) => Example4(buttonClickNotifier),
           buttons: ['Button 1', 'Button 2'])

@@ -10,7 +10,7 @@ class AppMenuWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     DemoFluAppState state = DemoFluAppState.of(context)!;
     List<Widget> children = [];
-    for (DFSection section in state.sections) {
+    for (Section section in state.sections) {
       if (section.name != null) {
         children.add(Container(
             child: Text(section.name!,
@@ -18,7 +18,7 @@ class AppMenuWidget extends StatelessWidget {
                     fontStyle: FontStyle.italic, color: Colors.grey[300])),
             padding: EdgeInsets.only(left: 8, right: 16, top: 8)));
       }
-      for (DFExample example in section.examples) {
+      for (Example example in section.examples) {
         children.add(_MenuItem(state.currentExample == example, example));
       }
     }
@@ -38,7 +38,7 @@ class _MenuItem extends StatefulWidget {
   const _MenuItem(this.selected, this.example);
 
   final bool selected;
-  final DFExample example;
+  final Example example;
 
   @override
   State<StatefulWidget> createState() => _MenuItemState();
