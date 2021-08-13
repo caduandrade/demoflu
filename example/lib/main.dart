@@ -6,7 +6,8 @@ import 'package:example/example4.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(DemoFluApp(title: 'Example Demo', sections: [
+  runApp(DemoFluApp(initialHeightWeight: .5,
+      title: 'Example Demo', sections: [
     Section(name: 'Section', examples: [
       Example(
         name: 'Example 1',

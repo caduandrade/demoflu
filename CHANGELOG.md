@@ -1,3 +1,8 @@
+## 0.5.0
+
+* Initial width and height weights
+* Background color picker
+
 ## 0.4.0
 
 * Custom buttons on the example menu.

@@ -84,7 +84,7 @@ class _MenuLayoutRenderBox extends RenderBox
 
   @override
   void performLayout() {
-    final BoxConstraints constraints = this.constraints;
+    final BoxConstraints constraints = this.constraints.loosen();
     RenderBox? child = firstChild;
 
     Map<int, RenderBox> texts = Map<int, RenderBox>();
@@ -131,10 +131,10 @@ class _MenuLayoutRenderBox extends RenderBox
       rowHeight = math.max(rowHeight, textSize.height);
       maxTextWidth = math.max(maxTextWidth, textSize.width);
 
-      maxWidth = math.max(maxWidth, textSize.width + widgetSize.width);
-
       totalHeight += rowHeight;
     }
+
+    maxWidth = math.max(maxWidth, maxTextWidth + maxWidgetWidth);
 
     buttons.forEach((widgetRenderBox) {
       widgetRenderBox.layout(constraints, parentUsesSize: true);

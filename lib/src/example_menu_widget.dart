@@ -1,12 +1,20 @@
 import 'package:demoflu/src/demoflu_app.dart';
 import 'package:demoflu/src/example.dart';
 import 'package:demoflu/src/menu_layout.dart';
+import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-class ExampleMenu extends StatelessWidget {
+class ExampleMenu extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _ExampleMenuState();
+}
+
+class _ExampleMenuState extends State<ExampleMenu> {
+  Color dialogColor = Colors.white;
+
   @override
   Widget build(BuildContext context) {
     DemoFluAppState state = DemoFluAppState.of(context)!;
@@ -21,29 +29,29 @@ class ExampleMenu extends StatelessWidget {
           LayoutConf(conf: Conf(row: row, widget: false), child: Text('code')));
       children.add(LayoutConf(
           conf: Conf(row: row, widget: true),
-          child: Switch(
+          child: Checkbox(
               value: state.codeVisible,
-              onChanged: (value) => state.codeVisible = value)));
+              onChanged: (value) => state.codeVisible = value!)));
+      row++;
+
+      children.add(LayoutConf(
+          conf: Conf(row: row, widget: false), child: Text('widget')));
+      children.add(LayoutConf(
+          conf: Conf(row: row, widget: true),
+          child: Checkbox(
+              value: state.widgetVisible,
+              onChanged: (value) => state.widgetVisible = value!)));
       row++;
     }
-
-    children.add(
-        LayoutConf(conf: Conf(row: row, widget: false), child: Text('widget')));
-    children.add(LayoutConf(
-        conf: Conf(row: row, widget: true),
-        child: Switch(
-            value: state.widgetVisible,
-            onChanged: (value) => state.widgetVisible = value)));
-    row++;
 
     if (state.isConsoleEnabled(example)) {
       children.add(LayoutConf(
           conf: Conf(row: row, widget: false), child: Text('console')));
       children.add(LayoutConf(
           conf: Conf(row: row, widget: true),
-          child: Switch(
+          child: Checkbox(
               value: state.consoleVisible,
-              onChanged: (value) => state.consoleVisible = value)));
+              onChanged: (value) => state.consoleVisible = value!)));
       row++;
     }
 
@@ -62,7 +70,6 @@ class ExampleMenu extends StatelessWidget {
               ),
               constraints: BoxConstraints.tightFor(width: 100))));
       row++;
-
       children.add(LayoutConf(
           conf: Conf(row: row, widget: false), child: Text('height')));
       children.add(LayoutConf(
@@ -78,6 +85,30 @@ class ExampleMenu extends StatelessWidget {
               constraints: BoxConstraints.tightFor(width: 100))));
       row++;
     }
+
+    Widget colorIndicator = Padding(
+        child: ColorIndicator(
+          width: 28,
+          height: 28,
+          borderRadius: 4,
+          hasBorder: true,
+          borderColor: Colors.grey[700],
+          color: state.widgetBackground,
+          onSelectFocus: false,
+          onSelect: () async {
+            dialogColor = state.widgetBackground;
+            if (await colorPickerDialog(context)) {
+              state.widgetBackground = dialogColor;
+            }
+          },
+        ),
+        padding: EdgeInsets.all(6));
+
+    children.add(LayoutConf(
+        conf: Conf(row: row, widget: false), child: Text('background')));
+    children.add(
+        LayoutConf(conf: Conf(row: row, widget: true), child: colorIndicator));
+    row++;
 
     int index = 0;
     example.buttons?.forEach((buttonName) {
@@ -96,18 +127,75 @@ class ExampleMenu extends StatelessWidget {
       index++;
     });
 
+    if (children.isEmpty) {
+      return SizedBox(width: 0);
+    }
+    Widget menu = MenuLayout(children: children);
+
+    menu = SliderTheme(
+        child: menu,
+        data: SliderThemeData(
+            overlayShape: RoundSliderOverlayShape(overlayRadius: 14),
+            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8)));
+
+    menu =
+        CheckboxTheme(child: menu, data: CheckboxThemeData(splashRadius: 14));
+
     return Container(
         child: SingleChildScrollView(
-            child: Padding(
-                child: SliderTheme(
-                    child: MenuLayout(children: children),
-                    data: SliderThemeData(
-                        thumbShape:
-                            RoundSliderThumbShape(enabledThumbRadius: 8))),
-                padding: EdgeInsets.all(8))),
+            child: Padding(child: menu, padding: EdgeInsets.all(8))),
         decoration: BoxDecoration(
             color: Colors.blueGrey[100],
             border: Border(
                 right: BorderSide(width: 1, color: Colors.blueGrey[700]!))));
+  }
+
+  Future<bool> colorPickerDialog(BuildContext context) async {
+    return ColorPicker(
+      // Use the dialogPickerColor as start color.
+      color: dialogColor,
+      // Update the dialogPickerColor using the callback.
+      onColorChanged: (Color color) => setState(() => dialogColor = color),
+      width: 40,
+      height: 40,
+      borderRadius: 4,
+      spacing: 5,
+      runSpacing: 5,
+      wheelDiameter: 155,
+      heading: Text(
+        'Select color',
+        style: Theme.of(context).textTheme.subtitle1,
+      ),
+      subheading: Text(
+        'Select color shade',
+        style: Theme.of(context).textTheme.subtitle1,
+      ),
+      wheelSubheading: Text(
+        'Selected color and its shades',
+        style: Theme.of(context).textTheme.subtitle1,
+      ),
+      showMaterialName: true,
+      showColorName: true,
+      showColorCode: true,
+      copyPasteBehavior: const ColorPickerCopyPasteBehavior(
+        longPressMenu: true,
+      ),
+      materialNameTextStyle: Theme.of(context).textTheme.caption,
+      colorNameTextStyle: Theme.of(context).textTheme.caption,
+      colorCodeTextStyle: Theme.of(context).textTheme.caption,
+      pickersEnabled: const <ColorPickerType, bool>{
+        ColorPickerType.both: false,
+        ColorPickerType.primary: true,
+        ColorPickerType.accent: false,
+        ColorPickerType.bw: false,
+        ColorPickerType.custom: true,
+        ColorPickerType.wheel: true,
+      },
+      // customColorSwatchesAndNames: colorsNameMap,
+    ).showPickerDialog(
+      context,
+      constraints:
+          const BoxConstraints(minHeight: 460, minWidth: 300, maxWidth: 320),
+    );
   }
 }

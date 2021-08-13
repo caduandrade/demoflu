@@ -21,17 +21,21 @@ class DemoFluApp extends StatefulWidget {
       {required this.title,
       required this.sections,
       required this.resizable,
-      this.widgetBackground,
+      required this.widgetBackground,
       this.maxSize,
-      required this.consoleEnabled});
+      required this.consoleEnabled,
+      this.initialWidthWeight,
+      this.initialHeightWeight});
 
   factory DemoFluApp(
       {required String title,
       required List<Section> sections,
-      Color? widgetBackground,
+      Color widgetBackground = Colors.white,
       Size? maxSize,
       bool resizable = false,
-      bool consoleEnabled = false}) {
+      bool consoleEnabled = false,
+      double? initialWidthWeight,
+      double? initialHeightWeight}) {
     int index = 1;
     sections.forEach((section) {
       section.examples.forEach((example) {
@@ -44,15 +48,19 @@ class DemoFluApp extends StatefulWidget {
         consoleEnabled: consoleEnabled,
         widgetBackground: widgetBackground,
         resizable: resizable,
-        maxSize: maxSize);
+        maxSize: maxSize,
+        initialWidthWeight: initialWidthWeight,
+        initialHeightWeight: initialHeightWeight);
   }
 
   final String title;
   final List<Section> sections;
-  final Color? widgetBackground;
+  final Color widgetBackground;
   final Size? maxSize;
   final bool resizable;
   final bool consoleEnabled;
+  final double? initialWidthWeight;
+  final double? initialHeightWeight;
 
   @override
   State<StatefulWidget> createState() => DemoFluAppState();
@@ -81,7 +89,15 @@ class DemoFluAppState extends State<DemoFluApp> {
   final MultiSplitViewController horizontalDividerController =
       MultiSplitViewController(weights: [.5, .5]);
 
-  Color? get widgetBackground => widget.widgetBackground;
+  late Color _widgetBackground;
+
+  Color get widgetBackground => _widgetBackground;
+
+  void set widgetBackground(Color color) {
+    setState(() {
+      _widgetBackground = color;
+    });
+  }
 
   Size? getMaxSize(Example example) {
     return example.maxSize ?? widget.maxSize;
@@ -169,6 +185,22 @@ class DemoFluAppState extends State<DemoFluApp> {
   @override
   void initState() {
     super.initState();
+    _widgetBackground = widget.widgetBackground;
+
+    if (widget.initialHeightWeight != null) {
+      _heightWeight = widget.initialHeightWeight!;
+      if (_heightWeight < 0 || _heightWeight > 1) {
+        throw ArgumentError(
+            'initialHeightWeight must be a value between 0 and 1');
+      }
+    }
+    if (widget.initialWidthWeight != null) {
+      _widthWeight = widget.initialWidthWeight!;
+      if (_widthWeight < 0 || _widthWeight > 1) {
+        throw ArgumentError(
+            'initialWidthWeight must be a value between 0 and 1');
+      }
+    }
     if (widget.sections.isNotEmpty) {
       Section section = widget.sections.first;
       if (section.examples.isNotEmpty) {
@@ -194,8 +226,6 @@ class DemoFluAppState extends State<DemoFluApp> {
       }
       _code = newCode;
       _consoleNotifier = ConsoleNotifier();
-      _widthWeight = 1;
-      _heightWeight = 1;
       _currentExample = example;
     });
   }
