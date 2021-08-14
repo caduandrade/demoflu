@@ -1,4 +1,5 @@
 import 'package:demoflu/src/console_widget.dart';
+import 'package:demoflu/src/demoflu_logo.dart';
 import 'package:demoflu/src/example.dart';
 import 'package:demoflu/src/example_menu_widget.dart';
 import 'package:demoflu/src/example_widget.dart';
@@ -7,9 +8,6 @@ import 'package:demoflu/src/section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:multi_split_view/multi_split_view.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-const _url = 'https://pub.dev/packages/demoflu';
 
 /// Demo app to be instantiated.
 class DemoFluApp extends StatefulWidget {
@@ -244,7 +242,7 @@ class DemoFluAppState extends State<DemoFluApp> {
             appBar: AppBar(
                 title: Text(widget.title),
                 backgroundColor: Colors.blueGrey[900],
-                actions: [_DemoFluLogo()]),
+                actions: [DemoFluLogo()]),
             body: _DemoFluAppInheritedWidget(state: this, child: _Body())));
   }
 
@@ -264,27 +262,6 @@ class _DemoFluAppInheritedWidget extends InheritedWidget {
   @override
   bool updateShouldNotify(covariant _DemoFluAppInheritedWidget oldWidget) =>
       true;
-}
-
-/// The DemoFlu logo widget.
-class _DemoFluLogo extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    Column column = Column(children: [
-      Text('built with', style: TextStyle(fontSize: 12)),
-      Text('DemoFlu', style: TextStyle(fontSize: 14))
-    ], mainAxisAlignment: MainAxisAlignment.center);
-    FittedBox fittedBox = FittedBox(child: column, fit: BoxFit.scaleDown);
-    EdgeInsets padding = EdgeInsets.fromLTRB(16, 8, 16, 8);
-    Container container = Container(child: fittedBox, padding: padding);
-    return InkWell(
-        child: LimitedBox(child: container, maxHeight: kToolbarHeight),
-        onTap: () => _launchURL());
-  }
-
-  void _launchURL() async => await canLaunch(_url)
-      ? await launch(_url)
-      : throw 'Could not launch $_url';
 }
 
 class _Body extends StatelessWidget {
