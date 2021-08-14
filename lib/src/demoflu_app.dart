@@ -5,10 +5,13 @@ import 'package:demoflu/src/menu/example_menu.dart';
 import 'package:demoflu/src/example_widget.dart';
 import 'package:demoflu/src/menu/app_menu_widget.dart';
 import 'package:demoflu/src/menu/example_menu_notifier.dart';
+import 'package:demoflu/src/menu/example_menu_widgets.dart';
 import 'package:demoflu/src/section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:multi_split_view/multi_split_view.dart';
+
+typedef SectionsBuilder = List<Section> Function(ExampleMenuNotifier notifier);
 
 /// Demo app to be instantiated.
 class DemoFluApp extends StatefulWidget {
@@ -16,44 +19,18 @@ class DemoFluApp extends StatefulWidget {
   ///
   /// The [widgetBackground] defines the default widget background for all
   /// examples.
-  const DemoFluApp._(
+  const DemoFluApp(
       {required this.title,
-      required this.sections,
-      required this.resizable,
-      required this.widgetBackground,
+      required this.sectionsBuilder,
+      this.resizable = false,
+      this.widgetBackground = Colors.white,
       this.maxSize,
-      required this.consoleEnabled,
+      this.consoleEnabled = false,
       this.initialWidthWeight,
       this.initialHeightWeight});
 
-  factory DemoFluApp(
-      {required String title,
-      required List<Section> sections,
-      Color widgetBackground = Colors.white,
-      Size? maxSize,
-      bool resizable = false,
-      bool consoleEnabled = false,
-      double? initialWidthWeight,
-      double? initialHeightWeight}) {
-    int index = 1;
-    sections.forEach((section) {
-      section.examples.forEach((example) {
-        example.index = index++;
-      });
-    });
-    return DemoFluApp._(
-        title: title,
-        sections: sections,
-        consoleEnabled: consoleEnabled,
-        widgetBackground: widgetBackground,
-        resizable: resizable,
-        maxSize: maxSize,
-        initialWidthWeight: initialWidthWeight,
-        initialHeightWeight: initialHeightWeight);
-  }
-
   final String title;
-  final List<Section> sections;
+  final SectionsBuilder sectionsBuilder;
   final Color widgetBackground;
   final Size? maxSize;
   final bool resizable;
@@ -73,9 +50,10 @@ class DemoFlu {
     state?.consoleNotifier.update(text);
   }
 
-  static void notifyMenuButtonClick(BuildContext context, int buttonIndex) {
+  static void notifyMenuButtonClick(
+      BuildContext context, MenuButton menuButton) {
     DemoFluAppState? state = DemoFluAppState.of(context);
-    state?._exampleMenuNotifier.notifyButtonClick(buttonIndex);
+    state?._exampleMenuNotifier.notifyButtonClick(menuButton.id);
   }
 }
 
@@ -88,6 +66,7 @@ class DemoFluAppState extends State<DemoFluApp> {
   final MultiSplitViewController horizontalDividerController =
       MultiSplitViewController(weights: [.5, .5]);
 
+  late List<Section> sections;
   late Color _widgetBackground;
 
   Color get widgetBackground => _widgetBackground;
@@ -200,8 +179,9 @@ class DemoFluAppState extends State<DemoFluApp> {
             'initialWidthWeight must be a value between 0 and 1');
       }
     }
-    if (widget.sections.isNotEmpty) {
-      Section section = widget.sections.first;
+    sections = widget.sectionsBuilder(_exampleMenuNotifier);
+    if (sections.isNotEmpty) {
+      Section section = sections.first;
       if (section.examples.isNotEmpty) {
         updateCurrentExample(section.examples.first);
       }
@@ -228,8 +208,6 @@ class DemoFluAppState extends State<DemoFluApp> {
       _currentExample = example;
     });
   }
-
-  List<Section> get sections => widget.sections;
 
   @override
   Widget build(BuildContext context) {
@@ -273,8 +251,7 @@ class _Body extends StatelessWidget {
     List<Widget> children = [LayoutId(id: 1, child: AppMenuWidget())];
     if (state.currentExample != null) {
       children.add(LayoutId(id: 3, child: ExampleMenu()));
-      exampleContent =
-          ExampleWidget(exampleMenuNotifier: state._exampleMenuNotifier);
+      exampleContent = ExampleWidget();
     } else {
       exampleContent = Center(child: Text('Loading...'));
     }

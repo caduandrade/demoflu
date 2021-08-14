@@ -1,6 +1,8 @@
+import 'package:demoflu/demoflu.dart';
 import 'package:demoflu/src/demoflu_app.dart';
 import 'package:demoflu/src/example.dart';
 import 'package:demoflu/src/menu/example_menu_layout.dart';
+import 'package:demoflu/src/menu/example_menu_widgets.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -110,22 +112,28 @@ class _ExampleMenuState extends State<ExampleMenu> {
         LayoutConf(conf: Conf(row: row, widget: true), child: colorIndicator));
     row++;
 
-    int index = 0;
-    example.buttons?.forEach((buttonName) {
-      final i = index;
-      children.add(LayoutConf(
-          conf: Conf(row: row, widget: true, span: true),
-          child: Padding(
-              child: ElevatedButton(
-                child: Text(buttonName),
-                onPressed: () {
-                  DemoFlu.notifyMenuButtonClick(context, i);
-                },
-              ),
-              padding: EdgeInsets.only(bottom: 8))));
-      row++;
-      index++;
-    });
+    if (example.content is ExampleStateful) {
+      ExampleStateful exampleStateful = example.content as ExampleStateful;
+      int index = 0;
+      exampleStateful.menuWidgets().forEach((menuWidget) {
+        final i = index;
+        if (menuWidget is MenuButton) {
+          MenuButton menuButton = menuWidget as MenuButton;
+          children.add(LayoutConf(
+              conf: Conf(row: row, widget: true, span: true),
+              child: Padding(
+                  child: ElevatedButton(
+                    child: Text(menuButton.name),
+                    onPressed: () {
+                      DemoFlu.notifyMenuButtonClick(context, menuButton);
+                    },
+                  ),
+                  padding: EdgeInsets.only(bottom: 8))));
+        }
+        row++;
+        index++;
+      });
+    }
 
     if (children.isEmpty) {
       return SizedBox(width: 0);

@@ -13,11 +13,6 @@ import 'package:flutter_highlight/themes/github.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 
 class ExampleWidget extends StatelessWidget {
-  const ExampleWidget({Key? key, required this.exampleMenuNotifier})
-      : super(key: key);
-
-  final ExampleMenuNotifier exampleMenuNotifier;
-
   @override
   Widget build(BuildContext context) {
     DemoFluAppState state = DemoFluAppState.of(context)!;
@@ -26,7 +21,6 @@ class ExampleWidget extends StatelessWidget {
   }
 
   Widget _build(BuildContext context, DemoFluAppState state, Example example) {
-    Widget content = example.builder(exampleMenuNotifier);
     LayoutBuilder layoutBuilder = LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       double maxWidth = constraints.maxWidth;
@@ -41,7 +35,7 @@ class ExampleWidget extends StatelessWidget {
         maxHeight = maxHeight * state.heightWeight;
       }
       ConstrainedBox constrainedBox = ConstrainedBox(
-          child: content,
+          child: example.content,
           constraints:
               BoxConstraints.tightFor(width: maxWidth, height: maxHeight));
 

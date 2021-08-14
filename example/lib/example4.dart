@@ -1,34 +1,37 @@
 import 'package:demoflu/demoflu.dart';
+import 'package:demoflu/src/menu/example_menu_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class Example4 extends StatefulWidget {
-  final ExampleMenuNotifier exampleMenuNotifier;
-
-  const Example4(this.exampleMenuNotifier);
+class Example4 extends ExampleStateful {
+  Example4(ExampleMenuNotifier menuNotifier)
+      : super(menuNotifier: menuNotifier);
 
   @override
   State<StatefulWidget> createState() => Example4State();
-}
-
-class Example4State extends State<Example4> {
-  int? _index;
 
   @override
-  void initState() {
-    super.initState();
-    widget.exampleMenuNotifier.registerButtonClick(onClick);
+  List<ExampleMenuWidget> menuWidgets() {
+    return [
+      MenuButton(id: 1, name: 'Button 1'),
+      MenuButton(id: 2, name: 'Button 2')
+    ];
   }
+}
+
+class Example4State extends ExampleStatefulState<Example4> {
+  int? _buttonId;
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('Example 4: $_index'));
+    return Center(child: Text('Example 4: $_buttonId'));
   }
 
-  void onClick(int index) {
-    print('button: $index');
+  @override
+  void onButtonClick(int index) {
+    print('buttonId: $index');
     setState(() {
-      _index = index;
+      _buttonId = index;
     });
   }
 }
