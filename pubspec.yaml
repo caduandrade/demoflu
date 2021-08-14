@@ -1,6 +1,6 @@
 name: demoflu
 description: Flutter widget demo builder. Web application to display widget usage.
-version: 0.5.0
+version: 0.6.0
 homepage: https://github.com/caduandrade/demoflu
 
 environment:

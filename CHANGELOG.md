@@ -1,3 +1,7 @@
+## 0.6.0
+
+* Simplifying widget injection in the menu
+
 ## 0.5.0
 
 * Initial width and height weights
