@@ -177,9 +177,6 @@ class _ExampleMenuState extends State<ExampleMenu> {
       showMaterialName: true,
       showColorName: true,
       showColorCode: true,
-      copyPasteBehavior: const ColorPickerCopyPasteBehavior(
-        longPressMenu: true,
-      ),
       materialNameTextStyle: Theme.of(context).textTheme.caption,
       colorNameTextStyle: Theme.of(context).textTheme.caption,
       colorCodeTextStyle: Theme.of(context).textTheme.caption,
@@ -188,8 +185,8 @@ class _ExampleMenuState extends State<ExampleMenu> {
         ColorPickerType.primary: true,
         ColorPickerType.accent: false,
         ColorPickerType.bw: false,
-        ColorPickerType.custom: true,
-        ColorPickerType.wheel: true,
+        ColorPickerType.custom: false,
+        ColorPickerType.wheel: false,
       },
       // customColorSwatchesAndNames: colorsNameMap,
     ).showPickerDialog(
