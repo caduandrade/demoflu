@@ -1,9 +1,10 @@
 import 'package:demoflu/src/console_widget.dart';
 import 'package:demoflu/src/demoflu_logo.dart';
 import 'package:demoflu/src/example.dart';
-import 'package:demoflu/src/example_menu_widget.dart';
+import 'package:demoflu/src/menu/example_menu.dart';
 import 'package:demoflu/src/example_widget.dart';
-import 'package:demoflu/src/app_menu_widget.dart';
+import 'package:demoflu/src/menu/app_menu_widget.dart';
+import 'package:demoflu/src/menu/example_menu_notifier.dart';
 import 'package:demoflu/src/section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -74,13 +75,13 @@ class DemoFlu {
 
   static void notifyMenuButtonClick(BuildContext context, int buttonIndex) {
     DemoFluAppState? state = DemoFluAppState.of(context);
-    state?._buttonClickNotifier.notifyClick(buttonIndex);
+    state?._exampleMenuNotifier.notifyButtonClick(buttonIndex);
   }
 }
 
 /// The [DemoFluApp] state.
 class DemoFluAppState extends State<DemoFluApp> {
-  final ButtonClickNotifier _buttonClickNotifier = ButtonClickNotifier();
+  final ExampleMenuNotifier _exampleMenuNotifier = ExampleMenuNotifier();
 
   final MultiSplitViewController verticalDividerController =
       MultiSplitViewController(weights: [.9, .1]);
@@ -210,7 +211,7 @@ class DemoFluAppState extends State<DemoFluApp> {
   /// Updates the current example.
   void updateCurrentExample(Example example) async {
     setState(() {
-      _buttonClickNotifier.unregister();
+      _exampleMenuNotifier.unregisterAll();
       _currentExample = null;
       _code = null;
     });
@@ -273,7 +274,7 @@ class _Body extends StatelessWidget {
     if (state.currentExample != null) {
       children.add(LayoutId(id: 3, child: ExampleMenu()));
       exampleContent =
-          ExampleWidget(buttonClickNotifier: state._buttonClickNotifier);
+          ExampleWidget(exampleMenuNotifier: state._exampleMenuNotifier);
     } else {
       exampleContent = Center(child: Text('Loading...'));
     }

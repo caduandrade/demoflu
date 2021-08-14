@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:demoflu/src/console_widget.dart';
 import 'package:demoflu/src/demoflu_app.dart';
 import 'package:demoflu/src/example.dart';
+import 'package:demoflu/src/menu/example_menu_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,10 +13,10 @@ import 'package:flutter_highlight/themes/github.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 
 class ExampleWidget extends StatelessWidget {
-  const ExampleWidget({Key? key, required this.buttonClickNotifier})
+  const ExampleWidget({Key? key, required this.exampleMenuNotifier})
       : super(key: key);
 
-  final ButtonClickNotifier buttonClickNotifier;
+  final ExampleMenuNotifier exampleMenuNotifier;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class ExampleWidget extends StatelessWidget {
   }
 
   Widget _build(BuildContext context, DemoFluAppState state, Example example) {
-    Widget content = example.builder(buttonClickNotifier);
+    Widget content = example.builder(exampleMenuNotifier);
     LayoutBuilder layoutBuilder = LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       double maxWidth = constraints.maxWidth;

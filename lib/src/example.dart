@@ -1,27 +1,7 @@
+import 'package:demoflu/src/menu/example_menu_notifier.dart';
 import 'package:flutter/material.dart';
 
-typedef ExampleWidgetBuilder = Widget Function(
-    ButtonClickNotifier buttonClickNotifier);
-
-typedef OnButtonClick = void Function(int buttonIndex);
-
-class ButtonClickNotifier {
-  OnButtonClick? _onClick;
-
-  void register(OnButtonClick onClick) {
-    _onClick = onClick;
-  }
-
-  void unregister() {
-    _onClick = null;
-  }
-
-  void notifyClick(int buttonIndex) {
-    if (_onClick != null) {
-      _onClick!(buttonIndex);
-    }
-  }
-}
+typedef ExampleWidgetBuilder = Widget Function(ExampleMenuNotifier notifier);
 
 /// Represents a menu item for a widget example.
 class Example {

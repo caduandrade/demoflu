@@ -1,12 +1,11 @@
 import 'package:demoflu/demoflu.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class Example4 extends StatefulWidget {
-  final ButtonClickNotifier buttonClickNotifier;
+  final ExampleMenuNotifier exampleMenuNotifier;
 
-  const Example4(this.buttonClickNotifier);
+  const Example4(this.exampleMenuNotifier);
 
   @override
   State<StatefulWidget> createState() => Example4State();
@@ -18,7 +17,7 @@ class Example4State extends State<Example4> {
   @override
   void initState() {
     super.initState();
-    widget.buttonClickNotifier.register(onClick);
+    widget.exampleMenuNotifier.registerButtonClick(onClick);
   }
 
   @override

@@ -1,6 +1,6 @@
 import 'package:demoflu/src/demoflu_app.dart';
 import 'package:demoflu/src/example.dart';
-import 'package:demoflu/src/menu_layout.dart';
+import 'package:demoflu/src/menu/example_menu_layout.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
