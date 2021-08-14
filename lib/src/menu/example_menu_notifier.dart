@@ -11,9 +11,9 @@ class ExampleMenuNotifier {
     _onButtonClick = null;
   }
 
-  void notifyButtonClick(int buttonIndex) {
+  void notifyButtonClick(int id) {
     if (_onButtonClick != null) {
-      _onButtonClick!(buttonIndex);
+      _onButtonClick!(id);
     }
   }
 }
