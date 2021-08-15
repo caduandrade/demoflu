@@ -1,3 +1,7 @@
+## 0.6.1
+
+* Exporting Dart file correctly
+
 ## 0.6.0
 
 * Simplifying widget injection in the menu
