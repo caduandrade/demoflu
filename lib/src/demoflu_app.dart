@@ -1,17 +1,17 @@
 import 'package:demoflu/src/console_widget.dart';
 import 'package:demoflu/src/demoflu_logo.dart';
-import 'package:demoflu/src/example.dart';
+import 'package:demoflu/src/menu_item.dart';
 import 'package:demoflu/src/menu/example_menu.dart';
 import 'package:demoflu/src/example_widget.dart';
 import 'package:demoflu/src/menu/app_menu_widget.dart';
 import 'package:demoflu/src/menu/example_menu_notifier.dart';
 import 'package:demoflu/src/menu/example_menu_widgets.dart';
-import 'package:demoflu/src/section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:multi_split_view/multi_split_view.dart';
 
-typedef SectionsBuilder = List<Section> Function(ExampleMenuNotifier notifier);
+typedef AppMenuBuilder = List<MenuItem> Function(
+    ExampleMenuNotifier exampleMenuNotifier);
 
 /// Demo app to be instantiated.
 class DemoFluApp extends StatefulWidget {
@@ -21,7 +21,7 @@ class DemoFluApp extends StatefulWidget {
   /// examples.
   const DemoFluApp(
       {required this.title,
-      required this.sectionsBuilder,
+      required this.appMenuBuilder,
       this.resizable = false,
       this.widgetBackground = Colors.white,
       this.maxSize,
@@ -30,7 +30,7 @@ class DemoFluApp extends StatefulWidget {
       this.initialHeightWeight});
 
   final String title;
-  final SectionsBuilder sectionsBuilder;
+  final AppMenuBuilder appMenuBuilder;
   final Color widgetBackground;
   final Size? maxSize;
   final bool resizable;
@@ -66,28 +66,28 @@ class DemoFluAppState extends State<DemoFluApp> {
   final MultiSplitViewController horizontalDividerController =
       MultiSplitViewController(weights: [.5, .5]);
 
-  late List<Section> sections;
+  late List<MenuItem> menuItems;
   late Color _widgetBackground;
 
   Color get widgetBackground => _widgetBackground;
 
-  void set widgetBackground(Color color) {
+  set widgetBackground(Color color) {
     setState(() {
       _widgetBackground = color;
     });
   }
 
-  Size? getMaxSize(Example example) {
+  Size? getMaxSize(MenuItem example) {
     return example.maxSize ?? widget.maxSize;
   }
 
   /// Indicates whether console view is enabled.
-  bool isConsoleEnabled(Example example) {
+  bool isConsoleEnabled(MenuItem example) {
     return example.consoleEnabled ?? widget.consoleEnabled;
   }
 
   /// Indicates whether example is resizable.
-  bool isResizable(Example example) {
+  bool isResizable(MenuItem example) {
     return example.resizable ?? widget.resizable;
   }
 
@@ -95,10 +95,10 @@ class DemoFluAppState extends State<DemoFluApp> {
 
   ConsoleNotifier get consoleNotifier => _consoleNotifier;
 
-  Example? _currentExample;
+  MenuItem? _currentMenuItem;
 
   /// Gets the current selected example.
-  Example? get currentExample => _currentExample;
+  MenuItem? get currentMenuItem => _currentMenuItem;
 
   String? _code;
 
@@ -179,33 +179,32 @@ class DemoFluAppState extends State<DemoFluApp> {
             'initialWidthWeight must be a value between 0 and 1');
       }
     }
-    sections = widget.sectionsBuilder(_exampleMenuNotifier);
-    if (sections.isNotEmpty) {
-      Section section = sections.first;
-      if (section.examples.isNotEmpty) {
-        updateCurrentExample(section.examples.first);
-      }
+    menuItems = widget.appMenuBuilder(_exampleMenuNotifier);
+    int menuItemIndex =
+        menuItems.indexWhere((menuItem) => menuItem.example != null);
+    if (menuItemIndex > -1) {
+      updateCurrentExample(menuItems[menuItemIndex]);
     }
   }
 
   /// Updates the current example.
-  void updateCurrentExample(Example example) async {
+  void updateCurrentExample(MenuItem menuItem) async {
     setState(() {
       _exampleMenuNotifier.unregisterAll();
-      _currentExample = null;
+      _currentMenuItem = null;
       _code = null;
     });
     String? newCode;
-    if (example.codeFile != null) {
-      newCode = await rootBundle.loadString(example.codeFile!);
+    if (menuItem.codeFile != null) {
+      newCode = await rootBundle.loadString(menuItem.codeFile!);
     }
     setState(() {
-      if (!isConsoleEnabled(example)) {
+      if (!isConsoleEnabled(menuItem)) {
         _consoleVisible = false;
       }
       _code = newCode;
       _consoleNotifier = ConsoleNotifier();
-      _currentExample = example;
+      _currentMenuItem = menuItem;
     });
   }
 
@@ -249,7 +248,7 @@ class _Body extends StatelessWidget {
     DemoFluAppState state = DemoFluAppState.of(context)!;
     Widget? exampleContent;
     List<Widget> children = [LayoutId(id: 1, child: AppMenuWidget())];
-    if (state.currentExample != null) {
+    if (state.currentMenuItem != null) {
       children.add(LayoutId(id: 3, child: ExampleMenu()));
       exampleContent = ExampleWidget();
     } else {

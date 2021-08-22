@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:demoflu/src/console_widget.dart';
 import 'package:demoflu/src/demoflu_app.dart';
-import 'package:demoflu/src/example.dart';
+import 'package:demoflu/src/menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -14,15 +14,17 @@ class ExampleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DemoFluAppState state = DemoFluAppState.of(context)!;
-    Example example = state.currentExample!;
+    MenuItem example = state.currentMenuItem!;
 
     Widget widget = Container();
-
 
     if (state.widgetVisible && state.consoleVisible) {
       widget = MultiSplitView(
           axis: Axis.vertical,
-          children: [_buildExampleContentWidget(state, example), ConsoleWidget()],
+          children: [
+            _buildExampleContentWidget(state, example),
+            ConsoleWidget()
+          ],
           controller: state.verticalDividerController);
     } else if (state.widgetVisible) {
       widget = _buildExampleContentWidget(state, example);
@@ -32,44 +34,43 @@ class ExampleWidget extends StatelessWidget {
 
     if (example.codeFile != null && state.codeVisible) {
       if (state.widgetVisible || state.consoleVisible) {
-        widget= MultiSplitView(
-            children: [
-              _buildCodeWidget(context, state.code!),
-              widget
-            ],
+        widget = MultiSplitView(
+            children: [_buildCodeWidget(context, state.code!), widget],
             controller: state.horizontalDividerController);
       } else {
-        widget= _buildCodeWidget(context, state.code!);
+        widget = _buildCodeWidget(context, state.code!);
       }
     }
 
-    return MultiSplitViewTheme(child: widget, data: MultiSplitViewThemeData(dividerColor: Colors.blueGrey[700]));
+    return MultiSplitViewTheme(
+        child: widget,
+        data: MultiSplitViewThemeData(dividerColor: Colors.blueGrey[700]));
   }
 
   /// Builds the example content widget.
-  Widget _buildExampleContentWidget(DemoFluAppState state, Example example){
+  Widget _buildExampleContentWidget(DemoFluAppState state, MenuItem example) {
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-          double maxWidth = constraints.maxWidth;
-          double maxHeight = constraints.maxHeight;
-          Size? maxSize = state.getMaxSize(example);
-          if (maxSize != null) {
-            maxWidth = math.min(maxWidth, maxSize.width);
-            maxHeight = math.min(maxHeight, maxSize.height);
-          }
-          if (state.isResizable(example)) {
-            maxWidth = maxWidth * state.widthWeight;
-            maxHeight = maxHeight * state.heightWeight;
-          }
-          ConstrainedBox constrainedBox = ConstrainedBox(
-              child: example.content,
-              constraints:
+      double maxWidth = constraints.maxWidth;
+      double maxHeight = constraints.maxHeight;
+      Size? maxSize = state.getMaxSize(example);
+      if (maxSize != null) {
+        maxWidth = math.min(maxWidth, maxSize.width);
+        maxHeight = math.min(maxHeight, maxSize.height);
+      }
+      if (state.isResizable(example)) {
+        maxWidth = maxWidth * state.widthWeight;
+        maxHeight = maxHeight * state.heightWeight;
+      }
+      ConstrainedBox constrainedBox = ConstrainedBox(
+          child: example.example,
+          constraints:
               BoxConstraints.tightFor(width: maxWidth, height: maxHeight));
 
-          return Container(
-              color: state.widgetBackground,
-              child: Center(child: Container(child: constrainedBox)));
-        });
+      return Container(
+          color: state.widgetBackground,
+          child: Center(child: Container(child: constrainedBox)));
+    });
   }
 
   /// Builds the widget for example code.

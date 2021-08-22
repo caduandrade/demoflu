@@ -1,6 +1,6 @@
 import 'package:demoflu/demoflu.dart';
 import 'package:demoflu/src/demoflu_app.dart';
-import 'package:demoflu/src/example.dart';
+import 'package:demoflu/src/menu_item.dart';
 import 'package:demoflu/src/menu/example_menu_layout.dart';
 import 'package:demoflu/src/menu/example_menu_widgets.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
@@ -21,7 +21,7 @@ class _ExampleMenuState extends State<ExampleMenu> {
   Widget build(BuildContext context) {
     DemoFluAppState state = DemoFluAppState.of(context)!;
 
-    Example example = state.currentExample!;
+    MenuItem example = state.currentMenuItem!;
 
     List<LayoutConf> children = [];
 
@@ -112,8 +112,8 @@ class _ExampleMenuState extends State<ExampleMenu> {
         LayoutConf(conf: Conf(row: row, widget: true), child: colorIndicator));
     row++;
 
-    if (example.content is ExampleStateful) {
-      ExampleStateful exampleStateful = example.content as ExampleStateful;
+    if (example.example is ExampleStateful) {
+      ExampleStateful exampleStateful = example.example as ExampleStateful;
       int index = 0;
       exampleStateful.menuWidgets().forEach((menuWidget) {
         final i = index;

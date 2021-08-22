@@ -1,6 +1,7 @@
 ## 0.7.0
 
 * Update of dependencies
+* Indentation in menu items
 
 ## 0.6.1
 
