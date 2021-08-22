@@ -1,3 +1,8 @@
+## 0.7.1
+
+* Bugfix
+  * *MultiSplitViewTheme* being propagated to example widgets
+
 ## 0.7.0
 
 * Update of dependencies

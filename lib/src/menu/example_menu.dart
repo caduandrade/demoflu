@@ -21,12 +21,12 @@ class _ExampleMenuState extends State<ExampleMenu> {
   Widget build(BuildContext context) {
     DemoFluAppState state = DemoFluAppState.of(context)!;
 
-    MenuItem example = state.currentMenuItem!;
+    MenuItem menuItem = state.currentMenuItem!;
 
     List<LayoutConf> children = [];
 
     int row = 1;
-    if (example.codeFile != null) {
+    if (menuItem.codeFile != null) {
       children.add(
           LayoutConf(conf: Conf(row: row, widget: false), child: Text('code')));
       children.add(LayoutConf(
@@ -46,7 +46,7 @@ class _ExampleMenuState extends State<ExampleMenu> {
       row++;
     }
 
-    if (state.isConsoleEnabled(example)) {
+    if (state.isConsoleEnabled(menuItem)) {
       children.add(LayoutConf(
           conf: Conf(row: row, widget: false), child: Text('console')));
       children.add(LayoutConf(
@@ -57,7 +57,7 @@ class _ExampleMenuState extends State<ExampleMenu> {
       row++;
     }
 
-    if (state.widgetVisible && state.isResizable(example)) {
+    if (state.widgetVisible && state.isResizable(menuItem)) {
       children.add(LayoutConf(
           conf: Conf(row: row, widget: false), child: Text('width')));
       children.add(LayoutConf(
@@ -112,13 +112,11 @@ class _ExampleMenuState extends State<ExampleMenu> {
         LayoutConf(conf: Conf(row: row, widget: true), child: colorIndicator));
     row++;
 
-    if (example.example is ExampleStateful) {
-      ExampleStateful exampleStateful = example.example as ExampleStateful;
-      int index = 0;
+    if (menuItem.example is ExampleStateful) {
+      ExampleStateful exampleStateful = menuItem.example as ExampleStateful;
       exampleStateful.menuWidgets().forEach((menuWidget) {
-        final i = index;
         if (menuWidget is MenuButton) {
-          MenuButton menuButton = menuWidget as MenuButton;
+          MenuButton menuButton = menuWidget;
           children.add(LayoutConf(
               conf: Conf(row: row, widget: true, span: true),
               child: Padding(
@@ -131,7 +129,6 @@ class _ExampleMenuState extends State<ExampleMenu> {
                   padding: EdgeInsets.only(bottom: 8))));
         }
         row++;
-        index++;
       });
     }
 

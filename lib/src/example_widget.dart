@@ -14,7 +14,7 @@ class ExampleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DemoFluAppState state = DemoFluAppState.of(context)!;
-    MenuItem example = state.currentMenuItem!;
+    MenuItem menuItem = state.currentMenuItem!;
 
     Widget widget = Container();
 
@@ -22,17 +22,17 @@ class ExampleWidget extends StatelessWidget {
       widget = MultiSplitView(
           axis: Axis.vertical,
           children: [
-            _buildExampleContentWidget(state, example),
+            _buildExampleContentWidget(state, menuItem),
             ConsoleWidget()
           ],
           controller: state.verticalDividerController);
     } else if (state.widgetVisible) {
-      widget = _buildExampleContentWidget(state, example);
+      widget = _buildExampleContentWidget(state, menuItem);
     } else if (state.consoleVisible) {
       widget = ConsoleWidget();
     }
 
-    if (example.codeFile != null && state.codeVisible) {
+    if (menuItem.codeFile != null && state.codeVisible) {
       if (state.widgetVisible || state.consoleVisible) {
         widget = MultiSplitView(
             children: [_buildCodeWidget(context, state.code!), widget],
@@ -48,22 +48,23 @@ class ExampleWidget extends StatelessWidget {
   }
 
   /// Builds the example content widget.
-  Widget _buildExampleContentWidget(DemoFluAppState state, MenuItem example) {
+  Widget _buildExampleContentWidget(DemoFluAppState state, MenuItem menuItem) {
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       double maxWidth = constraints.maxWidth;
       double maxHeight = constraints.maxHeight;
-      Size? maxSize = state.getMaxSize(example);
+      Size? maxSize = state.getMaxSize(menuItem);
       if (maxSize != null) {
         maxWidth = math.min(maxWidth, maxSize.width);
         maxHeight = math.min(maxHeight, maxSize.height);
       }
-      if (state.isResizable(example)) {
+      if (state.isResizable(menuItem)) {
         maxWidth = maxWidth * state.widthWeight;
         maxHeight = maxHeight * state.heightWeight;
       }
       ConstrainedBox constrainedBox = ConstrainedBox(
-          child: example.example,
+          child: MultiSplitViewTheme(
+              child: menuItem.example!, data: MultiSplitViewThemeData()),
           constraints:
               BoxConstraints.tightFor(width: maxWidth, height: maxHeight));
 
