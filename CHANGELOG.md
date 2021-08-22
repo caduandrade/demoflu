@@ -1,3 +1,7 @@
+## 0.7.0
+
+* Update of dependencies
+
 ## 0.6.1
 
 * Exporting Dart file correctly

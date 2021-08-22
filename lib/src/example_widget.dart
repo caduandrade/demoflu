@@ -3,8 +3,6 @@ import 'dart:math' as math;
 import 'package:demoflu/src/console_widget.dart';
 import 'package:demoflu/src/demoflu_app.dart';
 import 'package:demoflu/src/example.dart';
-import 'package:demoflu/src/menu/example_menu_notifier.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -17,64 +15,64 @@ class ExampleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     DemoFluAppState state = DemoFluAppState.of(context)!;
     Example example = state.currentExample!;
-    return _build(context, state, example);
-  }
 
-  Widget _build(BuildContext context, DemoFluAppState state, Example example) {
-    LayoutBuilder layoutBuilder = LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-      double maxWidth = constraints.maxWidth;
-      double maxHeight = constraints.maxHeight;
-      Size? maxSize = state.getMaxSize(example);
-      if (maxSize != null) {
-        maxWidth = math.min(maxWidth, maxSize.width);
-        maxHeight = math.min(maxHeight, maxSize.height);
-      }
-      if (state.isResizable(example)) {
-        maxWidth = maxWidth * state.widthWeight;
-        maxHeight = maxHeight * state.heightWeight;
-      }
-      ConstrainedBox constrainedBox = ConstrainedBox(
-          child: example.content,
-          constraints:
-              BoxConstraints.tightFor(width: maxWidth, height: maxHeight));
+    Widget widget = Container();
 
-      return Container(
-          color: state.widgetBackground,
-          child: Center(child: Container(child: constrainedBox)));
-    });
 
-    Widget? widgetAndOrConsole;
     if (state.widgetVisible && state.consoleVisible) {
-      widgetAndOrConsole = MultiSplitView(
+      widget = MultiSplitView(
           axis: Axis.vertical,
-          children: [layoutBuilder, ConsoleWidget()],
-          dividerColor: Colors.blueGrey[700],
+          children: [_buildExampleContentWidget(state, example), ConsoleWidget()],
           controller: state.verticalDividerController);
     } else if (state.widgetVisible) {
-      widgetAndOrConsole = layoutBuilder;
+      widget = _buildExampleContentWidget(state, example);
     } else if (state.consoleVisible) {
-      widgetAndOrConsole = ConsoleWidget();
+      widget = ConsoleWidget();
     }
 
     if (example.codeFile != null && state.codeVisible) {
-      if (widgetAndOrConsole != null) {
-        return MultiSplitView(
+      if (state.widgetVisible || state.consoleVisible) {
+        widget= MultiSplitView(
             children: [
               _buildCodeWidget(context, state.code!),
-              widgetAndOrConsole
+              widget
             ],
-            dividerColor: Colors.blueGrey[700],
             controller: state.horizontalDividerController);
       } else {
-        return _buildCodeWidget(context, state.code!);
+        widget= _buildCodeWidget(context, state.code!);
       }
-    } else if (widgetAndOrConsole != null) {
-      return widgetAndOrConsole;
     }
-    return Container();
+
+    return MultiSplitViewTheme(child: widget, data: MultiSplitViewThemeData(dividerColor: Colors.blueGrey[700]));
   }
 
+  /// Builds the example content widget.
+  Widget _buildExampleContentWidget(DemoFluAppState state, Example example){
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          double maxWidth = constraints.maxWidth;
+          double maxHeight = constraints.maxHeight;
+          Size? maxSize = state.getMaxSize(example);
+          if (maxSize != null) {
+            maxWidth = math.min(maxWidth, maxSize.width);
+            maxHeight = math.min(maxHeight, maxSize.height);
+          }
+          if (state.isResizable(example)) {
+            maxWidth = maxWidth * state.widthWeight;
+            maxHeight = maxHeight * state.heightWeight;
+          }
+          ConstrainedBox constrainedBox = ConstrainedBox(
+              child: example.content,
+              constraints:
+              BoxConstraints.tightFor(width: maxWidth, height: maxHeight));
+
+          return Container(
+              color: state.widgetBackground,
+              child: Center(child: Container(child: constrainedBox)));
+        });
+  }
+
+  /// Builds the widget for example code.
   Widget _buildCodeWidget(BuildContext context, String code) {
     return Container(
         color: Color(0xfff8f8f8),
