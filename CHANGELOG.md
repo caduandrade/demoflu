@@ -1,3 +1,7 @@
+## 0.7.2
+
+* *multi_split_view* dependency updated to 1.7.1
+
 ## 0.7.1
 
 * Bugfix
