@@ -189,7 +189,7 @@ class _ExampleMenuState extends State<ExampleMenu> {
         ColorPickerType.both: false,
         ColorPickerType.primary: true,
         ColorPickerType.accent: false,
-        ColorPickerType.bw: false,
+        ColorPickerType.bw: true,
         ColorPickerType.custom: false,
         ColorPickerType.wheel: false,
       },
