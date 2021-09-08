@@ -28,10 +28,10 @@ class Example4State extends ExampleStatefulState<Example4> {
   }
 
   @override
-  void onButtonClick(int index) {
-    print('buttonId: $index');
+  void onButtonClick(int buttonId) {
+    print('buttonId: $buttonId');
     setState(() {
-      _buttonId = index;
+      _buttonId = buttonId;
     });
   }
 }

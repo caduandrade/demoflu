@@ -19,5 +19,5 @@ abstract class ExampleStatefulState<T extends ExampleStateful>
     widget.menuNotifier.registerButtonClick(onButtonClick);
   }
 
-  void onButtonClick(int index);
+  void onButtonClick(int buttonId);
 }
