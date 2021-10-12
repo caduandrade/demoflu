@@ -28,6 +28,41 @@ void main() {
           MenuItem(
               name: 'Example 4',
               example: Example4(exampleMenuNotifier),
+              indentation: 2),
+          MenuItem(
+              name: 'Example 4',
+              example: Example4(exampleMenuNotifier),
+              indentation: 2),
+          MenuItem(
+              name: 'Example 4',
+              example: Example4(exampleMenuNotifier),
+              indentation: 2),
+          MenuItem(
+              name: 'Example 4',
+              example: Example4(exampleMenuNotifier),
+              indentation: 2),
+          MenuItem(
+              name: 'Example 4',
+              example: Example4(exampleMenuNotifier),
+              indentation: 2),
+          MenuItem(
+              name: 'Example 4',
+              example: Example4(exampleMenuNotifier),
+              indentation: 2),  MenuItem(
+              name: 'Example 4',
+              example: Example4(exampleMenuNotifier),
+              indentation: 2),  MenuItem(
+              name: 'Example 4',
+              example: Example4(exampleMenuNotifier),
+              indentation: 2),  MenuItem(
+              name: 'Example 4',
+              example: Example4(exampleMenuNotifier),
+              indentation: 2),  MenuItem(
+              name: 'Example 4',
+              example: Example4(exampleMenuNotifier),
+              indentation: 2),  MenuItem(
+              name: 'Example 4',
+              example: Example4(exampleMenuNotifier),
               indentation: 2)
         ];
       }));

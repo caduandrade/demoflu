@@ -44,7 +44,9 @@ class ExampleWidget extends StatelessWidget {
 
     return MultiSplitViewTheme(
         child: widget,
-        data: MultiSplitViewThemeData(dividerColor: Colors.blueGrey[700]));
+        data: MultiSplitViewThemeData(
+            dividerPainter:
+                DividerPainters.background(color: Colors.blueGrey[700])));
   }
 
   /// Builds the example content widget.

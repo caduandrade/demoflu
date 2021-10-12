@@ -1,7 +1,11 @@
+## 0.8.2
+
+* *multi_split_view* dependency updated to 1.8.0
+
 ## 0.8.1
 
 * *multi_split_view* dependency updated to 1.7.2
-* 
+
 ## 0.8.0
 
 * Black and white color picker
