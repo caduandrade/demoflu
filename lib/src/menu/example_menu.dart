@@ -148,6 +148,7 @@ class _ExampleMenuState extends State<ExampleMenu> {
 
     return Container(
         child: SingleChildScrollView(
+            controller: ScrollController(),
             child: Padding(child: menu, padding: EdgeInsets.all(8))),
         decoration: BoxDecoration(
             color: Colors.blueGrey[100],

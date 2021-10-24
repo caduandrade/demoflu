@@ -18,7 +18,9 @@ class ConsoleWidget extends StatelessWidget {
         valueListenable: state.consoleNotifier,
         builder: (BuildContext context, String value, Widget? child) {
           return SingleChildScrollView(
-              child: Text(value), padding: EdgeInsets.all(16));
+              controller: ScrollController(),
+              child: Text(value),
+              padding: EdgeInsets.all(16));
         });
   }
 }

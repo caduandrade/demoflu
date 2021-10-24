@@ -82,13 +82,14 @@ class ExampleWidget extends StatelessWidget {
         color: Color(0xfff8f8f8),
         child: Stack(children: [
           SingleChildScrollView(
+              controller: ScrollController(),
               child: HighlightView(
-            code,
-            language: 'dart',
-            theme: githubTheme,
-            padding: EdgeInsets.fromLTRB(16, 24, 16, 16),
-            textStyle: TextStyle(fontSize: 16),
-          )),
+                code,
+                language: 'dart',
+                theme: githubTheme,
+                padding: EdgeInsets.fromLTRB(16, 24, 16, 16),
+                textStyle: TextStyle(fontSize: 16),
+              )),
           Positioned(
               child: IconButton(
                 icon: const Icon(Icons.content_copy),

@@ -14,6 +14,7 @@ class AppMenuWidget extends StatelessWidget {
     }
     return Container(
         child: SingleChildScrollView(
+            controller: ScrollController(),
             child: IntrinsicWidth(
                 child: Column(
                     children: children,

@@ -1,3 +1,7 @@
+## 0.8.3
+
+* *multi_split_view* dependency updated to 1.9.0
+
 ## 0.8.2
 
 * *multi_split_view* dependency updated to 1.8.0

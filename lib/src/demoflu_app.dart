@@ -62,9 +62,9 @@ class DemoFluAppState extends State<DemoFluApp> {
   final ExampleMenuNotifier _exampleMenuNotifier = ExampleMenuNotifier();
 
   final MultiSplitViewController verticalDividerController =
-      MultiSplitViewController(weights: [.9, .1]);
+      MultiSplitViewController(initialWeights: [.9, .1]);
   final MultiSplitViewController horizontalDividerController =
-      MultiSplitViewController(weights: [.5, .5]);
+      MultiSplitViewController(initialWeights: [.5, .5]);
 
   late List<MenuItem> menuItems;
   late Color _widgetBackground;
