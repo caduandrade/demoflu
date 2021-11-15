@@ -2,7 +2,6 @@ import 'package:demoflu/demoflu.dart';
 import 'package:demoflu/src/demoflu_app.dart';
 import 'package:demoflu/src/menu_item.dart';
 import 'package:demoflu/src/menu/example_menu_layout.dart';
-import 'package:demoflu/src/menu/example_menu_widgets.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -99,7 +98,7 @@ class _ExampleMenuState extends State<ExampleMenu> {
           onSelectFocus: false,
           onSelect: () async {
             dialogColor = state.widgetBackground;
-            if (await colorPickerDialog(context)) {
+            if (await _colorPickerDialog(context)) {
               state.widgetBackground = dialogColor;
             }
           },
@@ -111,26 +110,6 @@ class _ExampleMenuState extends State<ExampleMenu> {
     children.add(
         LayoutConf(conf: Conf(row: row, widget: true), child: colorIndicator));
     row++;
-
-    if (menuItem.example is ExampleStateful) {
-      ExampleStateful exampleStateful = menuItem.example as ExampleStateful;
-      exampleStateful.menuWidgets().forEach((menuWidget) {
-        if (menuWidget is MenuButton) {
-          MenuButton menuButton = menuWidget;
-          children.add(LayoutConf(
-              conf: Conf(row: row, widget: true, span: true),
-              child: Padding(
-                  child: ElevatedButton(
-                    child: Text(menuButton.name),
-                    onPressed: () {
-                      DemoFlu.notifyMenuButtonClick(context, menuButton);
-                    },
-                  ),
-                  padding: EdgeInsets.only(bottom: 8))));
-        }
-        row++;
-      });
-    }
 
     if (children.isEmpty) {
       return SizedBox(width: 0);
@@ -156,7 +135,7 @@ class _ExampleMenuState extends State<ExampleMenu> {
                 right: BorderSide(width: 1, color: Colors.blueGrey[700]!))));
   }
 
-  Future<bool> colorPickerDialog(BuildContext context) async {
+  Future<bool> _colorPickerDialog(BuildContext context) async {
     return ColorPicker(
       // Use the dialogPickerColor as start color.
       color: dialogColor,

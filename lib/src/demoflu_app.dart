@@ -1,17 +1,13 @@
 import 'package:demoflu/src/console_widget.dart';
 import 'package:demoflu/src/demoflu_logo.dart';
 import 'package:demoflu/src/menu_item.dart';
-import 'package:demoflu/src/menu/example_menu.dart';
-import 'package:demoflu/src/example_widget.dart';
-import 'package:demoflu/src/menu/app_menu_widget.dart';
-import 'package:demoflu/src/menu/example_menu_notifier.dart';
-import 'package:demoflu/src/menu/example_menu_widgets.dart';
+import 'package:demoflu/src/app_menu_widget.dart';
+import 'package:demoflu/src/temp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:multi_split_view/multi_split_view.dart';
 
-typedef AppMenuBuilder = List<MenuItem> Function(
-    ExampleMenuNotifier exampleMenuNotifier);
+typedef AppMenuBuilder = List<MenuItem> Function();
 
 /// Demo app to be instantiated.
 class DemoFluApp extends StatefulWidget {
@@ -49,18 +45,10 @@ class DemoFlu {
     DemoFluAppState? state = DemoFluAppState.of(context);
     state?.consoleNotifier.update(text);
   }
-
-  static void notifyMenuButtonClick(
-      BuildContext context, MenuButton menuButton) {
-    DemoFluAppState? state = DemoFluAppState.of(context);
-    state?._exampleMenuNotifier.notifyButtonClick(menuButton.id);
-  }
 }
 
 /// The [DemoFluApp] state.
 class DemoFluAppState extends State<DemoFluApp> {
-  final ExampleMenuNotifier _exampleMenuNotifier = ExampleMenuNotifier();
-
   final MultiSplitViewController verticalDividerController =
       MultiSplitViewController(initialWeights: [.9, .1]);
   final MultiSplitViewController horizontalDividerController =
@@ -141,9 +129,7 @@ class DemoFluAppState extends State<DemoFluApp> {
   }
 
   double _widthWeight = 1;
-
   double get widthWeight => _widthWeight;
-
   set widthWeight(double value) {
     setState(() {
       _widthWeight = value;
@@ -151,9 +137,7 @@ class DemoFluAppState extends State<DemoFluApp> {
   }
 
   double _heightWeight = 1;
-
   double get heightWeight => _heightWeight;
-
   set heightWeight(double value) {
     setState(() {
       _heightWeight = value;
@@ -179,7 +163,7 @@ class DemoFluAppState extends State<DemoFluApp> {
             'initialWidthWeight must be a value between 0 and 1');
       }
     }
-    menuItems = widget.appMenuBuilder(_exampleMenuNotifier);
+    menuItems = widget.appMenuBuilder();
     int menuItemIndex =
         menuItems.indexWhere((menuItem) => menuItem.example != null);
     if (menuItemIndex > -1) {
@@ -190,7 +174,6 @@ class DemoFluAppState extends State<DemoFluApp> {
   /// Updates the current example.
   void updateCurrentExample(MenuItem menuItem) async {
     setState(() {
-      _exampleMenuNotifier.unregisterAll();
       _currentMenuItem = null;
       _code = null;
     });
@@ -221,7 +204,26 @@ class DemoFluAppState extends State<DemoFluApp> {
                 title: Text(widget.title),
                 backgroundColor: Colors.blueGrey[900],
                 actions: [DemoFluLogo()]),
-            body: _DemoFluAppInheritedWidget(state: this, child: _Body())));
+            body:
+                _DemoFluAppInheritedWidget(state: this, child: _buildBody())));
+  }
+
+  Widget _buildBody() {
+    //DemoFluAppState state = DemoFluAppState.of(context)!;
+
+    Widget? exampleContent;
+    if (_currentMenuItem != null) {
+      exampleContent = TempWidget();
+    } else {
+      exampleContent = Center(child: Text('Loading...'));
+    }
+
+    List<LayoutId> children = [
+      LayoutId(id: 1, child: AppMenuWidget()),
+      LayoutId(id: 2, child: exampleContent)
+    ];
+
+    return CustomMultiChildLayout(delegate: _Layout(), children: children);
   }
 
   static DemoFluAppState? of(BuildContext context) {
@@ -242,24 +244,7 @@ class _DemoFluAppInheritedWidget extends InheritedWidget {
       true;
 }
 
-class _Body extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    DemoFluAppState state = DemoFluAppState.of(context)!;
-    Widget? exampleContent;
-    List<Widget> children = [LayoutId(id: 1, child: AppMenuWidget())];
-    if (state.currentMenuItem != null) {
-      children.add(LayoutId(id: 3, child: ExampleMenu()));
-      exampleContent = ExampleWidget();
-    } else {
-      exampleContent = Center(child: Text('Loading...'));
-    }
-    children.add(LayoutId(id: 2, child: exampleContent));
-    return CustomMultiChildLayout(delegate: _BodyLayout(), children: children);
-  }
-}
-
-class _BodyLayout extends MultiChildLayoutDelegate {
+class _Layout extends MultiChildLayoutDelegate {
   @override
   void performLayout(Size size) {
     Size appMenuSize = layoutChild(
@@ -271,24 +256,11 @@ class _BodyLayout extends MultiChildLayoutDelegate {
             maxHeight: size.height));
     positionChild(1, Offset.zero);
 
-    Size exampleMenuSize = Size.zero;
-    if (hasChild(3)) {
-      exampleMenuSize = layoutChild(
-          3,
-          BoxConstraints(
-              minWidth: 0,
-              maxWidth: size.width - appMenuSize.width,
-              minHeight: size.height,
-              maxHeight: size.height));
-      positionChild(3, Offset(appMenuSize.width, 0));
-    }
-
     layoutChild(
         2,
         BoxConstraints.tight(Size(
-            size.width - appMenuSize.width - exampleMenuSize.width,
-            size.height)));
-    positionChild(2, Offset(appMenuSize.width + exampleMenuSize.width, 0));
+            size.width - appMenuSize.width, size.height)));
+    positionChild(2, Offset(appMenuSize.width, 0));
   }
 
   @override
