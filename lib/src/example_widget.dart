@@ -70,7 +70,7 @@ class ExampleWidgetState extends State<ExampleWidget> {
         child: widget,
         data: MultiSplitViewThemeData(
             dividerPainter:
-                DividerPainters.background(color: Colors.blueGrey[700])));
+                DividerPainters.grooved2(backgroundColor: Colors.blueGrey[700], color: Colors.blueGrey[300]!, highlightedColor: Colors.blueGrey[50])));
   }
 
   /// Builds the widget for example code.
