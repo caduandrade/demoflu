@@ -19,7 +19,7 @@ class AppMenuWidget extends StatelessWidget {
                 child: Column(
                     children: children,
                     crossAxisAlignment: CrossAxisAlignment.stretch))),
-        decoration: BoxDecoration(color: Colors.blueGrey[900]));
+        decoration: BoxDecoration(color: Colors.blueGrey[900],border: Border(right: BorderSide(color: Colors.blueGrey[900]!,width: 2))));
   }
 }
 

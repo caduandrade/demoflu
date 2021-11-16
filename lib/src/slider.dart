@@ -11,20 +11,22 @@ class DemofluSlider extends LeafRenderObjectWidget {
       required this.barColor,
       required this.activeBarColor,
       required this.markerColor,
-      this.markerLength = 10,
-      this.markerWidth = 10,
-      this.barLength = 5,
-      this.markerBarLength = 2,
+
       this.onChanged})
       : super(key: key);
+
+  static const double markerHeight =10;
+  static const  double markerWidth=10;
+  static const  double barHeight =5;
+  static const  double markerBarHeight=2;
+
+  static double get height{
+    return DemofluSlider.markerHeight+DemofluSlider.barHeight+DemofluSlider.markerHeight;
+}
 
   final Color barColor;
   final Color activeBarColor;
   final Color markerColor;
-  final double markerLength;
-  final double markerWidth;
-  final double barLength;
-  final double markerBarLength;
 
   final double value;
   final ValueChanged<double>? onChanged;
@@ -35,11 +37,7 @@ class DemofluSlider extends LeafRenderObjectWidget {
         value: value,
         barColor: barColor,
         activeBarColor: activeBarColor,
-        barLength: barLength,
-        markerBarLength: markerBarLength,
         markerColor: markerColor,
-        markerLength: markerLength,
-        markerWidth: markerWidth,
         onChanged: onChanged);
   }
 
@@ -50,11 +48,7 @@ class DemofluSlider extends LeafRenderObjectWidget {
       ..value = value
       ..barColor = barColor
       ..activeBarColor = activeBarColor
-      ..barLength = barLength
-      ..markerBarLength = markerBarLength
       ..markerColor = markerColor
-      ..markerLength = markerLength
-      ..markerWidth = markerWidth
       ..onChanged = onChanged;
   }
 
@@ -63,7 +57,7 @@ class DemofluSlider extends LeafRenderObjectWidget {
     super.debugFillProperties(properties);
     properties.add(ColorProperty('barColor', barColor));
     properties.add(ColorProperty('markerColor', markerColor));
-    properties.add(DoubleProperty('markerLength', markerLength));
+    properties.add(DoubleProperty('markerLength', markerHeight));
     properties.add(DoubleProperty('value', value));
   }
 }
@@ -73,20 +67,12 @@ class RenderDemofluSlider extends RenderBox {
       {required double value,
       required Color barColor,
       required Color activeBarColor,
-      required double barLength,
-      required double markerBarLength,
       required Color markerColor,
-      required double markerLength,
-      required double markerWidth,
       required this.onChanged})
       : _value = value,
         _barColor = barColor,
         _activeBarColor = activeBarColor,
-        _barLength = barLength,
-        _markerBarLength = markerBarLength,
-        _markerColor = markerColor,
-        _markerLength = markerLength,
-        _markerWidth = markerWidth {
+        _markerColor = markerColor {
     _drag = HorizontalDragGestureRecognizer()
       ..onStart = (DragStartDetails details) {
         _notifyMarkerPositionChange(details.localPosition);
@@ -139,23 +125,7 @@ class RenderDemofluSlider extends RenderBox {
     }
   }
 
-  double _barLength;
-  double get barLength => _barLength;
-  set barLength(double value) {
-    if (_barLength != value) {
-      _barLength = value;
-      markNeedsLayout();
-    }
-  }
 
-  double _markerBarLength;
-  double get markerBarLength => _markerBarLength;
-  set markerBarLength(double value) {
-    if (_markerBarLength != value) {
-      _markerBarLength = value;
-      markNeedsLayout();
-    }
-  }
 
   Color _markerColor;
   Color get markerColor => _markerColor;
@@ -166,29 +136,7 @@ class RenderDemofluSlider extends RenderBox {
     }
   }
 
-  double _markerLength;
-  double get markerLength => _markerLength;
-  set markerLength(double value) {
-    if (_markerLength != value) {
-      _markerLength = value;
-      markNeedsLayout();
-    }
-  }
-
-  double _markerWidth;
-  double get markerWidth => _markerWidth;
-  set markerWidth(double value) {
-    if (_markerWidth != value) {
-      _markerWidth = value;
-      markNeedsLayout();
-    }
-  }
-
   static const _minDesiredWidth = 100.0;
-
-  double _minHeight() {
-    return markerLength + barLength + markerBarLength;
-  }
 
   @override
   double computeMinIntrinsicWidth(double height) => _minDesiredWidth;
@@ -197,10 +145,10 @@ class RenderDemofluSlider extends RenderBox {
   double computeMaxIntrinsicWidth(double height) => _minDesiredWidth;
 
   @override
-  double computeMinIntrinsicHeight(double width) => _minHeight();
+  double computeMinIntrinsicHeight(double width) => DemofluSlider.height;
 
   @override
-  double computeMaxIntrinsicHeight(double width) => _minHeight();
+  double computeMaxIntrinsicHeight(double width) => DemofluSlider.height;
 
   @override
   bool hitTestSelf(Offset position) => true;
@@ -221,7 +169,7 @@ class RenderDemofluSlider extends RenderBox {
   @override
   Size computeDryLayout(BoxConstraints constraints) {
     final desiredWidth = constraints.maxWidth;
-    final desiredHeight = _minHeight();
+    final desiredHeight = DemofluSlider.height;
     final desiredSize = Size(desiredWidth, desiredHeight);
     return constraints.constrain(desiredSize);
   }
@@ -244,28 +192,28 @@ class RenderDemofluSlider extends RenderBox {
       ..style = PaintingStyle.fill
       ..color = markerColor;
 
-    double reservedHeight = barLength;
+    double reservedHeight = DemofluSlider.barHeight;
     canvas.drawRect(
-        Rect.fromLTWH(0, size.height - reservedHeight, size.width, barLength),
+        Rect.fromLTWH(0, size.height - reservedHeight, size.width, DemofluSlider.barHeight),
         barPaint);
     double activeArea = size.width * value;
     canvas.drawRect(
         Rect.fromLTWH((size.width - activeArea) / 2,
-            size.height - reservedHeight, activeArea, barLength),
+            size.height - reservedHeight, activeArea, DemofluSlider.barHeight),
         activeBarPaint);
 
-    reservedHeight += markerLength;
+    reservedHeight += DemofluSlider.markerHeight;
     Path path = Path();
     path.moveTo(halfWidth - (halfWidth * value), size.height - reservedHeight);
-    path.relativeLineTo(markerWidth, 0);
-    path.relativeLineTo(-markerWidth, markerLength);
+    path.relativeLineTo(DemofluSlider.markerWidth, 0);
+    path.relativeLineTo(-DemofluSlider.markerWidth, DemofluSlider.markerHeight);
     path.close();
     canvas.drawPath(path, markerPaint);
 
-    reservedHeight += markerBarLength;
+    reservedHeight += DemofluSlider.markerBarHeight;
     canvas.drawRect(
         Rect.fromLTWH(
-            0, size.height - reservedHeight, size.width / 2, markerBarLength),
+            0, size.height - reservedHeight, size.width / 2, DemofluSlider.markerBarHeight),
         markerPaint);
 
     canvas.restore();

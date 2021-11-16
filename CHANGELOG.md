@@ -1,3 +1,8 @@
+## 0.9.0
+
+* *multi_split_view* dependency updated to 1.10.0
+* *url_launcher* dependency updated to 6.0.13
+
 ## 0.8.3
 
 * *multi_split_view* dependency updated to 1.9.0

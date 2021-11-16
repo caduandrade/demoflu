@@ -2,7 +2,7 @@ import 'package:demoflu/src/console_widget.dart';
 import 'package:demoflu/src/demoflu_logo.dart';
 import 'package:demoflu/src/menu_item.dart';
 import 'package:demoflu/src/app_menu_widget.dart';
-import 'package:demoflu/src/temp.dart';
+import 'package:demoflu/src/example_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:multi_split_view/multi_split_view.dart';
@@ -50,9 +50,9 @@ class DemoFlu {
 /// The [DemoFluApp] state.
 class DemoFluAppState extends State<DemoFluApp> {
   final MultiSplitViewController verticalDividerController =
-      MultiSplitViewController(initialWeights: [.9, .1]);
+      MultiSplitViewController(weights: [.9, .1]);
   final MultiSplitViewController horizontalDividerController =
-      MultiSplitViewController(initialWeights: [.5, .5]);
+      MultiSplitViewController(weights: [.5, .5]);
 
   late List<MenuItem> menuItems;
   late Color _widgetBackground;
@@ -213,7 +213,7 @@ class DemoFluAppState extends State<DemoFluApp> {
 
     Widget? exampleContent;
     if (_currentMenuItem != null) {
-      exampleContent = TempWidget();
+      exampleContent = ExampleWidget();
     } else {
       exampleContent = Center(child: Text('Loading...'));
     }
