@@ -25,6 +25,11 @@ class ResizableExampleWidget extends StatelessWidget {
         if (state.isResizable(menuItem)) {
           children.add(LayoutId(
               id: _Id.widthSlider,
+
+              child:DemofluSlider(
+                  value: state.widthWeight,
+                  onChanged: (double value) => state.widthWeight = value)
+              /*
               child: Padding(
                   child: DemofluSlider(
                       barColor: Colors.blueGrey[200]!,
@@ -32,7 +37,9 @@ class ResizableExampleWidget extends StatelessWidget {
                       markerColor: Colors.blueGrey[900]!,
                       value: state.widthWeight,
                       onChanged: (double value) => state.widthWeight = value),
-                  padding: EdgeInsets.only(bottom: 8, top: 8))));
+                  padding: EdgeInsets.only(bottom: 8, top: 8))
+*/
+          ));
 
 /*
         children.add(LayoutId(
@@ -102,12 +109,12 @@ class _Layout extends MultiChildLayoutDelegate {
 
     if (hasChild(_Id.widthSlider)) {
       double width = size.width - reservedWidth;
-      layoutChild(
+      Size s = layoutChild(
           _Id.widthSlider,
           BoxConstraints(
               minWidth: width,
               maxWidth: width,
-              minHeight: 0,
+              minHeight: DemofluSlider.height,
               maxHeight: DemofluSlider.height));
       positionChild(
           _Id.widthSlider, Offset(reservedWidth, 0));
@@ -118,7 +125,7 @@ class _Layout extends MultiChildLayoutDelegate {
        layoutChild(
           _Id.heightSlider,
           BoxConstraints(
-              minWidth: 0,
+              minWidth: DemofluSlider.height,
               maxWidth: DemofluSlider.height,
               minHeight: height,
               maxHeight: height));
@@ -140,6 +147,6 @@ class _Layout extends MultiChildLayoutDelegate {
 
   @override
   bool shouldRelayout(covariant MultiChildLayoutDelegate oldDelegate) {
-    return false;
+    return true;
   }
 }

@@ -6,27 +6,22 @@ import 'package:flutter/widgets.dart';
 
 class DemofluSlider extends LeafRenderObjectWidget {
   DemofluSlider(
-      {Key? key,
-      this.value = 0.5,
-      required this.barColor,
-      required this.activeBarColor,
-      required this.markerColor,
-
-      this.onChanged})
-      : super(key: key);
+      {   this.value = 0.5,
+      this.onChanged});
 
   static const double markerHeight =10;
   static const  double markerWidth=10;
   static const  double barHeight =5;
   static const  double markerBarHeight=2;
+  static const double gap = 6;
 
   static double get height{
-    return DemofluSlider.markerHeight+DemofluSlider.barHeight+DemofluSlider.markerHeight;
+    return DemofluSlider.markerHeight+DemofluSlider.barHeight+DemofluSlider.markerBarHeight + 2*gap;
 }
 
-  final Color barColor;
-  final Color activeBarColor;
-  final Color markerColor;
+  final Color barColor = Colors.blueGrey[200]!;
+  final Color activeBarColor= Colors.blueGrey[800]!;
+  final Color markerColor=Colors.blueGrey[900]!;
 
   final double value;
   final ValueChanged<double>? onChanged;
@@ -103,7 +98,6 @@ class RenderDemofluSlider extends RenderBox {
     if (_value != value) {
       _value = value;
       markNeedsPaint();
-      markNeedsSemanticsUpdate();
     }
   }
 
@@ -192,7 +186,7 @@ class RenderDemofluSlider extends RenderBox {
       ..style = PaintingStyle.fill
       ..color = markerColor;
 
-    double reservedHeight = DemofluSlider.barHeight;
+    double reservedHeight = DemofluSlider.barHeight + DemofluSlider.gap;
     canvas.drawRect(
         Rect.fromLTWH(0, size.height - reservedHeight, size.width, DemofluSlider.barHeight),
         barPaint);
