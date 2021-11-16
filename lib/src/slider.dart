@@ -89,7 +89,7 @@ class RenderDemofluSlider extends RenderBox {
   late HorizontalDragGestureRecognizer _drag;
 
   void _notifyMarkerPositionChange(Offset localPosition) {
-    if(axis==Axis.horizontal) {
+    if (axis == Axis.horizontal) {
       final double clickableArea = size.width / 2;
       if (localPosition.dx <= clickableArea) {
         var dx = localPosition.dx.clamp(0, clickableArea);
@@ -160,25 +160,27 @@ class RenderDemofluSlider extends RenderBox {
 
   @override
   double computeMinIntrinsicWidth(double height) {
-    if(axis==Axis.horizontal) {
+    if (axis == Axis.horizontal) {
       return _minDesiredMainSize;
     }
     return DemofluSlider.crossSize;
   }
 
   @override
-  double computeMaxIntrinsicWidth(double height) => computeMinIntrinsicWidth(height);
+  double computeMaxIntrinsicWidth(double height) =>
+      computeMinIntrinsicWidth(height);
 
   @override
   double computeMinIntrinsicHeight(double width) {
-    if(axis==Axis.horizontal) {
+    if (axis == Axis.horizontal) {
       return DemofluSlider.crossSize;
     }
     return _minDesiredMainSize;
   }
 
   @override
-  double computeMaxIntrinsicHeight(double width) => computeMinIntrinsicHeight(width);
+  double computeMaxIntrinsicHeight(double width) =>
+      computeMinIntrinsicHeight(width);
 
   @override
   bool hitTestSelf(Offset position) => true;
@@ -198,8 +200,12 @@ class RenderDemofluSlider extends RenderBox {
 
   @override
   Size computeDryLayout(BoxConstraints constraints) {
-    final desiredWidth = axis==Axis.horizontal? constraints.maxWidth:DemofluSlider.crossSize;
-    final desiredHeight = axis==Axis.horizontal?DemofluSlider.crossSize:constraints.maxHeight;
+    final desiredWidth = axis == Axis.horizontal
+        ? constraints.maxWidth
+        : DemofluSlider.crossSize;
+    final desiredHeight = axis == Axis.horizontal
+        ? DemofluSlider.crossSize
+        : constraints.maxHeight;
     final desiredSize = Size(desiredWidth, desiredHeight);
     return constraints.constrain(desiredSize);
   }
@@ -220,7 +226,7 @@ class RenderDemofluSlider extends RenderBox {
       ..style = PaintingStyle.fill
       ..color = markerColor;
 
-    if(axis==Axis.horizontal) {
+    if (axis == Axis.horizontal) {
       final double halfWidth = size.width / 2;
 
       double reservedHeight = DemofluSlider.barCrossSize + DemofluSlider.gap;
@@ -230,8 +236,10 @@ class RenderDemofluSlider extends RenderBox {
           barPaint);
       double activeArea = size.width * value;
       canvas.drawRect(
-          Rect.fromLTWH((size.width - activeArea) / 2,
-              size.height - reservedHeight, activeArea,
+          Rect.fromLTWH(
+              (size.width - activeArea) / 2,
+              size.height - reservedHeight,
+              activeArea,
               DemofluSlider.barCrossSize),
           activeBarPaint);
 
@@ -255,27 +263,33 @@ class RenderDemofluSlider extends RenderBox {
 
       double reservedWidth = DemofluSlider.barCrossSize + DemofluSlider.gap;
       canvas.drawRect(
-          Rect.fromLTWH(size.width - reservedWidth, 0, DemofluSlider.barCrossSize, size.height),
+          Rect.fromLTWH(size.width - reservedWidth, 0,
+              DemofluSlider.barCrossSize, size.height),
           barPaint);
 
       double activeArea = size.height * value;
       canvas.drawRect(
-          Rect.fromLTWH(size.width - reservedWidth, (size.height - activeArea) / 2,
-              DemofluSlider.barCrossSize,activeArea),
+          Rect.fromLTWH(
+              size.width - reservedWidth,
+              (size.height - activeArea) / 2,
+              DemofluSlider.barCrossSize,
+              activeArea),
           activeBarPaint);
-
 
       reservedWidth += DemofluSlider.markerCrossSize;
       Path path = Path();
-      path.moveTo(size.width-reservedWidth,  halfHeight - (halfHeight * value));
+      path.moveTo(
+          size.width - reservedWidth, halfHeight - (halfHeight * value));
       path.relativeLineTo(0, DemofluSlider.markerMainSize);
-      path.relativeLineTo(DemofluSlider.markerCrossSize, -DemofluSlider.markerMainSize );
+      path.relativeLineTo(
+          DemofluSlider.markerCrossSize, -DemofluSlider.markerMainSize);
       path.close();
       canvas.drawPath(path, markerPaint);
 
       reservedWidth += DemofluSlider.markerBarCrossSize;
       canvas.drawRect(
-          Rect.fromLTWH(size.width-reservedWidth, 0, DemofluSlider.markerBarCrossSize, size.height / 2),
+          Rect.fromLTWH(size.width - reservedWidth, 0,
+              DemofluSlider.markerBarCrossSize, size.height / 2),
           markerPaint);
     }
 

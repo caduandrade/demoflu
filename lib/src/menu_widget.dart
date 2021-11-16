@@ -1,10 +1,9 @@
 import 'package:demoflu/src/demoflu_app.dart';
 import 'package:demoflu/src/menu_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class AppMenuWidget extends StatelessWidget {
+class MenuWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DemoFluAppState state = DemoFluAppState.of(context)!;
@@ -19,7 +18,10 @@ class AppMenuWidget extends StatelessWidget {
                 child: Column(
                     children: children,
                     crossAxisAlignment: CrossAxisAlignment.stretch))),
-        decoration: BoxDecoration(color: Colors.blueGrey[900],border: Border(right: BorderSide(color: Colors.blueGrey[900]!,width: 2))));
+        decoration: BoxDecoration(
+            color: Colors.blueGrey[900],
+            border: Border(
+                right: BorderSide(color: Colors.blueGrey[900]!, width: 2))));
   }
 }
 

@@ -1,7 +1,7 @@
 import 'package:demoflu/src/console_widget.dart';
 import 'package:demoflu/src/demoflu_logo.dart';
 import 'package:demoflu/src/menu_item.dart';
-import 'package:demoflu/src/app_menu_widget.dart';
+import 'package:demoflu/src/menu_widget.dart';
 import 'package:demoflu/src/example_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -219,7 +219,7 @@ class DemoFluAppState extends State<DemoFluApp> {
     }
 
     List<LayoutId> children = [
-      LayoutId(id: 1, child: AppMenuWidget()),
+      LayoutId(id: 1, child: MenuWidget()),
       LayoutId(id: 2, child: exampleContent)
     ];
 
@@ -258,8 +258,8 @@ class _Layout extends MultiChildLayoutDelegate {
 
     layoutChild(
         2,
-        BoxConstraints.tight(Size(
-            size.width - appMenuSize.width, size.height)));
+        BoxConstraints.tight(
+            Size(size.width - appMenuSize.width, size.height)));
     positionChild(2, Offset(appMenuSize.width, 0));
   }
 

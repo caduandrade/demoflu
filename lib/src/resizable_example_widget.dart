@@ -34,7 +34,6 @@ class ResizableExampleWidget extends StatelessWidget {
                 axis: Axis.vertical,
                 value: state.heightWeight,
                 onChanged: (double value) => state.heightWeight = value)));
-
       }
     }
 

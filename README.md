@@ -8,4 +8,4 @@ Flutter widget demo builder. Web application to display widget usage.
 
 ![](https://caduandrade.github.io/demoflu/screenshot_1_v1.png)
 
-![](https://caduandrade.github.io/demoflu/screenshot_1_v1.png)
+![](https://caduandrade.github.io/demoflu/screenshot_2_v1.png)

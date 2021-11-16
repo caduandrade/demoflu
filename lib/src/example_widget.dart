@@ -25,8 +25,8 @@ class ExampleWidgetState extends State<ExampleWidget> {
     if (state.currentMenuItem != null) {
       children
           .add(LayoutId(id: _Id.exampleArea, child: _buildExampleArea(state)));
-      children.add(LayoutId(
-          id: _Id.horizontalMenu, child: _buildHorizontalMenu(state)));
+      children.add(
+          LayoutId(id: _Id.horizontalMenu, child: _buildHorizontalMenu(state)));
     } else {
       children.add(LayoutId(
           id: _Id.exampleArea, child: Center(child: Text('Loading...'))));
@@ -69,14 +69,18 @@ class ExampleWidgetState extends State<ExampleWidget> {
     return MultiSplitViewTheme(
         child: widget,
         data: MultiSplitViewThemeData(
-            dividerPainter:
-                DividerPainters.grooved2(backgroundColor: Colors.blueGrey[700], color: Colors.blueGrey[300]!, highlightedColor: Colors.blueGrey[50])));
+            dividerPainter: DividerPainters.grooved2(
+                backgroundColor: Colors.blueGrey[700],
+                color: Colors.blueGrey[300]!,
+                highlightedColor: Colors.blueGrey[50])));
   }
 
   /// Builds the widget for example code.
   Widget _buildCodeWidget(BuildContext context, String code) {
     return Container(
-        decoration: BoxDecoration(color: Color(0xfff8f8f8), border: Border.all(color:Colors.blueGrey[700]!)),
+        decoration: BoxDecoration(
+            color: Color(0xfff8f8f8),
+            border: Border.all(color: Colors.blueGrey[700]!)),
         child: Stack(children: [
           SingleChildScrollView(
               controller: ScrollController(),
@@ -210,10 +214,7 @@ class ExampleWidgetState extends State<ExampleWidget> {
   }
 }
 
-enum _Id {
-  exampleArea,
-  horizontalMenu
-}
+enum _Id { exampleArea, horizontalMenu }
 
 class _Layout extends MultiChildLayoutDelegate {
   @override
@@ -228,7 +229,7 @@ class _Layout extends MultiChildLayoutDelegate {
               minHeight: 0,
               maxHeight: size.height));
       positionChild(_Id.horizontalMenu, Offset(0, 0));
-      exampleY=horizontalMenuSize.height;
+      exampleY = horizontalMenuSize.height;
     }
     if (hasChild(_Id.exampleArea)) {
       layoutChild(

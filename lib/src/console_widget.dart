@@ -2,8 +2,7 @@ import 'package:demoflu/src/demoflu_app.dart';
 import 'package:flutter/cupertino.dart';
 
 class ConsoleNotifier extends ValueNotifier<String> {
-
-  int _count =0;
+  int _count = 0;
 
   ConsoleNotifier() : super('');
 
