@@ -7,53 +7,36 @@ import 'package:flutter/material.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 
 class ResizableExampleWidget extends StatelessWidget {
-
   const ResizableExampleWidget({required this.menuItem});
 
   final MenuItem menuItem;
-
 
   @override
   Widget build(BuildContext context) {
     DemoFluAppState state = DemoFluAppState.of(context)!;
 
     List<LayoutId> children = [];
-      if (state.widgetVisible) {
-        MenuItem menuItem = state.currentMenuItem!;
-        children.add(
-            LayoutId(id: _Id.exampleWidget, child: _buildExampleWidget(state)));
-        if (state.isResizable(menuItem)) {
-          children.add(LayoutId(
-              id: _Id.widthSlider,
-
-              child:DemofluSlider(
-                  value: state.widthWeight,
-                  onChanged: (double value) => state.widthWeight = value)
-              /*
-              child: Padding(
-                  child: DemofluSlider(
-                      barColor: Colors.blueGrey[200]!,
-                      activeBarColor: Colors.blueGrey[800]!,
-                      markerColor: Colors.blueGrey[900]!,
-                      value: state.widthWeight,
-                      onChanged: (double value) => state.widthWeight = value),
-                  padding: EdgeInsets.only(bottom: 8, top: 8))
-*/
-          ));
-
-/*
+    if (state.widgetVisible) {
+      MenuItem menuItem = state.currentMenuItem!;
+      children.add(
+          LayoutId(id: _Id.exampleWidget, child: _buildExampleWidget(state)));
+      if (state.isResizable(menuItem)) {
         children.add(LayoutId(
-            id: _Id.height,
-            child: Slider(
-              value: state.heightWeight,
-              min: 0,
-              max: 1,
-              label: state.heightWeight.round().toString(),
-              onChanged: (double value) => state.heightWeight = value,
-            )));
-*/
-        }
+            id: _Id.widthSlider,
+            child: DemofluSlider(
+                axis: Axis.horizontal,
+                value: state.widthWeight,
+                onChanged: (double value) => state.widthWeight = value)));
+        /*
+        children.add(LayoutId(
+            id: _Id.heightSlider,
+            child: DemofluSlider(
+                axis: Axis.vertical,
+                value: state.heightWeight,
+                onChanged: (double value) => state.heightWeight = value)));
+        */
       }
+    }
 
     return Container(
         child: CustomMultiChildLayout(delegate: _Layout(), children: children),
@@ -98,31 +81,30 @@ enum _Id {
 class _Layout extends MultiChildLayoutDelegate {
   @override
   void performLayout(Size size) {
-    double reservedWidth =0;
-    if(hasChild(_Id.heightSlider)){
-      reservedWidth=DemofluSlider.height;
+    double reservedWidth = 0;
+    if (hasChild(_Id.heightSlider)) {
+      reservedWidth = DemofluSlider.height;
     }
-    double reservedHeight =0;
-    if(hasChild(_Id.widthSlider)){
-      reservedHeight=DemofluSlider.height;
+    double reservedHeight = 0;
+    if (hasChild(_Id.widthSlider)) {
+      reservedHeight = DemofluSlider.height;
     }
 
     if (hasChild(_Id.widthSlider)) {
       double width = size.width - reservedWidth;
-      Size s = layoutChild(
+      layoutChild(
           _Id.widthSlider,
           BoxConstraints(
               minWidth: width,
               maxWidth: width,
               minHeight: DemofluSlider.height,
               maxHeight: DemofluSlider.height));
-      positionChild(
-          _Id.widthSlider, Offset(reservedWidth, 0));
+      positionChild(_Id.widthSlider, Offset(reservedWidth, 0));
     }
 
     if (hasChild(_Id.heightSlider)) {
-      double height =  size.height - reservedHeight;
-       layoutChild(
+      double height = size.height - reservedHeight;
+      layoutChild(
           _Id.heightSlider,
           BoxConstraints(
               minWidth: DemofluSlider.height,
@@ -131,7 +113,6 @@ class _Layout extends MultiChildLayoutDelegate {
               maxHeight: height));
       positionChild(_Id.heightSlider, Offset(0, reservedHeight));
     }
-
 
     if (hasChild(_Id.exampleWidget)) {
       layoutChild(

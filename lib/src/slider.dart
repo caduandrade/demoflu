@@ -5,23 +5,25 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
 class DemofluSlider extends LeafRenderObjectWidget {
-  DemofluSlider(
-      {   this.value = 0.5,
-      this.onChanged});
+  DemofluSlider({this.value = 0.5, required this.axis, this.onChanged});
 
-  static const double markerHeight =10;
-  static const  double markerWidth=10;
-  static const  double barHeight =5;
-  static const  double markerBarHeight=2;
+  static const double markerHeight = 10;
+  static const double markerWidth = 10;
+  static const double barHeight = 5;
+  static const double markerBarHeight = 2;
   static const double gap = 6;
 
-  static double get height{
-    return DemofluSlider.markerHeight+DemofluSlider.barHeight+DemofluSlider.markerBarHeight + 2*gap;
-}
+  static double get height {
+    return DemofluSlider.markerHeight +
+        DemofluSlider.barHeight +
+        DemofluSlider.markerBarHeight +
+        2 * gap;
+  }
 
+  final Axis axis;
   final Color barColor = Colors.blueGrey[200]!;
-  final Color activeBarColor= Colors.blueGrey[800]!;
-  final Color markerColor=Colors.blueGrey[900]!;
+  final Color activeBarColor = Colors.blueGrey[800]!;
+  final Color markerColor = Colors.blueGrey[900]!;
 
   final double value;
   final ValueChanged<double>? onChanged;
@@ -30,6 +32,7 @@ class DemofluSlider extends LeafRenderObjectWidget {
   RenderDemofluSlider createRenderObject(BuildContext context) {
     return RenderDemofluSlider(
         value: value,
+        axis: axis,
         barColor: barColor,
         activeBarColor: activeBarColor,
         markerColor: markerColor,
@@ -50,9 +53,11 @@ class DemofluSlider extends LeafRenderObjectWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<Axis>('axis', axis));
     properties.add(ColorProperty('barColor', barColor));
+    properties.add(ColorProperty('activeBarColor', activeBarColor));
     properties.add(ColorProperty('markerColor', markerColor));
-    properties.add(DoubleProperty('markerLength', markerHeight));
+    properties.add(DoubleProperty('markerHeight', markerHeight));
     properties.add(DoubleProperty('value', value));
   }
 }
@@ -63,8 +68,10 @@ class RenderDemofluSlider extends RenderBox {
       required Color barColor,
       required Color activeBarColor,
       required Color markerColor,
+      required Axis axis,
       required this.onChanged})
       : _value = value,
+        _axis = axis,
         _barColor = barColor,
         _activeBarColor = activeBarColor,
         _markerColor = markerColor {
@@ -89,6 +96,15 @@ class RenderDemofluSlider extends RenderBox {
       if (onChanged != null) {
         onChanged!(value);
       }
+    }
+  }
+
+  Axis _axis;
+  Axis get axis => _axis;
+  set axis(Axis axis) {
+    if (_axis != axis) {
+      _axis = axis;
+      markNeedsLayout();
     }
   }
 
@@ -118,8 +134,6 @@ class RenderDemofluSlider extends RenderBox {
       markNeedsPaint();
     }
   }
-
-
 
   Color _markerColor;
   Color get markerColor => _markerColor;
@@ -188,7 +202,8 @@ class RenderDemofluSlider extends RenderBox {
 
     double reservedHeight = DemofluSlider.barHeight + DemofluSlider.gap;
     canvas.drawRect(
-        Rect.fromLTWH(0, size.height - reservedHeight, size.width, DemofluSlider.barHeight),
+        Rect.fromLTWH(0, size.height - reservedHeight, size.width,
+            DemofluSlider.barHeight),
         barPaint);
     double activeArea = size.width * value;
     canvas.drawRect(
@@ -206,8 +221,8 @@ class RenderDemofluSlider extends RenderBox {
 
     reservedHeight += DemofluSlider.markerBarHeight;
     canvas.drawRect(
-        Rect.fromLTWH(
-            0, size.height - reservedHeight, size.width / 2, DemofluSlider.markerBarHeight),
+        Rect.fromLTWH(0, size.height - reservedHeight, size.width / 2,
+            DemofluSlider.markerBarHeight),
         markerPaint);
 
     canvas.restore();
