@@ -2,11 +2,14 @@ import 'package:demoflu/src/demoflu_app.dart';
 import 'package:flutter/cupertino.dart';
 
 class ConsoleNotifier extends ValueNotifier<String> {
+
+  int _count =0;
+
   ConsoleNotifier() : super('');
 
   update(String text) {
-    String time = DateTime.now().toIso8601String();
-    value = '[$time]  $text';
+    _count++;
+    value = '[$_count]  $text';
   }
 }
 

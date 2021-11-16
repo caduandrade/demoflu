@@ -175,6 +175,8 @@ class ExampleWidgetState extends State<ExampleWidget> {
   Widget _buildHorizontalMenu(DemoFluAppState state) {
     MenuItem menuItem = state.currentMenuItem!;
     List<Widget> children = [];
+    children.add(SizedBox(width: 16));
+    children.add(Text('background'));
     children.add(_buildColorIndicator(state));
     if (menuItem.codeFile != null) {
       children.add(SizedBox(width: 16));

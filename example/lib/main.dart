@@ -15,13 +15,13 @@ void main() {
               name: 'Example 1',
               example: Example1(),
               codeFile: 'lib/example1.dart',
+              resizable: true,
               indentation: 2),
           MenuItem(
               name: 'Example 2',
               example: Example2(),
               codeFile: 'lib/example2.dart',
               consoleEnabled: true,
-              resizable: true,
               indentation: 2),
           MenuItem(name: 'Example 3', example: Example3(), indentation: 2)
         ];

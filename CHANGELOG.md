@@ -1,5 +1,6 @@
 ## 0.9.0
 
+* New layout and resizing widget
 * *multi_split_view* dependency updated to 1.10.0
 * *url_launcher* dependency updated to 6.0.13
 

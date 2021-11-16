@@ -6,4 +6,6 @@ __*This package is still under developing*__
 
 Flutter widget demo builder. Web application to display widget usage.
 
-![](https://raw.githubusercontent.com/caduandrade/images/main/demoflu/demoflu_v5.png)
+![](https://caduandrade.github.io/demoflu/screenshot_1_v1.png)
+
+![](https://caduandrade.github.io/demoflu/screenshot_1_v1.png)
