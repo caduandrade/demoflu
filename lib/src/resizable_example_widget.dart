@@ -27,14 +27,14 @@ class ResizableExampleWidget extends StatelessWidget {
                 axis: Axis.horizontal,
                 value: state.widthWeight,
                 onChanged: (double value) => state.widthWeight = value)));
-        /*
+
         children.add(LayoutId(
             id: _Id.heightSlider,
             child: DemofluSlider(
                 axis: Axis.vertical,
                 value: state.heightWeight,
                 onChanged: (double value) => state.heightWeight = value)));
-        */
+
       }
     }
 
@@ -83,11 +83,11 @@ class _Layout extends MultiChildLayoutDelegate {
   void performLayout(Size size) {
     double reservedWidth = 0;
     if (hasChild(_Id.heightSlider)) {
-      reservedWidth = DemofluSlider.height;
+      reservedWidth = DemofluSlider.crossSize;
     }
     double reservedHeight = 0;
     if (hasChild(_Id.widthSlider)) {
-      reservedHeight = DemofluSlider.height;
+      reservedHeight = DemofluSlider.crossSize;
     }
 
     if (hasChild(_Id.widthSlider)) {
@@ -97,8 +97,8 @@ class _Layout extends MultiChildLayoutDelegate {
           BoxConstraints(
               minWidth: width,
               maxWidth: width,
-              minHeight: DemofluSlider.height,
-              maxHeight: DemofluSlider.height));
+              minHeight: DemofluSlider.crossSize,
+              maxHeight: DemofluSlider.crossSize));
       positionChild(_Id.widthSlider, Offset(reservedWidth, 0));
     }
 
@@ -107,8 +107,8 @@ class _Layout extends MultiChildLayoutDelegate {
       layoutChild(
           _Id.heightSlider,
           BoxConstraints(
-              minWidth: DemofluSlider.height,
-              maxWidth: DemofluSlider.height,
+              minWidth: DemofluSlider.crossSize,
+              maxWidth: DemofluSlider.crossSize,
               minHeight: height,
               maxHeight: height));
       positionChild(_Id.heightSlider, Offset(0, reservedHeight));
@@ -128,6 +128,6 @@ class _Layout extends MultiChildLayoutDelegate {
 
   @override
   bool shouldRelayout(covariant MultiChildLayoutDelegate oldDelegate) {
-    return true;
+    return false;
   }
 }

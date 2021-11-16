@@ -73,11 +73,10 @@ class ExampleWidgetState extends State<ExampleWidget> {
                 DividerPainters.background(color: Colors.blueGrey[700])));
   }
 
-
   /// Builds the widget for example code.
   Widget _buildCodeWidget(BuildContext context, String code) {
     return Container(
-        color: Color(0xfff8f8f8),
+        decoration: BoxDecoration(color: Color(0xfff8f8f8), border: Border.all(color:Colors.blueGrey[700]!)),
         child: Stack(children: [
           SingleChildScrollView(
               controller: ScrollController(),
