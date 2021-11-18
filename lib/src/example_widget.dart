@@ -1,6 +1,5 @@
 import 'package:demoflu/src/console_widget.dart';
-import 'package:demoflu/src/demoflu_app.dart';
-import 'package:demoflu/src/menu_item.dart';
+import 'package:demoflu/src/demoflu_settings.dart';
 import 'package:demoflu/src/resizable_example_widget.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +9,14 @@ import 'package:flutter_highlight/themes/github.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 
 class ExampleWidget extends StatefulWidget {
+
+  const ExampleWidget({required this.settings});
+
+  final DemoFluSettings settings;
+
   @override
-  State<StatefulWidget> createState() => ExampleWidgetState();
+  State<StatefulWidget> createState() =>ExampleWidgetState();
+
 }
 
 class ExampleWidgetState extends State<ExampleWidget> {
@@ -19,56 +24,44 @@ class ExampleWidgetState extends State<ExampleWidget> {
 
   @override
   Widget build(BuildContext context) {
-    DemoFluAppState state = DemoFluAppState.of(context)!;
-
-    List<LayoutId> children = [];
-    if (state.currentMenuItem != null) {
-      children
-          .add(LayoutId(id: _Id.exampleArea, child: _buildExampleArea(state)));
-      children.add(
-          LayoutId(id: _Id.horizontalMenu, child: _buildHorizontalMenu(state)));
-    } else {
-      children.add(LayoutId(
-          id: _Id.exampleArea, child: Center(child: Text('Loading...'))));
-    }
+    List<LayoutId> children = [LayoutId(id: _Id.exampleArea, child: _buildExampleArea()),
+      LayoutId(id: _Id.horizontalMenu, child: _buildHorizontalMenu())];
 
     return Container(
         child: CustomMultiChildLayout(delegate: _Layout(), children: children),
         color: Colors.blueGrey[100]);
   }
 
-  Widget _buildExampleArea(DemoFluAppState state) {
-    MenuItem menuItem = state.currentMenuItem!;
+  Widget _buildExampleArea() {
+    Widget exampleArea = Container();
 
-    Widget widget = Container();
-
-    if (state.widgetVisible && state.consoleVisible) {
-      widget = MultiSplitView(
+    if (widget.settings.widgetVisible && widget.settings.consoleVisible) {
+      exampleArea = MultiSplitView(
           axis: Axis.vertical,
           children: [
-            ResizableExampleWidget(menuItem: menuItem),
-            ConsoleWidget()
+            ResizableExampleWidget(settings: widget.settings),
+            ConsoleWidget(settings: widget.settings)
           ],
-          controller: state.verticalDividerController);
-    } else if (state.widgetVisible) {
-      widget = ResizableExampleWidget(menuItem: menuItem);
-    } else if (state.consoleVisible) {
-      widget = ConsoleWidget();
+          controller: widget.settings.verticalDividerController);
+    } else if (widget.settings.widgetVisible) {
+      exampleArea = ResizableExampleWidget(settings:widget.settings);
+    } else if (widget.settings.consoleVisible) {
+      exampleArea = ConsoleWidget(settings: widget.settings);
     }
 
-    if (menuItem.codeFile != null && state.codeVisible) {
-      if (state.widgetVisible || state.consoleVisible) {
-        widget = MultiSplitView(
-            children: [_buildCodeWidget(context, state.code!), widget],
-            controller: state.horizontalDividerController);
+    if (widget.settings.code != null && widget.settings.codeVisible) {
+      if (widget.settings.widgetVisible || widget.settings.consoleVisible) {
+        exampleArea = MultiSplitView(
+            children: [_buildCodeWidget(context), exampleArea],
+            controller: widget.settings.horizontalDividerController);
       } else {
-        widget = _buildCodeWidget(context, state.code!);
+        exampleArea = _buildCodeWidget(context);
       }
     }
 
     return MultiSplitViewTheme(
-        child: widget,
-        data: MultiSplitViewThemeData(
+        child: exampleArea,
+        data: MultiSplitViewThemeData(dividerThickness: 11,
             dividerPainter: DividerPainters.grooved2(
                 backgroundColor: Colors.blueGrey[700],
                 color: Colors.blueGrey[300]!,
@@ -76,7 +69,7 @@ class ExampleWidgetState extends State<ExampleWidget> {
   }
 
   /// Builds the widget for example code.
-  Widget _buildCodeWidget(BuildContext context, String code) {
+  Widget _buildCodeWidget(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
             color: Color(0xfff8f8f8),
@@ -85,7 +78,7 @@ class ExampleWidgetState extends State<ExampleWidget> {
           SingleChildScrollView(
               controller: ScrollController(),
               child: HighlightView(
-                code,
+                widget.settings.code!,
                 language: 'dart',
                 theme: githubTheme,
                 padding: EdgeInsets.fromLTRB(16, 24, 16, 16),
@@ -96,7 +89,7 @@ class ExampleWidgetState extends State<ExampleWidget> {
                 icon: const Icon(Icons.content_copy),
                 tooltip: 'Copy to clipboard',
                 onPressed: () {
-                  _copyToClipboard(context, code);
+                  _copyToClipboard(context, widget.settings.code!);
                 },
               ),
               right: 0,
@@ -110,7 +103,7 @@ class ExampleWidgetState extends State<ExampleWidget> {
         content: Text('Copied to clipboard'), duration: Duration(seconds: 2)));
   }
 
-  Widget _buildColorIndicator(DemoFluAppState state) {
+  Widget _buildColorIndicator() {
     return Padding(
         child: ColorIndicator(
           width: 28,
@@ -118,12 +111,12 @@ class ExampleWidgetState extends State<ExampleWidget> {
           borderRadius: 4,
           hasBorder: true,
           borderColor: Colors.grey[700],
-          color: state.widgetBackground,
+          color: widget.settings.widgetBackground,
           onSelectFocus: false,
           onSelect: () async {
-            dialogColor = state.widgetBackground;
+            dialogColor = widget.settings.widgetBackground;
             if (await _colorPickerDialog(context)) {
-              state.widgetBackground = dialogColor;
+              widget.settings.widgetBackground = dialogColor;
             }
           },
         ),
@@ -176,35 +169,34 @@ class ExampleWidgetState extends State<ExampleWidget> {
     );
   }
 
-  Widget _buildHorizontalMenu(DemoFluAppState state) {
-    MenuItem menuItem = state.currentMenuItem!;
+  Widget _buildHorizontalMenu() {
     List<Widget> children = [];
     children.add(SizedBox(width: 16));
     children.add(Text('background'));
-    children.add(_buildColorIndicator(state));
-    if (menuItem.codeFile != null) {
+    children.add(_buildColorIndicator());
+    if (widget.settings.code != null) {
       children.add(SizedBox(width: 16));
 
       children.add(Text('code'));
       children.add(Checkbox(
-          value: state.codeVisible,
-          onChanged: (value) => state.codeVisible = value!));
+          value: widget.settings.codeVisible,
+          onChanged: (value) => widget.settings.codeVisible = value!));
 
       children.add(SizedBox(width: 16));
 
       children.add(Text('widget'));
       children.add(Checkbox(
-          value: state.widgetVisible,
-          onChanged: (value) => state.widgetVisible = value!));
+          value: widget.settings.widgetVisible,
+          onChanged: (value) => widget.settings.widgetVisible = value!));
     }
 
-    if (state.isConsoleEnabled(menuItem)) {
+    if (widget.settings.consoleEnabled) {
       children.add(SizedBox(width: 16));
 
       children.add(Text('console'));
       children.add(Checkbox(
-          value: state.consoleVisible,
-          onChanged: (value) => state.consoleVisible = value!));
+          value: widget.settings.consoleVisible,
+          onChanged: (value) => widget.settings.consoleVisible = value!));
     }
 
     return CheckboxTheme(

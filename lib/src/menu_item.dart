@@ -1,3 +1,4 @@
+import 'package:demoflu/src/example_widget_builder.dart';
 import 'package:flutter/material.dart';
 
 /// Represents a menu item in the app menu.
@@ -5,7 +6,7 @@ class MenuItem {
   /// Buils a [MenuItem].
   MenuItem(
       {required this.name,
-      this.example,
+      this.builder,
       this.resizable,
       this.codeFile,
       this.maxSize,
@@ -14,7 +15,7 @@ class MenuItem {
       this.indentation = 1});
 
   final String name;
-  final Widget? example;
+  final ExampleWidgetBuilder? builder;
   final String? codeFile;
   final bool? resizable;
   final Size? maxSize;

@@ -1,15 +1,20 @@
-import 'package:demoflu/src/demoflu_app.dart';
+import 'package:demoflu/src/demoflu_settings.dart';
 import 'package:demoflu/src/menu_item.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class MenuWidget extends StatelessWidget {
+
+  MenuWidget({required this.settings, required this.menuItems});
+
+  final DemoFluSettings settings;
+  final List<MenuItem> menuItems;
+
   @override
   Widget build(BuildContext context) {
-    DemoFluAppState state = DemoFluAppState.of(context)!;
     List<Widget> children = [];
-    for (MenuItem menuItem in state.menuItems) {
-      children.add(_MenuItem(state.currentMenuItem == menuItem, menuItem));
+    for (MenuItem menuItem in menuItems) {
+      children.add(_MenuItemWidget(settings:settings, selected:settings.currentMenuItem == menuItem, menuItem:menuItem));
     }
     return Container(
         child: SingleChildScrollView(
@@ -25,17 +30,18 @@ class MenuWidget extends StatelessWidget {
   }
 }
 
-class _MenuItem extends StatefulWidget {
-  const _MenuItem(this.selected, this.menuItem);
+class _MenuItemWidget extends StatefulWidget {
+  const _MenuItemWidget({required this.settings, required this.selected, required this.menuItem});
 
+  final DemoFluSettings settings;
   final bool selected;
   final MenuItem menuItem;
 
   @override
-  State<StatefulWidget> createState() => _MenuItemState();
+  State<StatefulWidget> createState() => _MenuItemWidgetState();
 }
 
-class _MenuItemState extends State<_MenuItem> {
+class _MenuItemWidgetState extends State<_MenuItemWidget> {
   bool hover = false;
 
   @override
@@ -49,7 +55,7 @@ class _MenuItemState extends State<_MenuItem> {
             style: TextStyle(color: _textColor(), fontStyle: _fontStyle())),
         padding: EdgeInsets.fromLTRB(left, 8, 8, 8));
 
-    if (widget.menuItem.example == null) {
+    if (widget.menuItem.builder == null) {
       return text;
     }
 
@@ -96,7 +102,6 @@ class _MenuItemState extends State<_MenuItem> {
   }
 
   _onTap() {
-    DemoFluAppState state = DemoFluAppState.of(context)!;
-    state.updateCurrentExample(widget.menuItem);
+    widget.settings.updateCurrentExample(widget.menuItem);
   }
 }

@@ -1,11 +1,9 @@
-import 'package:demoflu/src/console_widget.dart';
 import 'package:demoflu/src/demoflu_logo.dart';
+import 'package:demoflu/src/demoflu_settings.dart';
 import 'package:demoflu/src/menu_item.dart';
 import 'package:demoflu/src/menu_widget.dart';
 import 'package:demoflu/src/example_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:multi_split_view/multi_split_view.dart';
 
 typedef AppMenuBuilder = List<MenuItem> Function();
 
@@ -15,7 +13,7 @@ class DemoFluApp extends StatefulWidget {
   ///
   /// The [widgetBackground] defines the default widget background for all
   /// examples.
-  const DemoFluApp(
+  DemoFluApp(
       {required this.title,
       required this.appMenuBuilder,
       this.resizable = false,
@@ -23,7 +21,18 @@ class DemoFluApp extends StatefulWidget {
       this.maxSize,
       this.consoleEnabled = false,
       this.initialWidthWeight,
-      this.initialHeightWeight});
+      this.initialHeightWeight}) {
+    if (initialHeightWeight != null &&
+        (initialHeightWeight! < 0 || initialHeightWeight! > 1)) {
+      throw ArgumentError(
+          'initialHeightWeight must be a value between 0 and 1: $initialHeightWeight');
+    }
+    if (initialWidthWeight != null &&
+        (initialWidthWeight! < 0 || initialWidthWeight! > 1)) {
+      throw ArgumentError(
+          'initialWidthWeight must be a value between 0 and 1: $initialWidthWeight');
+    }
+  }
 
   final String title;
   final AppMenuBuilder appMenuBuilder;
@@ -35,159 +44,54 @@ class DemoFluApp extends StatefulWidget {
   final double? initialHeightWeight;
 
   @override
-  State<StatefulWidget> createState() => DemoFluAppState();
+  State<StatefulWidget> createState() => DemoFluAppState(
+      settings: DemoFluSettings(
+          widgetBackground: widgetBackground,
+          widthWeight: initialWidthWeight,
+          heightWeight: initialHeightWeight,
+          defaultConsoleEnabled: consoleEnabled,
+          defaultResizable: resizable,
+          defaultMaxSize: maxSize),
+  menuItems: appMenuBuilder());
 }
 
 /// Utilities.
 class DemoFlu {
   /// Prints on demo console.
   static void printOnConsole(BuildContext context, String text) {
-    DemoFluAppState? state = DemoFluAppState.of(context);
-    state?.consoleNotifier.update(text);
+    DemoFluAppState? state = context.findAncestorStateOfType<DemoFluAppState>();
+    state?.settings.consoleNotifier.update(text);
   }
 }
 
 /// The [DemoFluApp] state.
 class DemoFluAppState extends State<DemoFluApp> {
-  final MultiSplitViewController verticalDividerController =
-      MultiSplitViewController(weights: [.9, .1]);
-  final MultiSplitViewController horizontalDividerController =
-      MultiSplitViewController(weights: [.5, .5]);
+  DemoFluAppState({required this.settings, required this.menuItems });
 
-  late List<MenuItem> menuItems;
-  late Color _widgetBackground;
-
-  Color get widgetBackground => _widgetBackground;
-
-  set widgetBackground(Color color) {
-    setState(() {
-      _widgetBackground = color;
-    });
-  }
-
-  Size? getMaxSize(MenuItem example) {
-    return example.maxSize ?? widget.maxSize;
-  }
-
-  /// Indicates whether console view is enabled.
-  bool isConsoleEnabled(MenuItem example) {
-    return example.consoleEnabled ?? widget.consoleEnabled;
-  }
-
-  /// Indicates whether example is resizable.
-  bool isResizable(MenuItem example) {
-    return example.resizable ?? widget.resizable;
-  }
-
-  ConsoleNotifier _consoleNotifier = ConsoleNotifier();
-
-  ConsoleNotifier get consoleNotifier => _consoleNotifier;
-
-  MenuItem? _currentMenuItem;
-
-  /// Gets the current selected example.
-  MenuItem? get currentMenuItem => _currentMenuItem;
-
-  String? _code;
-
-  String? get code => _code;
-
-  bool _codeVisible = false;
-
-  /// Indicates whether code view is visible.
-  bool get codeVisible => _codeVisible;
-
-  set codeVisible(bool visible) {
-    setState(() {
-      _codeVisible = visible;
-    });
-  }
-
-  bool _widgetVisible = true;
-
-  /// Indicates whether widget view is visible.
-  bool get widgetVisible => _widgetVisible;
-
-  set widgetVisible(bool visible) {
-    setState(() {
-      _widgetVisible = visible;
-      if (!visible) {
-        _consoleVisible = false;
-      }
-    });
-  }
-
-  bool _consoleVisible = false;
-
-  /// Indicates whether console view is visible.
-  bool get consoleVisible => _consoleVisible;
-
-  set consoleVisible(bool visible) {
-    setState(() {
-      _consoleVisible = visible;
-    });
-  }
-
-  double _widthWeight = 1;
-  double get widthWeight => _widthWeight;
-  set widthWeight(double value) {
-    setState(() {
-      _widthWeight = value;
-    });
-  }
-
-  double _heightWeight = 1;
-  double get heightWeight => _heightWeight;
-  set heightWeight(double value) {
-    setState(() {
-      _heightWeight = value;
-    });
-  }
+  final DemoFluSettings settings;
+  final List<MenuItem> menuItems;
 
   @override
   void initState() {
     super.initState();
-    _widgetBackground = widget.widgetBackground;
+    settings.addListener(_rebuild);
 
-    if (widget.initialHeightWeight != null) {
-      _heightWeight = widget.initialHeightWeight!;
-      if (_heightWeight < 0 || _heightWeight > 1) {
-        throw ArgumentError(
-            'initialHeightWeight must be a value between 0 and 1');
-      }
-    }
-    if (widget.initialWidthWeight != null) {
-      _widthWeight = widget.initialWidthWeight!;
-      if (_widthWeight < 0 || _widthWeight > 1) {
-        throw ArgumentError(
-            'initialWidthWeight must be a value between 0 and 1');
-      }
-    }
-    menuItems = widget.appMenuBuilder();
     int menuItemIndex =
-        menuItems.indexWhere((menuItem) => menuItem.example != null);
+        menuItems.indexWhere((menuItem) => menuItem.builder != null);
     if (menuItemIndex > -1) {
-      updateCurrentExample(menuItems[menuItemIndex]);
+      settings.updateCurrentExample(menuItems[menuItemIndex]);
     }
   }
 
-  /// Updates the current example.
-  void updateCurrentExample(MenuItem menuItem) async {
+  @override
+  void dispose() {
+    settings.removeListener(_rebuild);
+    super.dispose();
+  }
+
+  void _rebuild() {
     setState(() {
-      _currentMenuItem = null;
-      _code = null;
-    });
-    String? newCode;
-    if (menuItem.codeFile != null) {
-      newCode = await rootBundle.loadString(menuItem.codeFile!);
-    }
-    setState(() {
-      if (!isConsoleEnabled(menuItem)) {
-        _consoleVisible = false;
-      }
-      _code = newCode;
-      _consoleNotifier = ConsoleNotifier();
-      _currentMenuItem = menuItem;
+      //rebuilds
     });
   }
 
@@ -204,44 +108,25 @@ class DemoFluAppState extends State<DemoFluApp> {
                 title: Text(widget.title),
                 backgroundColor: Colors.blueGrey[900],
                 actions: [DemoFluLogo()]),
-            body:
-                _DemoFluAppInheritedWidget(state: this, child: _buildBody())));
+            body: _buildBody()));
   }
 
   Widget _buildBody() {
-    //DemoFluAppState state = DemoFluAppState.of(context)!;
-
     Widget? exampleContent;
-    if (_currentMenuItem != null) {
-      exampleContent = ExampleWidget();
+    if (settings.widget != null) {
+      exampleContent = ExampleWidget(settings: settings);
     } else {
       exampleContent = Center(child: Text('Loading...'));
     }
 
     List<LayoutId> children = [
-      LayoutId(id: 1, child: MenuWidget()),
+      LayoutId(
+          id: 1, child: MenuWidget(settings: settings, menuItems: menuItems)),
       LayoutId(id: 2, child: exampleContent)
     ];
 
     return CustomMultiChildLayout(delegate: _Layout(), children: children);
   }
-
-  static DemoFluAppState? of(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<_DemoFluAppInheritedWidget>()
-        ?.state;
-  }
-}
-
-class _DemoFluAppInheritedWidget extends InheritedWidget {
-  _DemoFluAppInheritedWidget({required this.state, required Widget child})
-      : super(child: child);
-
-  final DemoFluAppState state;
-
-  @override
-  bool updateShouldNotify(covariant _DemoFluAppInheritedWidget oldWidget) =>
-      true;
 }
 
 class _Layout extends MultiChildLayoutDelegate {

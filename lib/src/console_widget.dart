@@ -1,5 +1,6 @@
 import 'package:demoflu/src/demoflu_app.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:demoflu/src/demoflu_settings.dart';
+import 'package:flutter/widgets.dart';
 
 class ConsoleNotifier extends ValueNotifier<String> {
   int _count = 0;
@@ -13,11 +14,15 @@ class ConsoleNotifier extends ValueNotifier<String> {
 }
 
 class ConsoleWidget extends StatelessWidget {
+
+  ConsoleWidget({required this.settings});
+
+  final DemoFluSettings settings;
+
   @override
   Widget build(BuildContext context) {
-    DemoFluAppState state = DemoFluAppState.of(context)!;
     return ValueListenableBuilder<String>(
-        valueListenable: state.consoleNotifier,
+        valueListenable: settings.consoleNotifier,
         builder: (BuildContext context, String value, Widget? child) {
           return SingleChildScrollView(
               controller: ScrollController(),

@@ -13,17 +13,18 @@ void main() {
           MenuItem(name: 'Section', italic: true),
           MenuItem(
               name: 'Example 1',
-              example: Example1(),
+              builder: (settings)=>Example1(),
               codeFile: 'lib/example1.dart',
               resizable: true,
               indentation: 2),
           MenuItem(
               name: 'Example 2',
-              example: Example2(),
+              builder: (settings)=>Example2(),
               codeFile: 'lib/example2.dart',
               consoleEnabled: true,
               indentation: 2),
-          MenuItem(name: 'Example 3', example: Example3(), indentation: 2)
+          MenuItem(name: 'Example 3',
+              builder: (settings)=>Example3(), indentation: 2)
         ];
       }));
 }
