@@ -4,7 +4,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class MenuWidget extends StatelessWidget {
-
   MenuWidget({required this.settings, required this.menuItems});
 
   final DemoFluSettings settings;
@@ -14,7 +13,10 @@ class MenuWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> children = [];
     for (MenuItem menuItem in menuItems) {
-      children.add(_MenuItemWidget(settings:settings, selected:settings.currentMenuItem == menuItem, menuItem:menuItem));
+      children.add(_MenuItemWidget(
+          settings: settings,
+          selected: settings.currentMenuItem == menuItem,
+          menuItem: menuItem));
     }
     return Container(
         child: SingleChildScrollView(
@@ -31,7 +33,8 @@ class MenuWidget extends StatelessWidget {
 }
 
 class _MenuItemWidget extends StatefulWidget {
-  const _MenuItemWidget({required this.settings, required this.selected, required this.menuItem});
+  const _MenuItemWidget(
+      {required this.settings, required this.selected, required this.menuItem});
 
   final DemoFluSettings settings;
   final bool selected;

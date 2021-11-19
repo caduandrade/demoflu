@@ -8,14 +8,14 @@ import 'package:multi_split_view/multi_split_view.dart';
 class ResizableExampleWidget extends StatelessWidget {
   const ResizableExampleWidget({required this.settings});
 
-final DemoFluSettings settings;
+  final DemoFluSettings settings;
 
   @override
   Widget build(BuildContext context) {
     List<LayoutId> children = [];
     if (settings.widgetVisible) {
-      children.add(
-          LayoutId(id: _Id.exampleWidget, child: _buildExampleWidget()));
+      children
+          .add(LayoutId(id: _Id.exampleWidget, child: _buildExampleWidget()));
       if (settings.resizable) {
         children.add(LayoutId(
             id: _Id.widthSlider,
@@ -54,7 +54,8 @@ final DemoFluSettings settings;
       }
       ConstrainedBox constrainedBox = ConstrainedBox(
           child: MultiSplitViewTheme(
-              child: settings.widget!, data: MultiSplitViewThemeData()),
+              child: settings.example!.buildMainWidget(context),
+              data: MultiSplitViewThemeData()),
           constraints:
               BoxConstraints.tightFor(width: maxWidth, height: maxHeight));
 
@@ -84,7 +85,7 @@ class _Layout extends MultiChildLayoutDelegate {
     }
 
     if (hasChild(_Id.widthSlider)) {
-      double width = size.width - reservedWidth;
+      double width = math.max(size.width - reservedWidth, 0);
       layoutChild(
           _Id.widthSlider,
           BoxConstraints(
@@ -108,13 +109,15 @@ class _Layout extends MultiChildLayoutDelegate {
     }
 
     if (hasChild(_Id.exampleWidget)) {
+      double width = math.max(0, size.width - reservedWidth);
+      double height = math.max(0, size.height - reservedHeight);
       layoutChild(
           _Id.exampleWidget,
           BoxConstraints(
-              minWidth: size.width - reservedWidth,
-              maxWidth: size.width - reservedWidth,
-              minHeight: size.height - reservedHeight,
-              maxHeight: size.height - reservedHeight));
+              minWidth: width,
+              maxWidth: width,
+              minHeight: height,
+              maxHeight: height));
       positionChild(_Id.exampleWidget, Offset(reservedWidth, reservedHeight));
     }
   }

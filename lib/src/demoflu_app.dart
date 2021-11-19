@@ -52,7 +52,7 @@ class DemoFluApp extends StatefulWidget {
           defaultConsoleEnabled: consoleEnabled,
           defaultResizable: resizable,
           defaultMaxSize: maxSize),
-  menuItems: appMenuBuilder());
+      menuItems: appMenuBuilder());
 }
 
 /// Utilities.
@@ -66,7 +66,7 @@ class DemoFlu {
 
 /// The [DemoFluApp] state.
 class DemoFluAppState extends State<DemoFluApp> {
-  DemoFluAppState({required this.settings, required this.menuItems });
+  DemoFluAppState({required this.settings, required this.menuItems});
 
   final DemoFluSettings settings;
   final List<MenuItem> menuItems;
@@ -113,7 +113,7 @@ class DemoFluAppState extends State<DemoFluApp> {
 
   Widget _buildBody() {
     Widget? exampleContent;
-    if (settings.widget != null) {
+    if (settings.example != null) {
       exampleContent = ExampleWidget(settings: settings);
     } else {
       exampleContent = Center(child: Text('Loading...'));

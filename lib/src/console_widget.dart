@@ -1,4 +1,3 @@
-import 'package:demoflu/src/demoflu_app.dart';
 import 'package:demoflu/src/demoflu_settings.dart';
 import 'package:flutter/widgets.dart';
 
@@ -14,7 +13,6 @@ class ConsoleNotifier extends ValueNotifier<String> {
 }
 
 class ConsoleWidget extends StatelessWidget {
-
   ConsoleWidget({required this.settings});
 
   final DemoFluSettings settings;

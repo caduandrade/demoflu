@@ -1,5 +1,6 @@
 import 'package:demoflu/src/console_widget.dart';
 import 'package:demoflu/src/demoflu_settings.dart';
+import 'package:demoflu/src/example.dart';
 import 'package:demoflu/src/resizable_example_widget.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
@@ -9,23 +10,41 @@ import 'package:flutter_highlight/themes/github.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 
 class ExampleWidget extends StatefulWidget {
-
   const ExampleWidget({required this.settings});
 
   final DemoFluSettings settings;
 
   @override
-  State<StatefulWidget> createState() =>ExampleWidgetState();
-
+  State<StatefulWidget> createState() => ExampleWidgetState();
 }
 
 class ExampleWidgetState extends State<ExampleWidget> {
   Color dialogColor = Colors.white;
 
   @override
+  void initState() {
+    super.initState();
+    widget.settings.addListener(_rebuild);
+  }
+
+  @override
+  void dispose() {
+    widget.settings.removeListener(_rebuild);
+    super.dispose();
+  }
+
+  void _rebuild() {
+    setState(() {
+      // rebuilds
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    List<LayoutId> children = [LayoutId(id: _Id.exampleArea, child: _buildExampleArea()),
-      LayoutId(id: _Id.horizontalMenu, child: _buildHorizontalMenu())];
+    List<LayoutId> children = [
+      LayoutId(id: _Id.horizontalMenu, child: _buildHorizontalMenu()),
+      LayoutId(id: _Id.exampleArea, child: _buildExampleArea())
+    ];
 
     return Container(
         child: CustomMultiChildLayout(delegate: _Layout(), children: children),
@@ -33,35 +52,64 @@ class ExampleWidgetState extends State<ExampleWidget> {
   }
 
   Widget _buildExampleArea() {
-    Widget exampleArea = Container();
+    List<Widget> horizontalChildren = [];
+
+    if (widget.settings.code != null && widget.settings.codeVisible) {
+      horizontalChildren.add(_buildCodeWidget(context));
+    }
 
     if (widget.settings.widgetVisible && widget.settings.consoleVisible) {
-      exampleArea = MultiSplitView(
+      horizontalChildren.add(MultiSplitView(
           axis: Axis.vertical,
           children: [
             ResizableExampleWidget(settings: widget.settings),
             ConsoleWidget(settings: widget.settings)
           ],
-          controller: widget.settings.verticalDividerController);
+          controller: widget.settings.verticalDividerController));
     } else if (widget.settings.widgetVisible) {
-      exampleArea = ResizableExampleWidget(settings:widget.settings);
+      horizontalChildren.add(ResizableExampleWidget(settings: widget.settings));
     } else if (widget.settings.consoleVisible) {
-      exampleArea = ConsoleWidget(settings: widget.settings);
+      horizontalChildren.add(ConsoleWidget(settings: widget.settings));
     }
 
-    if (widget.settings.code != null && widget.settings.codeVisible) {
-      if (widget.settings.widgetVisible || widget.settings.consoleVisible) {
-        exampleArea = MultiSplitView(
-            children: [_buildCodeWidget(context), exampleArea],
-            controller: widget.settings.horizontalDividerController);
-      } else {
-        exampleArea = _buildCodeWidget(context);
+    final Example example = widget.settings.example!;
+
+    if (widget.settings.extraWidgetsVisible) {
+      List<Widget> children = [];
+      ExtraWidgetsMixin mixin = example as ExtraWidgetsMixin;
+      for (String name in widget.settings.extraWidgetsNames) {
+        Widget? w = mixin.buildExtraWidget(context, name);
+        if (w != null) {
+          children.add(Container(
+              child: Text(name, style: TextStyle(color: Colors.white)),
+              color: Colors.blueGrey[900],
+              padding: EdgeInsets.all(8)));
+          children.add(w);
+        }
       }
+      if (children.isNotEmpty) {
+        horizontalChildren.add(Container(
+            child: SingleChildScrollView(
+                child: Column(
+                    children: children,
+                    crossAxisAlignment: CrossAxisAlignment.stretch)),
+            color: Colors.white));
+      }
+    }
+
+    Widget exampleArea = Container();
+    if (horizontalChildren.length == 1) {
+      exampleArea = horizontalChildren.first;
+    } else if (horizontalChildren.length > 1) {
+      exampleArea = MultiSplitView(
+          children: horizontalChildren,
+          controller: widget.settings.horizontalDividerController);
     }
 
     return MultiSplitViewTheme(
         child: exampleArea,
-        data: MultiSplitViewThemeData(dividerThickness: 11,
+        data: MultiSplitViewThemeData(
+            dividerThickness: 11,
             dividerPainter: DividerPainters.grooved2(
                 backgroundColor: Colors.blueGrey[700],
                 color: Colors.blueGrey[300]!,
@@ -174,20 +222,31 @@ class ExampleWidgetState extends State<ExampleWidget> {
     children.add(SizedBox(width: 16));
     children.add(Text('background'));
     children.add(_buildColorIndicator());
+
     if (widget.settings.code != null) {
       children.add(SizedBox(width: 16));
-
       children.add(Text('code'));
       children.add(Checkbox(
           value: widget.settings.codeVisible,
           onChanged: (value) => widget.settings.codeVisible = value!));
+    }
 
-      children.add(SizedBox(width: 16));
-
+    children.add(SizedBox(width: 16));
+    if (widget.settings.extraWidgetsEnabled) {
+      children.add(Text('main widget'));
+    } else {
       children.add(Text('widget'));
+    }
+    children.add(Checkbox(
+        value: widget.settings.widgetVisible,
+        onChanged: (value) => widget.settings.widgetVisible = value!));
+
+    if (widget.settings.extraWidgetsEnabled) {
+      children.add(SizedBox(width: 16));
+      children.add(Text('extra widgets'));
       children.add(Checkbox(
-          value: widget.settings.widgetVisible,
-          onChanged: (value) => widget.settings.widgetVisible = value!));
+          value: widget.settings.extraWidgetsVisible,
+          onChanged: (value) => widget.settings.extraWidgetsVisible = value!));
     }
 
     if (widget.settings.consoleEnabled) {

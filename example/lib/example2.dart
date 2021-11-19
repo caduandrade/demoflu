@@ -2,7 +2,16 @@ import 'package:demoflu/demoflu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class Example2 extends StatelessWidget {
+class Example2 extends Example {
+
+  @override
+  Widget buildMainWidget(BuildContext context) {
+    return Example2Widget();
+  }
+
+}
+
+class Example2Widget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(

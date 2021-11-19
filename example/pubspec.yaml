@@ -45,6 +45,7 @@ flutter:
   assets:
     - lib/example1.dart
     - lib/example2.dart
+    - lib/example3.dart
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
