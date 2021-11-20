@@ -124,6 +124,6 @@ class _Layout extends MultiChildLayoutDelegate {
 
   @override
   bool shouldRelayout(covariant MultiChildLayoutDelegate oldDelegate) {
-    return false;
+    return true;
   }
 }

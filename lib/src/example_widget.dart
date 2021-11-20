@@ -24,12 +24,12 @@ class ExampleWidgetState extends State<ExampleWidget> {
   @override
   void initState() {
     super.initState();
-    widget.settings.addListener(_rebuild);
+    widget.settings.example?.addListener(_rebuild);
   }
 
   @override
   void dispose() {
-    widget.settings.removeListener(_rebuild);
+    widget.settings.example?.removeListener(_rebuild);
     super.dispose();
   }
 
@@ -296,6 +296,6 @@ class _Layout extends MultiChildLayoutDelegate {
 
   @override
   bool shouldRelayout(covariant MultiChildLayoutDelegate oldDelegate) {
-    return false;
+    return true;
   }
 }
