@@ -74,13 +74,12 @@ class DemoFluAppState extends State<DemoFluApp> {
   @override
   void initState() {
     super.initState();
-    settings.addListener(_rebuild);
-
     int menuItemIndex =
         menuItems.indexWhere((menuItem) => menuItem.builder != null);
     if (menuItemIndex > -1) {
       settings.updateCurrentExample(menuItems[menuItemIndex]);
     }
+    settings.addListener(_rebuild);
   }
 
   @override

@@ -40,6 +40,12 @@ class ExampleWidgetState extends State<ExampleWidget> {
   }
 
   @override
+  void didUpdateWidget(covariant ExampleWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    widget.settings.example?.addListener(_rebuild);
+  }
+
+  @override
   Widget build(BuildContext context) {
     List<LayoutId> children = [
       LayoutId(id: _Id.horizontalMenu, child: _buildHorizontalMenu()),
