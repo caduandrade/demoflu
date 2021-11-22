@@ -7,15 +7,17 @@ class Example3 extends Example with ExtraWidgetsMixin {
   int get count => _count;
   void incCount() {
     _count++;
-    notifyListeners();
+    notifyMainWidgetListeners();
   }
 
   @override
-  Widget buildMainWidget(BuildContext context) => Example3Widget(this);
+  Widget buildMainWidget(BuildContext context) => MainWidget(this);
 
   @override
   Widget? buildExtraWidget(BuildContext context, String name) {
-    return ExtraWidget(this);
+    if (name == 'Buttons') {
+      return ExtraWidget(this);
+    }
   }
 
   @override
@@ -39,8 +41,8 @@ class ExtraWidget extends StatelessWidget {
   }
 }
 
-class Example3Widget extends StatelessWidget {
-  const Example3Widget(this.example);
+class MainWidget extends StatelessWidget {
+  const MainWidget(this.example);
 
   final Example3 example;
 

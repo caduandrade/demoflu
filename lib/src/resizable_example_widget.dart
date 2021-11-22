@@ -5,31 +5,63 @@ import 'package:demoflu/src/slider.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 
-class ResizableExampleWidget extends StatelessWidget {
+class ResizableExampleWidget extends StatefulWidget {
   const ResizableExampleWidget({required this.settings});
 
   final DemoFluSettings settings;
 
   @override
+  State<StatefulWidget> createState() => ResizableExampleWidgetState();
+}
+
+class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
+  @override
+  void initState() {
+    super.initState();
+    widget.settings.example?.addMainWidgetListener(_rebuild);
+  }
+
+  @override
+  void dispose() {
+    widget.settings.example?.removeMainWidgetListener(_rebuild);
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant ResizableExampleWidget oldWidget) {
+    oldWidget.settings.example?.removeMainWidgetListener(_rebuild);
+    widget.settings.example?.addMainWidgetListener(_rebuild);
+    super.didUpdateWidget(oldWidget);
+  }
+
+  void _rebuild() {
+    setState(() {
+      // rebuilds
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     List<LayoutId> children = [];
-    if (settings.widgetVisible) {
+    if (widget.settings.widgetVisible) {
       children
           .add(LayoutId(id: _Id.exampleWidget, child: _buildExampleWidget()));
-      if (settings.resizable) {
+      if (widget.settings.resizable) {
         children.add(LayoutId(
             id: _Id.widthSlider,
             child: DemofluSlider(
                 axis: Axis.horizontal,
-                value: settings.widthWeight,
-                onChanged: (double value) => settings.widthWeight = value)));
+                value: widget.settings.widthWeight,
+                onChanged: (double value) =>
+                    widget.settings.widthWeight = value)));
 
         children.add(LayoutId(
             id: _Id.heightSlider,
             child: DemofluSlider(
                 axis: Axis.vertical,
-                value: settings.heightWeight,
-                onChanged: (double value) => settings.heightWeight = value)));
+                value: widget.settings.heightWeight,
+                onChanged: (double value) =>
+                    widget.settings.heightWeight = value)));
       }
     }
 
@@ -43,24 +75,24 @@ class ResizableExampleWidget extends StatelessWidget {
         builder: (BuildContext context, BoxConstraints constraints) {
       double maxWidth = constraints.maxWidth;
       double maxHeight = constraints.maxHeight;
-      Size? maxSize = settings.maxSize;
+      Size? maxSize = widget.settings.maxSize;
       if (maxSize != null) {
         maxWidth = math.min(maxWidth, maxSize.width);
         maxHeight = math.min(maxHeight, maxSize.height);
       }
-      if (settings.resizable) {
-        maxWidth = maxWidth * settings.widthWeight;
-        maxHeight = maxHeight * settings.heightWeight;
+      if (widget.settings.resizable) {
+        maxWidth = maxWidth * widget.settings.widthWeight;
+        maxHeight = maxHeight * widget.settings.heightWeight;
       }
       ConstrainedBox constrainedBox = ConstrainedBox(
           child: MultiSplitViewTheme(
-              child: settings.example!.buildMainWidget(context),
+              child: widget.settings.example!.buildMainWidget(context),
               data: MultiSplitViewThemeData()),
           constraints:
               BoxConstraints.tightFor(width: maxWidth, height: maxHeight));
 
       return Container(
-          color: settings.widgetBackground,
+          color: widget.settings.widgetBackground,
           child: Center(child: Container(child: constrainedBox)));
     });
   }

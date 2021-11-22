@@ -22,30 +22,6 @@ class ExampleWidgetState extends State<ExampleWidget> {
   Color dialogColor = Colors.white;
 
   @override
-  void initState() {
-    super.initState();
-    widget.settings.example?.addListener(_rebuild);
-  }
-
-  @override
-  void dispose() {
-    widget.settings.example?.removeListener(_rebuild);
-    super.dispose();
-  }
-
-  void _rebuild() {
-    setState(() {
-      // rebuilds
-    });
-  }
-
-  @override
-  void didUpdateWidget(covariant ExampleWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    widget.settings.example?.addListener(_rebuild);
-  }
-
-  @override
   Widget build(BuildContext context) {
     List<LayoutId> children = [
       LayoutId(id: _Id.horizontalMenu, child: _buildHorizontalMenu()),

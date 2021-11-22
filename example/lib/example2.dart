@@ -3,15 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class Example2 extends Example {
-
   @override
   Widget buildMainWidget(BuildContext context) {
-    return Example2Widget();
+    return MainWidget();
   }
-
 }
 
-class Example2Widget extends StatelessWidget {
+class MainWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
