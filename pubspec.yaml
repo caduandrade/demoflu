@@ -11,8 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
   url_launcher: ^6.0.13
-  multi_split_view: #^1.11.0
-    path: ../multi_split_view/
+  multi_split_view: ^1.10.0+1
+    #path: ../multi_split_view/
   flutter_highlight: ^0.7.0
   flex_color_picker: ^2.1.2
 

@@ -1,3 +1,7 @@
+## 0.10.0
+
+* Feature to add extra Widgets that can communicate with the main Widget in the example
+
 ## 0.9.0
 
 * New layout and resizing widget
