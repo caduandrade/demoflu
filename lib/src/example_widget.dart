@@ -91,7 +91,6 @@ class ExampleWidgetState extends State<ExampleWidget> {
     return MultiSplitViewTheme(
         child: exampleArea,
         data: MultiSplitViewThemeData(
-            dividerThickness: 11,
             dividerPainter: DividerPainters.grooved2(
                 backgroundColor: Colors.blueGrey[700],
                 color: Colors.blueGrey[300]!,

@@ -1,3 +1,8 @@
+## 0.11.0
+
+* *url_launcher* dependency updated to 6.0.18
+* *multi_split_view* dependency updated to 1.11.0
+
 ## 0.10.0
 
 * Feature to add extra Widgets that can communicate with the main Widget in the example

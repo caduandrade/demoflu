@@ -1,6 +1,6 @@
 name: demoflu
 description: Flutter widget demo builder. Web application to display widget usage.
-version: 0.10.0
+version: 0.11.0
 homepage: https://github.com/caduandrade/demoflu
 
 environment:
@@ -10,8 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  url_launcher: ^6.0.13
-  multi_split_view: ^1.10.0+1
+  url_launcher: ^6.0.18
+  multi_split_view: ^1.11.0
     #path: ../multi_split_view/
   flutter_highlight: ^0.7.0
   flex_color_picker: ^2.1.2
@@ -19,6 +19,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  flutter_lints: ^1.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
