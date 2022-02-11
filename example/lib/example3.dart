@@ -1,6 +1,5 @@
 import 'package:demoflu/demoflu.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class Example3 extends Example with ExtraWidgetsMixin {
   int _count = 0;
@@ -18,6 +17,7 @@ class Example3 extends Example with ExtraWidgetsMixin {
     if (name == 'Buttons') {
       return ExtraWidget(this);
     }
+    return null;
   }
 
   @override

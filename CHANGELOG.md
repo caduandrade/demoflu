@@ -1,3 +1,7 @@
+## 1.11.0+1
+
+* Removing unnecessary imports
+
 ## 0.11.0
 
 * *url_launcher* dependency updated to 6.0.18
