@@ -2,7 +2,7 @@
 
 * *multi_split_view* dependency updated to 1.13.0
 
-## 1.11.0+1
+## 0.11.0+1
 
 * Removing unnecessary imports
 
