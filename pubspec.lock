@@ -131,9 +131,9 @@ packages:
   multi_split_view:
     dependency: "direct main"
     description:
-      name: multi_split_view
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "../multi_split_view"
+      relative: true
+    source: path
     version: "1.13.0"
   path:
     dependency: transitive

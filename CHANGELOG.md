@@ -1,3 +1,7 @@
+## 0.13.0
+
+* *multi_split_view* dependency updated to 2.0.0
+
 ## 0.12.0
 
 * *multi_split_view* dependency updated to 1.13.0

@@ -139,9 +139,9 @@ class DemoFluSettings extends ChangeNotifier {
   bool get consoleEnabled => _consoleEnabled;
 
   final MultiSplitViewController verticalDividerController =
-      MultiSplitViewController(weights: [.9, .1]);
+      MultiSplitViewController(areas: Area.weights([.9, .1]));
   final MultiSplitViewController horizontalDividerController =
-      MultiSplitViewController(weights: [.5, .5]);
+      MultiSplitViewController(areas: Area.weights([.5, .5]));
 
   Example? _example;
   Example? get example => _example;
