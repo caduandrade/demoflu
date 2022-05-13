@@ -1,5 +1,5 @@
 import 'package:demoflu/src/demoflu_settings.dart';
-import 'package:demoflu/src/menu_item.dart';
+import 'package:demoflu/src/demo_menu_item.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -7,12 +7,12 @@ class MenuWidget extends StatelessWidget {
   MenuWidget({required this.settings, required this.menuItems});
 
   final DemoFluSettings settings;
-  final List<MenuItem> menuItems;
+  final List<DemoMenuItem> menuItems;
 
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [];
-    for (MenuItem menuItem in menuItems) {
+    for (DemoMenuItem menuItem in menuItems) {
       children.add(_MenuItemWidget(
           settings: settings,
           selected: settings.currentMenuItem == menuItem,
@@ -38,7 +38,7 @@ class _MenuItemWidget extends StatefulWidget {
 
   final DemoFluSettings settings;
   final bool selected;
-  final MenuItem menuItem;
+  final DemoMenuItem menuItem;
 
   @override
   State<StatefulWidget> createState() => _MenuItemWidgetState();

@@ -1,10 +1,16 @@
+## 0.14.0
+
+* `MenuItem` renamed to `DemoMenuItem`
+* `url_launcher` dependency updated to 6.1.2
+* `flex_color_picker` dependency updated to 2.5.0
+
 ## 0.13.0
 
-* *multi_split_view* dependency updated to 2.0.0
+* `multi_split_view` dependency updated to 2.0.0
 
 ## 0.12.0
 
-* *multi_split_view* dependency updated to 1.13.0
+* `multi_split_view` dependency updated to 1.13.0
 
 ## 0.11.0+1
 
@@ -12,8 +18,8 @@
 
 ## 0.11.0
 
-* *url_launcher* dependency updated to 6.0.18
-* *multi_split_view* dependency updated to 1.11.0
+* `url_launcher` dependency updated to 6.0.18
+* `multi_split_view` dependency updated to 1.11.0
 
 ## 0.10.0
 
@@ -22,20 +28,20 @@
 ## 0.9.0
 
 * New layout and resizing widget
-* *multi_split_view* dependency updated to 1.10.0
-* *url_launcher* dependency updated to 6.0.13
+* `multi_split_view` dependency updated to 1.10.0
+* `url_launcher` dependency updated to 6.0.13
 
 ## 0.8.3
 
-* *multi_split_view* dependency updated to 1.9.0
+* `multi_split_view` dependency updated to 1.9.0
 
 ## 0.8.2
 
-* *multi_split_view* dependency updated to 1.8.0
+* `multi_split_view` dependency updated to 1.8.0
 
 ## 0.8.1
 
-* *multi_split_view* dependency updated to 1.7.2
+* `multi_split_view` dependency updated to 1.7.2
 
 ## 0.8.0
 
@@ -43,12 +49,12 @@
 
 ## 0.7.2
 
-* *multi_split_view* dependency updated to 1.7.1
+* `multi_split_view` dependency updated to 1.7.1
 
 ## 0.7.1
 
 * Bugfix
-  * *MultiSplitViewTheme* being propagated to example widgets
+  * `MultiSplitViewTheme` being propagated to example widgets
 
 ## 0.7.0
 

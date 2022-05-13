@@ -1,11 +1,11 @@
 import 'package:demoflu/src/demoflu_logo.dart';
 import 'package:demoflu/src/demoflu_settings.dart';
-import 'package:demoflu/src/menu_item.dart';
+import 'package:demoflu/src/demo_menu_item.dart';
 import 'package:demoflu/src/menu_widget.dart';
 import 'package:demoflu/src/example_widget.dart';
 import 'package:flutter/material.dart';
 
-typedef AppMenuBuilder = List<MenuItem> Function();
+typedef AppMenuBuilder = List<DemoMenuItem> Function();
 
 /// Demo app to be instantiated.
 class DemoFluApp extends StatefulWidget {
@@ -69,7 +69,7 @@ class DemoFluAppState extends State<DemoFluApp> {
   DemoFluAppState({required this.settings, required this.menuItems});
 
   final DemoFluSettings settings;
-  final List<MenuItem> menuItems;
+  final List<DemoMenuItem> menuItems;
 
   @override
   void initState() {

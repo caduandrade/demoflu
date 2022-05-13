@@ -2,9 +2,9 @@ import 'package:demoflu/src/example_builder.dart';
 import 'package:flutter/material.dart';
 
 /// Represents a menu item in the app menu.
-class MenuItem {
-  /// Buils a [MenuItem].
-  MenuItem(
+class DemoMenuItem {
+  /// Builds a [DemoMenuItem].
+  DemoMenuItem(
       {required this.name,
       this.builder,
       this.resizable,

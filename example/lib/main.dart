@@ -10,20 +10,20 @@ void main() {
       title: 'Example Demo',
       appMenuBuilder: () {
         return [
-          MenuItem(name: 'Section', italic: true),
-          MenuItem(
+          DemoMenuItem(name: 'Section', italic: true),
+          DemoMenuItem(
               name: 'Example 1',
               builder: () => Example1(),
               codeFile: 'lib/example1.dart',
               resizable: true,
               indentation: 2),
-          MenuItem(
+          DemoMenuItem(
               name: 'Example 2',
               builder: () => Example2(),
               codeFile: 'lib/example2.dart',
               consoleEnabled: true,
               indentation: 2),
-          MenuItem(
+          DemoMenuItem(
               name: 'Example 3',
               builder: () => Example3(),
               codeFile: 'lib/example3.dart',

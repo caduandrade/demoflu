@@ -2,7 +2,7 @@ import 'dart:collection';
 
 import 'package:demoflu/src/console_widget.dart';
 import 'package:demoflu/src/example.dart';
-import 'package:demoflu/src/menu_item.dart';
+import 'package:demoflu/src/demo_menu_item.dart';
 import 'package:flutter/widgets.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -92,7 +92,7 @@ class DemoFluSettings extends ChangeNotifier {
   }
 
   /// Updates the current example.
-  void updateCurrentExample(MenuItem menuItem) async {
+  void updateCurrentExample(DemoMenuItem menuItem) async {
     _example = null;
     notifyListeners();
 
@@ -146,8 +146,8 @@ class DemoFluSettings extends ChangeNotifier {
   Example? _example;
   Example? get example => _example;
 
-  MenuItem? _currentMenuItem;
+  DemoMenuItem? _currentMenuItem;
 
   /// Gets the current selected example.
-  MenuItem? get currentMenuItem => _currentMenuItem;
+  DemoMenuItem? get currentMenuItem => _currentMenuItem;
 }
