@@ -1,3 +1,8 @@
+## 0.15.0
+
+* `multi_split_view` dependency updated to 2.1.0
+* Code view filling parent width.
+
 ## 0.14.0
 
 * `MenuItem` renamed to `DemoMenuItem`
