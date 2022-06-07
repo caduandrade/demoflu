@@ -104,15 +104,16 @@ class ExampleWidgetState extends State<ExampleWidget> {
             color: Color(0xfff8f8f8),
             border: Border.all(color: Colors.blueGrey[700]!)),
         child: Stack(children: [
-          SingleChildScrollView(
-              controller: ScrollController(),
-              child: HighlightView(
-                widget.settings.code!,
-                language: 'dart',
-                theme: githubTheme,
-                padding: EdgeInsets.fromLTRB(16, 24, 16, 16),
-                textStyle: TextStyle(fontSize: 16),
-              )),
+          Positioned.fill(
+              child: SingleChildScrollView(
+                  controller: ScrollController(),
+                  child: HighlightView(
+                    widget.settings.code!,
+                    language: 'dart',
+                    theme: githubTheme,
+                    padding: EdgeInsets.fromLTRB(16, 24, 16, 16),
+                    textStyle: TextStyle(fontSize: 16),
+                  ))),
           Positioned(
               child: IconButton(
                 icon: const Icon(Icons.content_copy),
