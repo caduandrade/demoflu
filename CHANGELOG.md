@@ -1,6 +1,7 @@
 ## 0.16.0
 
 * `multi_split_view` dependency updated to 2.2.0
+* `flex_color_picker` dependency updated to 3.0.0
 
 ## 0.15.0
 
