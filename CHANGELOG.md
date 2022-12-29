@@ -1,3 +1,7 @@
+## 0.16.0
+
+* `multi_split_view` dependency updated to 2.2.0
+
 ## 0.15.0
 
 * `multi_split_view` dependency updated to 2.1.0
