@@ -18,10 +18,13 @@ class ExampleWidget extends StatefulWidget {
 }
 
 class ExampleWidgetState extends State<ExampleWidget> {
-  Color dialogColor = Colors.white;
 
   @override
   Widget build(BuildContext context) {
+    if(widget.settings.example==null) {
+     return Center(child: Text('Loading...'));
+    }
+
     List<LayoutId> children = [
       LayoutId(id: _Id.horizontalMenu, child: _buildHorizontalMenu()),
       LayoutId(id: _Id.exampleArea, child: _buildExampleArea())

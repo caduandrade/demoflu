@@ -1,8 +1,8 @@
-import 'package:demoflu/src/internal/demoflu_logo.dart';
-import 'package:demoflu/src/demoflu_settings.dart';
 import 'package:demoflu/src/demo_menu_item.dart';
-import 'package:demoflu/src/internal/menu_widget.dart';
+import 'package:demoflu/src/demoflu_settings.dart';
 import 'package:demoflu/src/example_widget.dart';
+import 'package:demoflu/src/internal/demoflu_logo.dart';
+import 'package:demoflu/src/internal/menu_widget.dart';
 import 'package:demoflu/src/internal/settings/settings_button.dart';
 import 'package:demoflu/src/internal/settings/settings_widget.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,6 @@ typedef AppMenuBuilder = List<DemoMenuItem> Function();
 
 /// Demo app to be instantiated.
 class DemoFluApp extends StatefulWidget {
-  
   DemoFluApp(
       {required this.title,
       required this.appMenuBuilder,
@@ -38,7 +37,7 @@ class DemoFluApp extends StatefulWidget {
 
   /// Defines the default widget background for all examples.
   final Color exampleBackground;
-  
+
   final Size? maxSize;
   final bool resizable;
   final bool consoleEnabled;
@@ -108,29 +107,22 @@ class DemoFluAppState extends State<DemoFluApp> {
             appBar: AppBar(
                 title: Text(widget.title),
                 backgroundColor: Colors.blueGrey[900],
-                actions: [SettingsButton(settings: settings),DemoFluLogo()]),
+                actions: [SettingsButton(settings: settings), DemoFluLogo()]),
             body: _buildBody()));
   }
 
   Widget _buildBody() {
-    Widget? exampleContent;
-    if (settings.example != null) {
-      exampleContent = ExampleWidget(settings: settings);
-    } else {
-      exampleContent = Center(child: Text('Loading...'));
-    }
-
     List<LayoutId> children = [
-      LayoutId(id: 2, child: exampleContent),
+      LayoutId(id: 2, child: ExampleWidget(settings: settings)),
       LayoutId(
-          id: 1, child: MenuWidget(settings: settings, menuItems: menuItems)),
-
+          id: 1, child: MenuWidget(settings: settings, menuItems: menuItems))
     ];
 
-    Widget exampleArea = CustomMultiChildLayout(delegate: _Layout(), children: children);
+    Widget exampleArea =
+        CustomMultiChildLayout(delegate: _Layout(), children: children);
 
-    List<Widget> stackChildren =[Positioned.fill(child: exampleArea)];
-    if(settings.settingsVisible) {
+    List<Widget> stackChildren = [Positioned.fill(child: exampleArea)];
+    if (settings.settingsVisible) {
       stackChildren.add(SettingsWidget(settings: settings));
     }
     return Stack(children: stackChildren);
