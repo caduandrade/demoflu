@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const _url = 'https://pub.dev/packages/demoflu';
-
 /// The DemoFlu logo widget.
 class DemoFluLogo extends StatelessWidget {
   @override
@@ -19,7 +17,10 @@ class DemoFluLogo extends StatelessWidget {
         onTap: () => _launchURL());
   }
 
-  void _launchURL() async => await canLaunch(_url)
-      ? await launch(_url)
-      : throw 'Could not launch $_url';
+  void _launchURL() async {
+    final Uri uri = Uri.parse('https://pub.dev/packages/demoflu');
+    await canLaunchUrl(uri)
+        ? await launchUrl(uri)
+        : throw 'Could not launch $uri';
+  }
 }
