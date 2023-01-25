@@ -92,7 +92,7 @@ class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
               BoxConstraints.tightFor(width: maxWidth, height: maxHeight));
 
       return Container(
-          color: widget.settings.widgetBackground,
+          color: widget.settings.exampleBackground,
           child: Center(child: Container(child: constrainedBox)));
     });
   }

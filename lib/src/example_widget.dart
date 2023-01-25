@@ -1,8 +1,7 @@
-import 'package:demoflu/src/console_widget.dart';
+import 'package:demoflu/src/internal/console_widget.dart';
 import 'package:demoflu/src/demoflu_settings.dart';
 import 'package:demoflu/src/example.dart';
 import 'package:demoflu/src/internal/resizable_example_widget.dart';
-import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_highlight/flutter_highlight.dart';
@@ -133,78 +132,9 @@ class ExampleWidgetState extends State<ExampleWidget> {
         content: Text('Copied to clipboard'), duration: Duration(seconds: 2)));
   }
 
-  Widget _buildColorIndicator() {
-    return Padding(
-        child: ColorIndicator(
-          width: 28,
-          height: 28,
-          borderRadius: 4,
-          hasBorder: true,
-          borderColor: Colors.grey[700],
-          color: widget.settings.widgetBackground,
-          onSelectFocus: false,
-          onSelect: () async {
-            dialogColor = widget.settings.widgetBackground;
-            if (await _colorPickerDialog(context)) {
-              widget.settings.widgetBackground = dialogColor;
-            }
-          },
-        ),
-        padding: EdgeInsets.all(8));
-  }
-
-  Future<bool> _colorPickerDialog(BuildContext context) async {
-    return ColorPicker(
-      // Use the dialogPickerColor as start color.
-      color: dialogColor,
-      // Update the dialogPickerColor using the callback.
-      onColorChanged: (Color color) => setState(() => dialogColor = color),
-      width: 40,
-      height: 40,
-      borderRadius: 4,
-      spacing: 5,
-      runSpacing: 5,
-      wheelDiameter: 155,
-      heading: Text(
-        'Select color',
-        style: Theme.of(context).textTheme.subtitle1,
-      ),
-      subheading: Text(
-        'Select color shade',
-        style: Theme.of(context).textTheme.subtitle1,
-      ),
-      wheelSubheading: Text(
-        'Selected color and its shades',
-        style: Theme.of(context).textTheme.subtitle1,
-      ),
-      showMaterialName: true,
-      showColorName: true,
-      showColorCode: true,
-      materialNameTextStyle: Theme.of(context).textTheme.caption,
-      colorNameTextStyle: Theme.of(context).textTheme.caption,
-      colorCodeTextStyle: Theme.of(context).textTheme.caption,
-      pickersEnabled: const <ColorPickerType, bool>{
-        ColorPickerType.both: false,
-        ColorPickerType.primary: true,
-        ColorPickerType.accent: false,
-        ColorPickerType.bw: true,
-        ColorPickerType.custom: false,
-        ColorPickerType.wheel: false,
-      },
-      // customColorSwatchesAndNames: colorsNameMap,
-    ).showPickerDialog(
-      context,
-      constraints:
-          const BoxConstraints(minHeight: 460, minWidth: 300, maxWidth: 320),
-    );
-  }
 
   Widget _buildHorizontalMenu() {
     List<Widget> children = [];
-    children.add(SizedBox(width: 16));
-    children.add(Text('background'));
-    children.add(_buildColorIndicator());
-
     if (widget.settings.code != null) {
       children.add(SizedBox(width: 16));
       children.add(Text('code'));

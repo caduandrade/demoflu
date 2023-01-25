@@ -3,21 +3,20 @@ import 'package:demoflu/src/demoflu_settings.dart';
 import 'package:demoflu/src/demo_menu_item.dart';
 import 'package:demoflu/src/internal/menu_widget.dart';
 import 'package:demoflu/src/example_widget.dart';
+import 'package:demoflu/src/internal/settings/settings_button.dart';
+import 'package:demoflu/src/internal/settings/settings_widget.dart';
 import 'package:flutter/material.dart';
 
 typedef AppMenuBuilder = List<DemoMenuItem> Function();
 
 /// Demo app to be instantiated.
 class DemoFluApp extends StatefulWidget {
-  /// Builds a [DemoFluApp].
-  ///
-  /// The [widgetBackground] defines the default widget background for all
-  /// examples.
+  
   DemoFluApp(
       {required this.title,
       required this.appMenuBuilder,
       this.resizable = false,
-      this.widgetBackground = Colors.white,
+      this.exampleBackground = Colors.white,
       this.maxSize,
       this.consoleEnabled = false,
       this.initialWidthWeight,
@@ -36,7 +35,10 @@ class DemoFluApp extends StatefulWidget {
 
   final String title;
   final AppMenuBuilder appMenuBuilder;
-  final Color widgetBackground;
+
+  /// Defines the default widget background for all examples.
+  final Color exampleBackground;
+  
   final Size? maxSize;
   final bool resizable;
   final bool consoleEnabled;
@@ -46,7 +48,7 @@ class DemoFluApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => DemoFluAppState(
       settings: DemoFluSettings(
-          widgetBackground: widgetBackground,
+          exampleBackground: exampleBackground,
           widthWeight: initialWidthWeight,
           heightWeight: initialHeightWeight,
           defaultConsoleEnabled: consoleEnabled,
@@ -106,7 +108,7 @@ class DemoFluAppState extends State<DemoFluApp> {
             appBar: AppBar(
                 title: Text(widget.title),
                 backgroundColor: Colors.blueGrey[900],
-                actions: [DemoFluLogo()]),
+                actions: [SettingsButton(settings: settings),DemoFluLogo()]),
             body: _buildBody()));
   }
 
@@ -125,7 +127,13 @@ class DemoFluAppState extends State<DemoFluApp> {
 
     ];
 
-    return CustomMultiChildLayout(delegate: _Layout(), children: children);
+    Widget exampleArea = CustomMultiChildLayout(delegate: _Layout(), children: children);
+
+    List<Widget> stackChildren =[Positioned.fill(child: exampleArea)];
+    if(settings.settingsVisible) {
+      stackChildren.add(SettingsWidget(settings: settings));
+    }
+    return Stack(children: stackChildren);
   }
 }
 
