@@ -7,13 +7,11 @@ import 'package:demoflu/src/internal/settings/settings_button.dart';
 import 'package:demoflu/src/internal/settings/settings_widget.dart';
 import 'package:flutter/material.dart';
 
-typedef AppMenuBuilder = List<DemoMenuItem> Function();
-
 /// Demo app to be instantiated.
 class DemoFluApp extends StatefulWidget {
   DemoFluApp(
       {required this.title,
-      required this.appMenuBuilder,
+      required this.menuItems,
       this.resizable = false,
       this.exampleBackground = Colors.white,
       this.maxSize,
@@ -33,7 +31,7 @@ class DemoFluApp extends StatefulWidget {
   }
 
   final String title;
-  final AppMenuBuilder appMenuBuilder;
+  final List<DemoMenuItem> menuItems;
 
   /// Defines the default widget background for all examples.
   final Color exampleBackground;
@@ -52,8 +50,7 @@ class DemoFluApp extends StatefulWidget {
           heightWeight: initialHeightWeight,
           defaultConsoleEnabled: consoleEnabled,
           defaultResizable: resizable,
-          defaultMaxSize: maxSize),
-      menuItems: appMenuBuilder());
+          defaultMaxSize: maxSize));
 }
 
 /// Utilities.
@@ -67,18 +64,17 @@ class DemoFlu {
 
 /// The [DemoFluApp] state.
 class DemoFluAppState extends State<DemoFluApp> {
-  DemoFluAppState({required this.settings, required this.menuItems});
+  DemoFluAppState({required this.settings});
 
   final DemoFluSettings settings;
-  final List<DemoMenuItem> menuItems;
 
   @override
   void initState() {
     super.initState();
     int menuItemIndex =
-        menuItems.indexWhere((menuItem) => menuItem.builder != null);
+        widget.menuItems.indexWhere((menuItem) => menuItem.builder != null);
     if (menuItemIndex > -1) {
-      settings.updateCurrentExample(menuItems[menuItemIndex]);
+      settings.updateCurrentExample(widget.menuItems[menuItemIndex]);
     }
     settings.addListener(_rebuild);
   }
@@ -115,7 +111,8 @@ class DemoFluAppState extends State<DemoFluApp> {
     List<LayoutId> children = [
       LayoutId(id: 2, child: ExampleWidget(settings: settings)),
       LayoutId(
-          id: 1, child: MenuWidget(settings: settings, menuItems: menuItems))
+          id: 1,
+          child: MenuWidget(settings: settings, menuItems: widget.menuItems))
     ];
 
     Widget exampleArea =

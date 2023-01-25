@@ -18,11 +18,10 @@ class ExampleWidget extends StatefulWidget {
 }
 
 class ExampleWidgetState extends State<ExampleWidget> {
-
   @override
   Widget build(BuildContext context) {
-    if(widget.settings.example==null) {
-     return Center(child: Text('Loading...'));
+    if (widget.settings.example == null) {
+      return Center(child: Text('Loading...'));
     }
 
     List<LayoutId> children = [
@@ -134,7 +133,6 @@ class ExampleWidgetState extends State<ExampleWidget> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Copied to clipboard'), duration: Duration(seconds: 2)));
   }
-
 
   Widget _buildHorizontalMenu() {
     List<Widget> children = [];

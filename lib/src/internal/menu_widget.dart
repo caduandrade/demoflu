@@ -19,24 +19,24 @@ class MenuWidget extends StatelessWidget {
           menuItem: menuItem));
     }
     return Container(
-        child: SingleChildScrollView(
-            controller: ScrollController(),
-            child: IntrinsicWidth(
-                child: Column(
-                    children: children,
-                    crossAxisAlignment: CrossAxisAlignment.stretch))),
-        decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.5),
-                spreadRadius: 1,
-                blurRadius: 1,
-                offset: Offset(0, 0), // changes position of shadow
-              ),
-            ],
-            color: Colors.blueGrey[900],
-            border: Border(
-                right: BorderSide(color: Colors.blueGrey[900]!, width: 2))),
+      child: SingleChildScrollView(
+          controller: ScrollController(),
+          child: IntrinsicWidth(
+              child: Column(
+                  children: children,
+                  crossAxisAlignment: CrossAxisAlignment.stretch))),
+      decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.5),
+              spreadRadius: 1,
+              blurRadius: 1,
+              offset: Offset(0, 0), // changes position of shadow
+            ),
+          ],
+          color: Colors.blueGrey[900],
+          border: Border(
+              right: BorderSide(color: Colors.blueGrey[900]!, width: 2))),
     );
   }
 }

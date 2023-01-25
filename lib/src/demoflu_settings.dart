@@ -42,7 +42,7 @@ class DemoFluSettings extends ChangeNotifier {
   Color get exampleBackground => _exampleBackground;
 
   set exampleBackground(Color color) {
-    if(_exampleBackground!=color) {
+    if (_exampleBackground != color) {
       _exampleBackground = color;
       notifyListeners();
     }

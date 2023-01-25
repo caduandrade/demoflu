@@ -1,3 +1,11 @@
+## 0.17.0
+
+* New layout
+* Refactor
+  * `DemoFluApp`
+    * Parameter `appMenuBuilder` has been changed to `menuItems` (list of `DemoMenu`).
+  * `AppMenuBuilder` has been removed
+
 ## 0.16.0
 
 * `multi_split_view` dependency updated to 2.2.0
