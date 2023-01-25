@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:demoflu/src/demoflu_settings.dart';
-import 'package:demoflu/src/slider.dart';
+import 'package:demoflu/src/internal/slider.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 

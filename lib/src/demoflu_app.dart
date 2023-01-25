@@ -1,7 +1,7 @@
-import 'package:demoflu/src/demoflu_logo.dart';
+import 'package:demoflu/src/internal/demoflu_logo.dart';
 import 'package:demoflu/src/demoflu_settings.dart';
 import 'package:demoflu/src/demo_menu_item.dart';
-import 'package:demoflu/src/menu_widget.dart';
+import 'package:demoflu/src/internal/menu_widget.dart';
 import 'package:demoflu/src/example_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -119,9 +119,10 @@ class DemoFluAppState extends State<DemoFluApp> {
     }
 
     List<LayoutId> children = [
+      LayoutId(id: 2, child: exampleContent),
       LayoutId(
           id: 1, child: MenuWidget(settings: settings, menuItems: menuItems)),
-      LayoutId(id: 2, child: exampleContent)
+
     ];
 
     return CustomMultiChildLayout(delegate: _Layout(), children: children);
