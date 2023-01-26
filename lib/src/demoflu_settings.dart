@@ -1,11 +1,10 @@
 import 'dart:collection';
 
-import 'package:demoflu/src/internal/console_widget.dart';
 import 'package:demoflu/src/demo_menu_item.dart';
 import 'package:demoflu/src/example.dart';
+import 'package:demoflu/src/internal/console_controller.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
-import 'package:multi_split_view/multi_split_view.dart';
 
 class DemoFluSettings extends ChangeNotifier {
   DemoFluSettings(
@@ -65,39 +64,6 @@ class DemoFluSettings extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool _widgetVisible = true;
-
-  /// Indicates whether widget view is visible.
-  bool get widgetVisible => _widgetVisible;
-
-  set widgetVisible(bool visible) {
-    _widgetVisible = visible;
-    if (!visible) {
-      _consoleVisible = false;
-    }
-    notifyListeners();
-  }
-
-  bool _consoleVisible = false;
-
-  /// Indicates whether console view is visible.
-  bool get consoleVisible => _consoleVisible;
-
-  set consoleVisible(bool visible) {
-    _consoleVisible = visible;
-    notifyListeners();
-  }
-
-  bool _codeVisible = false;
-
-  /// Indicates whether code view is visible.
-  bool get codeVisible => _codeVisible;
-
-  set codeVisible(bool visible) {
-    _codeVisible = visible;
-    notifyListeners();
-  }
-
   double _widthWeight;
 
   double get widthWeight => _widthWeight;
@@ -130,9 +96,7 @@ class DemoFluSettings extends ChangeNotifier {
     _consoleEnabled = menuItem.consoleEnabled ?? _defaultConsoleEnabled;
     _maxSize = menuItem.maxSize ?? _defaultMaxSize;
     _code = code;
-    if (_consoleEnabled == false) {
-      _consoleVisible = false;
-    }
+
     _example = menuItem.builder!();
     if (_example is ExtraWidgetsMixin) {
       ExtraWidgetsMixin extraWidgetsMixin = _example as ExtraWidgetsMixin;
@@ -142,14 +106,10 @@ class DemoFluSettings extends ChangeNotifier {
     }
 
     _extraWidgetsVisible = extraWidgetsEnabled;
-
-    _consoleNotifier = ConsoleNotifier();
     notifyListeners();
   }
 
-  ConsoleNotifier _consoleNotifier = ConsoleNotifier();
-
-  ConsoleNotifier get consoleNotifier => _consoleNotifier;
+  final ConsoleController console = ConsoleController();
 
   String? _code;
 
@@ -167,11 +127,6 @@ class DemoFluSettings extends ChangeNotifier {
   bool _consoleEnabled = false;
 
   bool get consoleEnabled => _consoleEnabled;
-
-  final MultiSplitViewController verticalDividerController =
-      MultiSplitViewController(areas: Area.weights([.9, .1]));
-  final MultiSplitViewController horizontalDividerController =
-      MultiSplitViewController(areas: Area.weights([.5, .5]));
 
   Example? _example;
 

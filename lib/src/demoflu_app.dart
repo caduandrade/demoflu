@@ -1,10 +1,10 @@
 import 'package:demoflu/src/demo_menu_item.dart';
 import 'package:demoflu/src/demoflu_settings.dart';
-import 'package:demoflu/src/example_widget.dart';
 import 'package:demoflu/src/internal/demoflu_logo.dart';
 import 'package:demoflu/src/internal/menu_widget.dart';
 import 'package:demoflu/src/internal/settings/settings_button.dart';
 import 'package:demoflu/src/internal/settings/settings_widget.dart';
+import 'package:demoflu/src/internal/switch_view/switch_view.dart';
 import 'package:flutter/material.dart';
 
 /// Demo app to be instantiated.
@@ -58,7 +58,7 @@ class DemoFlu {
   /// Prints on demo console.
   static void printOnConsole(BuildContext context, String text) {
     DemoFluAppState? state = context.findAncestorStateOfType<DemoFluAppState>();
-    state?.settings.consoleNotifier.update(text);
+    state?.settings.console.update(text);
   }
 }
 
@@ -108,8 +108,10 @@ class DemoFluAppState extends State<DemoFluApp> {
   }
 
   Widget _buildBody() {
+    Widget center = settings.example == null ? Center(child: Text('Loading...')):SwitchView(settings: settings);
+
     List<LayoutId> children = [
-      LayoutId(id: 2, child: ExampleWidget(settings: settings)),
+      LayoutId(id: 2, child: center),
       LayoutId(
           id: 1,
           child: MenuWidget(settings: settings, menuItems: widget.menuItems))

@@ -4,6 +4,7 @@
 * Refactor
   * `DemoFluApp`
     * Parameter `appMenuBuilder` has been changed to `menuItems` (list of `DemoMenu`).
+    * `widgetBackground` renamed to `exampleBackground`
   * `AppMenuBuilder` has been removed
 
 ## 0.16.0

@@ -14,7 +14,7 @@ class SettingsWidget extends StatelessWidget {
           hasScrollBody: false,
           child: Container(
               color: Colors.white,
-              padding: EdgeInsets.all(8),
+              padding: EdgeInsets.all(16),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [

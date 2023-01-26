@@ -3,7 +3,6 @@ import 'dart:math' as math;
 import 'package:demoflu/src/demoflu_settings.dart';
 import 'package:demoflu/src/internal/slider.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_split_view/multi_split_view.dart';
 
 class ResizableExampleWidget extends StatefulWidget {
   const ResizableExampleWidget({required this.settings});
@@ -43,7 +42,7 @@ class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
   @override
   Widget build(BuildContext context) {
     List<LayoutId> children = [];
-    if (widget.settings.widgetVisible) {
+
       children
           .add(LayoutId(id: _Id.exampleWidget, child: _buildExampleWidget()));
       if (widget.settings.resizable) {
@@ -63,7 +62,6 @@ class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
                 onChanged: (double value) =>
                     widget.settings.heightWeight = value)));
       }
-    }
 
     return Container(
         child: CustomMultiChildLayout(delegate: _Layout(), children: children),
@@ -85,9 +83,7 @@ class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
         maxHeight = maxHeight * widget.settings.heightWeight;
       }
       ConstrainedBox constrainedBox = ConstrainedBox(
-          child: MultiSplitViewTheme(
               child: widget.settings.example!.buildMainWidget(context),
-              data: MultiSplitViewThemeData()),
           constraints:
               BoxConstraints.tightFor(width: maxWidth, height: maxHeight));
 
