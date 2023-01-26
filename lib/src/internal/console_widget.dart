@@ -1,4 +1,4 @@
-import 'package:demoflu/src/demoflu_settings.dart';
+import 'package:demoflu/src/internal/demoflu_settings.dart';
 import 'package:flutter/material.dart';
 
 class ConsoleWidget extends StatefulWidget {
@@ -40,9 +40,13 @@ class ConsoleWidgetState extends State<ConsoleWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(child: ListView.builder(padding: EdgeInsets.all(8),shrinkWrap: true,
+    return Container(
+        child: ListView.builder(
+            padding: EdgeInsets.all(8),
+            shrinkWrap: true,
             itemBuilder: _itemBuilder,
-            itemCount: widget.settings.console.values.length),color: Colors.white);
+            itemCount: widget.settings.console.values.length),
+        color: Colors.white);
   }
 
   Widget? _itemBuilder(BuildContext context, int index) {

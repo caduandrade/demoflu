@@ -1,3 +1,1 @@
-enum SwitchViewType {
-  code, example
-}
+enum SwitchViewType { code, example }

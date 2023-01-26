@@ -1,5 +1,5 @@
 import 'package:demoflu/src/demo_menu_item.dart';
-import 'package:demoflu/src/demoflu_settings.dart';
+import 'package:demoflu/src/internal/demoflu_settings.dart';
 import 'package:demoflu/src/internal/demoflu_logo.dart';
 import 'package:demoflu/src/internal/menu_widget.dart';
 import 'package:demoflu/src/internal/settings/settings_button.dart';
@@ -108,7 +108,9 @@ class DemoFluAppState extends State<DemoFluApp> {
   }
 
   Widget _buildBody() {
-    Widget center = settings.example == null ? Center(child: Text('Loading...')):SwitchView(settings: settings);
+    Widget center = settings.example == null
+        ? Center(child: Text('Loading...'))
+        : SwitchView(settings: settings);
 
     List<LayoutId> children = [
       LayoutId(id: 2, child: center),

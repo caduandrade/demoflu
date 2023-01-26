@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:demoflu/src/demoflu_settings.dart';
+import 'package:demoflu/src/internal/demoflu_settings.dart';
 import 'package:demoflu/src/internal/slider.dart';
 import 'package:flutter/material.dart';
 
@@ -43,25 +43,24 @@ class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
   Widget build(BuildContext context) {
     List<LayoutId> children = [];
 
-      children
-          .add(LayoutId(id: _Id.exampleWidget, child: _buildExampleWidget()));
-      if (widget.settings.resizable) {
-        children.add(LayoutId(
-            id: _Id.widthSlider,
-            child: DemofluSlider(
-                axis: Axis.horizontal,
-                value: widget.settings.widthWeight,
-                onChanged: (double value) =>
-                    widget.settings.widthWeight = value)));
+    children.add(LayoutId(id: _Id.exampleWidget, child: _buildExampleWidget()));
+    if (widget.settings.resizable) {
+      children.add(LayoutId(
+          id: _Id.widthSlider,
+          child: DemofluSlider(
+              axis: Axis.horizontal,
+              value: widget.settings.widthWeight,
+              onChanged: (double value) =>
+                  widget.settings.widthWeight = value)));
 
-        children.add(LayoutId(
-            id: _Id.heightSlider,
-            child: DemofluSlider(
-                axis: Axis.vertical,
-                value: widget.settings.heightWeight,
-                onChanged: (double value) =>
-                    widget.settings.heightWeight = value)));
-      }
+      children.add(LayoutId(
+          id: _Id.heightSlider,
+          child: DemofluSlider(
+              axis: Axis.vertical,
+              value: widget.settings.heightWeight,
+              onChanged: (double value) =>
+                  widget.settings.heightWeight = value)));
+    }
 
     return Container(
         child: CustomMultiChildLayout(delegate: _Layout(), children: children),
@@ -83,7 +82,7 @@ class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
         maxHeight = maxHeight * widget.settings.heightWeight;
       }
       ConstrainedBox constrainedBox = ConstrainedBox(
-              child: widget.settings.example!.buildMainWidget(context),
+          child: widget.settings.example!.buildMainWidget(context),
           constraints:
               BoxConstraints.tightFor(width: maxWidth, height: maxHeight));
 

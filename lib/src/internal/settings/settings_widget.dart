@@ -1,4 +1,4 @@
-import 'package:demoflu/src/demoflu_settings.dart';
+import 'package:demoflu/src/internal/demoflu_settings.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 

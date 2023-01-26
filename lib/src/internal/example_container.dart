@@ -1,4 +1,4 @@
-import 'package:demoflu/src/demoflu_settings.dart';
+import 'package:demoflu/src/internal/demoflu_settings.dart';
 import 'package:demoflu/src/example.dart';
 import 'package:demoflu/src/internal/console_widget.dart';
 import 'package:demoflu/src/internal/resizable_example_widget.dart';
@@ -42,7 +42,10 @@ class ExampleContainerState extends State<ExampleContainer> {
                   child: Column(
                       children: children,
                       crossAxisAlignment: CrossAxisAlignment.stretch)),
-              decoration: BoxDecoration(color: Colors.white, border: Border(left: BorderSide(color: Colors.blueGrey[900]!))));
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  border:
+                      Border(left: BorderSide(color: Colors.blueGrey[900]!))));
           column = ConstrainedBox(
               constraints: BoxConstraints(maxWidth: 200, minWidth: 200),
               child: column);

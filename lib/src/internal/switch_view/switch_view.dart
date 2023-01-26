@@ -1,4 +1,4 @@
-import 'package:demoflu/src/demoflu_settings.dart';
+import 'package:demoflu/src/internal/demoflu_settings.dart';
 import 'package:demoflu/src/internal/code_widget.dart';
 import 'package:demoflu/src/internal/example_container.dart';
 import 'package:demoflu/src/internal/switch_view/switch_view_toggle_buttons.dart';
@@ -19,7 +19,8 @@ class SwitchViewState extends State<SwitchView> {
 
   @override
   Widget build(BuildContext context) {
-    ExampleContainer exampleWidget = ExampleContainer(settings: widget.settings);
+    ExampleContainer exampleWidget =
+        ExampleContainer(settings: widget.settings);
     if (widget.settings.code == null) {
       // no code available
       return exampleWidget;

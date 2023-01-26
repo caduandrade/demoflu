@@ -1,4 +1,4 @@
-import 'package:demoflu/src/demoflu_settings.dart';
+import 'package:demoflu/src/internal/demoflu_settings.dart';
 import 'package:demoflu/src/demo_menu_item.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
