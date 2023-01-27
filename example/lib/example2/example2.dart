@@ -7,5 +7,5 @@ class Example2 extends Example {
             widget: MainWidget(),
             codeFile: 'lib/example2/example2_widget.dart',
             consoleEnabled: true,
-  resizable: false);
+            resizable: false);
 }
