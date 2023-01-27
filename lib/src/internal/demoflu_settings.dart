@@ -7,16 +7,31 @@ import 'package:flutter/widgets.dart';
 class DemoFluSettings extends ChangeNotifier {
   DemoFluSettings(
       {required Color exampleBackground,
-      required double? widthWeight,
-      required double? heightWeight,
-      required this.resizable,
-      required Size? defaultMaxSize})
-      : this._defaultMaxSize = defaultMaxSize,
+      required double widthWeight,
+      required double heightWeight,
+      required bool resizable,
+      required Size? maxSize})
+      : this._resizable=resizable,
+        this._maxSize = maxSize,
         this._exampleBackground = exampleBackground,
-        this._widthWeight = widthWeight ?? 1,
-        this._heightWeight = heightWeight ?? 1;
+        this._widthWeight = widthWeight,
+        this._heightWeight = heightWeight;
 
-  final Size? _defaultMaxSize;
+  final bool _resizable;
+  bool get resizable => _example?.resizable??_resizable;
+
+  bool _resizeEnabled = true;
+  bool get resizeEnabled => _resizeEnabled;
+   set resizeEnabled(bool value) {
+    if(_resizeEnabled!=value){
+      _resizeEnabled=value;
+      notifyListeners();
+    }
+  }
+
+  final Size? _maxSize;
+
+  Size? get maxSize => _example?.maxSize??_maxSize;
 
   bool _settingsVisible = false;
 
@@ -70,7 +85,6 @@ class DemoFluSettings extends ChangeNotifier {
         code = await rootBundle.loadString(newExample.codeFile!);
       }
       _currentMenuItem = menuItem;
-      _maxSize = newExample.maxSize ?? _defaultMaxSize;
       _code = code;
 
       console.clear();
@@ -87,11 +101,9 @@ class DemoFluSettings extends ChangeNotifier {
 
   String? get code => _code;
 
-  Size? _maxSize;
 
-  Size? get maxSize => _maxSize;
 
-  final bool resizable;
+
 
   AbstractExample? _example;
 

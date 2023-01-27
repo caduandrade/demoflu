@@ -15,17 +15,15 @@ class DemoFluApp extends StatefulWidget {
       this.resizable = true,
       this.exampleBackground = Colors.white,
       this.maxSize,
-      this.initialWidthWeight,
-      this.initialHeightWeight}) {
-    if (initialHeightWeight != null &&
-        (initialHeightWeight! < 0 || initialHeightWeight! > 1)) {
+      this.widthWeight=1,
+      this.heightWeight=1}){
+    if (heightWeight < 0 || heightWeight > 1) {
       throw ArgumentError(
-          'initialHeightWeight must be a value between 0 and 1: $initialHeightWeight');
+          'heightWeight must be a value between 0 and 1: $heightWeight');
     }
-    if (initialWidthWeight != null &&
-        (initialWidthWeight! < 0 || initialWidthWeight! > 1)) {
+    if (widthWeight < 0 || widthWeight > 1) {
       throw ArgumentError(
-          'initialWidthWeight must be a value between 0 and 1: $initialWidthWeight');
+          'widthWeight must be a value between 0 and 1: $widthWeight');
     }
   }
 
@@ -37,17 +35,17 @@ class DemoFluApp extends StatefulWidget {
 
   final Size? maxSize;
   final bool resizable;
-  final double? initialWidthWeight;
-  final double? initialHeightWeight;
+  final double widthWeight;
+  final double heightWeight;
 
   @override
   State<StatefulWidget> createState() => DemoFluAppState(
       settings: DemoFluSettings(
           exampleBackground: exampleBackground,
-          widthWeight: initialWidthWeight,
-          heightWeight: initialHeightWeight,
+          widthWeight: widthWeight,
+          heightWeight: heightWeight,
           resizable: resizable,
-          defaultMaxSize: maxSize));
+          maxSize: maxSize));
 }
 
 /// Utilities.
@@ -81,7 +79,7 @@ class DemoFluAppState extends State<DemoFluApp> {
     settings.removeListener(_rebuild);
     super.dispose();
   }
-
+  
   void _rebuild() {
     setState(() {
       //rebuilds

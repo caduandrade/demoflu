@@ -16,29 +16,22 @@ class SwitchView extends StatefulWidget {
 
 class SwitchViewState extends State<SwitchView> {
   SwitchViewType _selectedType = SwitchViewType.example;
-  bool _resizeEnabled = false;
 
   @override
   Widget build(BuildContext context) {
-    final bool resizable = widget.settings.example!.resizable != null
-        ? widget.settings.example!.resizable!
-        : widget.settings.resizable;
-
     List<Widget> barExtraWidgets =
         widget.settings.example!.buildBarWidgets(context);
 
-    if (resizable) {
+    if (widget.settings.resizable) {
       barExtraWidgets.add(_CheckWidget(
-          value: _resizeEnabled,
+          value: widget.settings.resizeEnabled,
           title: 'resizable',
-          onChanged: (value) => setState(() {
-                _resizeEnabled = !_resizeEnabled;
-              })));
+          onChanged: (value) => widget.settings.resizeEnabled=!widget.settings.resizeEnabled));
     }
 
     ExampleContainer exampleWidget = ExampleContainer(
         settings: widget.settings,
-        resizable: resizable ? _resizeEnabled : false);
+        resizable: widget.settings.resizable ? widget.settings.resizeEnabled : false);
     CodeWidget? codeWidget = widget.settings.code != null
         ? CodeWidget(code: widget.settings.code!)
         : null;

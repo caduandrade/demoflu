@@ -5,7 +5,8 @@ import 'package:demoflu_example/example3/example3.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(DemoFluApp(initialHeightWeight: .5, title: 'Example Demo', menuItems: [
+  runApp(DemoFluApp(
+      heightWeight: .5, title: 'Example Demo', menuItems: [
     DemoMenuItem(name: 'Section', italic: true),
     DemoMenuItem(name: 'Example 1', example: Example1(), indentation: 2),
     DemoMenuItem(name: 'Example 2', example: Example2(), indentation: 2),
