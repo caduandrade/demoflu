@@ -1,13 +1,15 @@
 import 'dart:math' as math;
 
+import 'package:demoflu/src/example.dart';
 import 'package:demoflu/src/internal/demoflu_settings.dart';
 import 'package:demoflu/src/internal/slider.dart';
 import 'package:flutter/material.dart';
 
 class ResizableExampleWidget extends StatefulWidget {
-  const ResizableExampleWidget({required this.settings});
+  const ResizableExampleWidget({required this.settings, required this.example});
 
   final DemoFluSettings settings;
+  final AbstractExample example;
 
   @override
   State<StatefulWidget> createState() => ResizableExampleWidgetState();
@@ -45,7 +47,7 @@ class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
         builder: (BuildContext context, BoxConstraints constraints) {
       double maxWidth = constraints.maxWidth;
       double maxHeight = constraints.maxHeight;
-      Size? maxSize = widget.settings.maxSize;
+      Size? maxSize = widget.example.maxSize ?? widget.settings.maxSize;
       if (maxSize != null) {
         maxWidth = math.min(maxWidth, maxSize.width);
         maxHeight = math.min(maxHeight, maxSize.height);
@@ -55,7 +57,7 @@ class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
       maxHeight = maxHeight * widget.settings.heightWeight;
 
       ConstrainedBox constrainedBox = ConstrainedBox(
-          child: widget.settings.example!.buildWidget(context),
+          child: widget.example.buildWidget(context),
           constraints:
               BoxConstraints.tightFor(width: maxWidth, height: maxHeight));
 

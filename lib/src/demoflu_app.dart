@@ -1,9 +1,9 @@
-import 'package:demoflu/src/demo_menu_item.dart';
-import 'package:demoflu/src/internal/demoflu_settings.dart';
+import 'package:demoflu/demoflu.dart';
+import 'package:demoflu/src/internal/console_controller.dart';
 import 'package:demoflu/src/internal/demoflu_logo.dart';
+import 'package:demoflu/src/internal/demoflu_settings.dart';
 import 'package:demoflu/src/internal/menu_widget.dart';
-import 'package:demoflu/src/internal/settings/settings_button.dart';
-import 'package:demoflu/src/internal/settings/settings_widget.dart';
+import 'package:demoflu/src/internal/settings_widget.dart';
 import 'package:demoflu/src/internal/switch_view/switch_view.dart';
 import 'package:flutter/material.dart';
 
@@ -15,8 +15,8 @@ class DemoFluApp extends StatefulWidget {
       this.resizable = true,
       this.exampleBackground = Colors.white,
       this.maxSize,
-      this.widthWeight=1,
-      this.heightWeight=1}){
+      this.widthWeight = 1,
+      this.heightWeight = 1}) {
     if (heightWeight < 0 || heightWeight > 1) {
       throw ArgumentError(
           'heightWeight must be a value between 0 and 1: $heightWeight');
@@ -39,51 +39,32 @@ class DemoFluApp extends StatefulWidget {
   final double heightWeight;
 
   @override
-  State<StatefulWidget> createState() => DemoFluAppState(
-      settings: DemoFluSettings(
-          exampleBackground: exampleBackground,
-          widthWeight: widthWeight,
-          heightWeight: heightWeight,
-          resizable: resizable,
-          maxSize: maxSize));
-}
-
-/// Utilities.
-class DemoFlu {
-  /// Prints on demo console.
-  static void printOnConsole(BuildContext context, String text) {
-    DemoFluAppState? state = context.findAncestorStateOfType<DemoFluAppState>();
-    state?.settings.console.update(text);
-  }
+  State<StatefulWidget> createState() => DemoFluAppState();
 }
 
 /// The [DemoFluApp] state.
 class DemoFluAppState extends State<DemoFluApp> {
-  DemoFluAppState({required this.settings});
-
-  final DemoFluSettings settings;
+  late final DemoFluSettings settings;
+  final ConsoleController _console = ConsoleController();
+  DemoMenuItem? _selectedMenuItem;
+  AbstractExample? _example;
+  bool _settingsVisible = false;
 
   @override
   void initState() {
     super.initState();
+    settings = DemoFluSettings(
+        exampleBackground: widget.exampleBackground,
+        widthWeight: widget.widthWeight,
+        heightWeight: widget.heightWeight,
+        resizable: widget.resizable,
+        maxSize: widget.maxSize);
     int menuItemIndex =
         widget.menuItems.indexWhere((menuItem) => menuItem.example != null);
     if (menuItemIndex > -1) {
-      settings.updateCurrentExample(widget.menuItems[menuItemIndex]);
+      _selectedMenuItem = widget.menuItems[menuItemIndex];
+      _example = _selectedMenuItem?.example;
     }
-    settings.addListener(_rebuild);
-  }
-
-  @override
-  void dispose() {
-    settings.removeListener(_rebuild);
-    super.dispose();
-  }
-  
-  void _rebuild() {
-    setState(() {
-      //rebuilds
-    });
   }
 
   @override
@@ -98,30 +79,53 @@ class DemoFluAppState extends State<DemoFluApp> {
             appBar: AppBar(
                 title: Text(widget.title),
                 backgroundColor: Colors.blueGrey[900],
-                actions: [SettingsButton(settings: settings), DemoFluLogo()]),
+                actions: [
+                  IconButton(
+                      onPressed: () =>
+                          setState(() => _settingsVisible = !_settingsVisible),
+                      icon: Icon(Icons.settings),
+                      tooltip: 'Settings'),
+                  DemoFluLogo()
+                ]),
             body: _buildBody()));
   }
 
   Widget _buildBody() {
-    Widget center = settings.example == null
-        ? Center(child: Text('Loading...'))
-        : SwitchView(settings: settings);
+    Widget center = _example == null
+        ? Center(child: Text('No example available'))
+        : AnimatedBuilder(
+            animation: settings,
+            builder: (context, child) => SwitchView(
+                settings: settings, example: _example!, console: _console));
 
     List<LayoutId> children = [
       LayoutId(id: 2, child: center),
       LayoutId(
           id: 1,
-          child: MenuWidget(settings: settings, menuItems: widget.menuItems))
+          child: MenuWidget(
+              onMenuItemTap: _onMenuSelect,
+              selectedMenuItem: _selectedMenuItem,
+              menuItems: widget.menuItems))
     ];
 
     Widget exampleArea =
         CustomMultiChildLayout(delegate: _Layout(), children: children);
 
     List<Widget> stackChildren = [Positioned.fill(child: exampleArea)];
-    if (settings.settingsVisible) {
-      stackChildren.add(SettingsWidget(settings: settings));
+    if (_settingsVisible) {
+      stackChildren.add(SettingsWidget(
+          settings: settings,
+          onClose: () => setState(() => _settingsVisible = false)));
     }
     return Stack(children: stackChildren);
+  }
+
+  void _onMenuSelect(DemoMenuItem menuItem) {
+    _console.clear();
+    setState(() {
+      _selectedMenuItem = menuItem;
+      _example = menuItem.example;
+    });
   }
 }
 
@@ -147,5 +151,14 @@ class _Layout extends MultiChildLayoutDelegate {
   @override
   bool shouldRelayout(covariant MultiChildLayoutDelegate oldDelegate) {
     return false;
+  }
+}
+
+/// Utilities.
+class DemoFlu {
+  /// Prints on demo console.
+  static void printOnConsole(BuildContext context, String text) {
+    DemoFluAppState? state = context.findAncestorStateOfType<DemoFluAppState>();
+    state?._console.update(text);
   }
 }

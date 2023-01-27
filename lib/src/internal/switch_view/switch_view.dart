@@ -1,4 +1,6 @@
+import 'package:demoflu/src/example.dart';
 import 'package:demoflu/src/internal/code_widget.dart';
+import 'package:demoflu/src/internal/console_controller.dart';
 import 'package:demoflu/src/internal/demoflu_settings.dart';
 import 'package:demoflu/src/internal/example_container.dart';
 import 'package:demoflu/src/internal/switch_view/switch_view_toggle_buttons.dart';
@@ -6,9 +8,16 @@ import 'package:demoflu/src/internal/switch_view/switch_view_type.dart';
 import 'package:flutter/material.dart';
 
 class SwitchView extends StatefulWidget {
-  const SwitchView({Key? key, required this.settings}) : super(key: key);
+  const SwitchView(
+      {Key? key,
+      required this.settings,
+      required this.example,
+      required this.console})
+      : super(key: key);
 
   final DemoFluSettings settings;
+  final AbstractExample example;
+  final ConsoleController console;
 
   @override
   State<StatefulWidget> createState() => SwitchViewState();
@@ -19,21 +28,28 @@ class SwitchViewState extends State<SwitchView> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> barExtraWidgets =
-        widget.settings.example!.buildBarWidgets(context);
+    List<Widget> barExtraWidgets = widget.example.buildBarWidgets(context);
 
-    if (widget.settings.resizable) {
-      barExtraWidgets.add(_CheckWidget(
-          value: widget.settings.resizeEnabled,
-          title: 'resizable',
-          onChanged: (value) => widget.settings.resizeEnabled=!widget.settings.resizeEnabled));
+    final bool resizable =
+        widget.example.resizable ?? widget.settings.resizable;
+
+    if (resizable) {
+      barExtraWidgets.insert(
+          0,
+          _CheckWidget(
+              value: widget.settings.resizeEnabled,
+              title: 'resizable',
+              onChanged: (value) => widget.settings.resizeEnabled =
+                  !widget.settings.resizeEnabled));
     }
 
     ExampleContainer exampleWidget = ExampleContainer(
         settings: widget.settings,
-        resizable: widget.settings.resizable ? widget.settings.resizeEnabled : false);
-    CodeWidget? codeWidget = widget.settings.code != null
-        ? CodeWidget(code: widget.settings.code!)
+        console: widget.console,
+        resizable: resizable ? widget.settings.resizeEnabled : false,
+        example: widget.example);
+    CodeWidget? codeWidget = widget.example.codeFile != null
+        ? CodeWidget(codeFile: widget.example.codeFile!)
         : null;
 
     if (codeWidget == null && barExtraWidgets.isEmpty) {

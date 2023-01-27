@@ -1,4 +1,5 @@
 import 'package:demoflu/src/example.dart';
+import 'package:demoflu/src/internal/console_controller.dart';
 import 'package:demoflu/src/internal/console_widget.dart';
 import 'package:demoflu/src/internal/demoflu_settings.dart';
 import 'package:demoflu/src/internal/resizable_example_widget.dart';
@@ -6,10 +7,16 @@ import 'package:demoflu/src/internal/title_container.dart';
 import 'package:flutter/material.dart';
 
 class ExampleContainer extends StatefulWidget {
-  const ExampleContainer({required this.settings, required this.resizable});
+  const ExampleContainer(
+      {required this.settings,
+      required this.resizable,
+      required this.example,
+      required this.console});
 
   final DemoFluSettings settings;
   final bool resizable;
+  final AbstractExample example;
+  final ConsoleController console;
 
   @override
   State<StatefulWidget> createState() => ExampleContainerState();
@@ -21,19 +28,19 @@ class ExampleContainerState extends State<ExampleContainer> {
   @override
   void initState() {
     super.initState();
-    widget.settings.example?.addListener(_rebuild);
+    widget.example.addListener(_rebuild);
   }
 
   @override
   void dispose() {
-    widget.settings.example?.removeListener(_rebuild);
+    widget.example.removeListener(_rebuild);
     super.dispose();
   }
 
   @override
   void didUpdateWidget(covariant ExampleContainer oldWidget) {
-    oldWidget.settings.example?.removeListener(_rebuild);
-    widget.settings.example?.addListener(_rebuild);
+    oldWidget.example.removeListener(_rebuild);
+    widget.example.addListener(_rebuild);
     super.didUpdateWidget(oldWidget);
   }
 
@@ -46,30 +53,29 @@ class ExampleContainerState extends State<ExampleContainer> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      final AbstractExample example = widget.settings.example!;
-
       List<Widget> children = [];
 
       Widget exampleWidget = Expanded(
           child: widget.resizable
-              ? ResizableExampleWidget(settings: widget.settings)
+              ? ResizableExampleWidget(
+                  settings: widget.settings, example: widget.example)
               : Container(
                   color: widget.settings.exampleBackground,
-                  child: widget.settings.example!.buildWidget(context)));
+                  child: widget.example.buildWidget(context)));
 
       children.add(exampleWidget);
 
-      if (example.consoleEnabled && constraints.maxHeight > 150) {
+      if (widget.example.consoleEnabled && constraints.maxHeight > 150) {
         children.add(ConstrainedBox(
             constraints: BoxConstraints(maxHeight: 150, minHeight: 0),
             child: TitleContainer(
                 title: 'Console',
                 onResize: _onConsoleResize,
                 extraButton: IconButton(
-                    onPressed: () => widget.settings.console.clear(),
+                    onPressed: () => widget.console.clear(),
                     icon: Icon(Icons.delete, color: Colors.white)),
                 child: _consoleExpanded
-                    ? ConsoleWidget(settings: widget.settings)
+                    ? ConsoleWidget(console: widget.console)
                     : null)));
       }
       return Column(

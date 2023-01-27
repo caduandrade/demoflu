@@ -1,21 +1,24 @@
-import 'package:demoflu/src/internal/demoflu_settings.dart';
 import 'package:demoflu/src/demo_menu_item.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class MenuWidget extends StatelessWidget {
-  MenuWidget({required this.settings, required this.menuItems});
+  MenuWidget(
+      {required this.menuItems,
+      required this.selectedMenuItem,
+      required this.onMenuItemTap});
 
-  final DemoFluSettings settings;
   final List<DemoMenuItem> menuItems;
+  final DemoMenuItem? selectedMenuItem;
+  final OnMenuItemTap onMenuItemTap;
 
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [];
     for (DemoMenuItem menuItem in menuItems) {
       children.add(_MenuItemWidget(
-          settings: settings,
-          selected: settings.currentMenuItem == menuItem,
+          onMenuItemTap: onMenuItemTap,
+          selected: selectedMenuItem == menuItem,
           menuItem: menuItem));
     }
     return Container(
@@ -42,9 +45,11 @@ class MenuWidget extends StatelessWidget {
 
 class _MenuItemWidget extends StatefulWidget {
   const _MenuItemWidget(
-      {required this.settings, required this.selected, required this.menuItem});
+      {required this.onMenuItemTap,
+      required this.selected,
+      required this.menuItem});
 
-  final DemoFluSettings settings;
+  final OnMenuItemTap onMenuItemTap;
   final bool selected;
   final DemoMenuItem menuItem;
 
@@ -113,6 +118,8 @@ class _MenuItemWidgetState extends State<_MenuItemWidget> {
   }
 
   _onTap() {
-    widget.settings.updateCurrentExample(widget.menuItem);
+    widget.onMenuItemTap(widget.menuItem);
   }
 }
+
+typedef OnMenuItemTap = void Function(DemoMenuItem menuItem);

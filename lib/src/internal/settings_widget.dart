@@ -3,9 +3,12 @@ import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 
 class SettingsWidget extends StatelessWidget {
-  const SettingsWidget({Key? key, required this.settings}) : super(key: key);
+  const SettingsWidget(
+      {Key? key, required this.settings, required this.onClose})
+      : super(key: key);
 
   final DemoFluSettings settings;
+  final VoidCallback onClose;
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +37,7 @@ class SettingsWidget extends StatelessWidget {
                     Align(
                         alignment: Alignment.centerRight,
                         child: ElevatedButton(
-                            child: Text('Back'),
-                            onPressed: () => settings.settingsVisible = false))
+                            child: Text('Back'), onPressed: onClose))
                   ])))
     ]);
   }
