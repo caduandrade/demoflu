@@ -3,16 +3,11 @@
 * New layout
 * Refactor
   * `DemoFluApp`
-    * Parameter `appMenuBuilder` has been changed to `menuItems` (list of `DemoMenu`).
-    * `widgetBackground` renamed to `exampleBackground`
-  * `MenuItem`
-  * builder delete
-  * final String? codeFile;
-      final bool? resizable;
-      final Size? maxSize;
-      final bool? consoleEnabled;
-  + example
-  * `AppMenuBuilder` has been removed
+    * Parameter `appMenuBuilder` has been replaced by `menuItems` (list of `DemoMenu`).
+    * Parameter `widgetBackground` has been renamed to `exampleBackground`.
+  * `MenuItem` 
+    * Parameters `codeFile`, `resizable`, `maxSize` and `consoleEnabled` has been moved to class `AbstractExample`.
+    * The `builder` parameter has been replaced by `example`.
 
 ## 0.16.0
 
