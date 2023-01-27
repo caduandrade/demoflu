@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:demoflu/src/demo_menu_item.dart';
 import 'package:demoflu/src/example.dart';
 import 'package:demoflu/src/internal/console_controller.dart';
@@ -47,23 +45,6 @@ class DemoFluSettings extends ChangeNotifier {
     }
   }
 
-  List<String> _extraWidgetsNames = [];
-
-  List<String> get extraWidgetsNames =>
-      UnmodifiableListView(_extraWidgetsNames);
-
-  bool get extraWidgetsEnabled => _extraWidgetsNames.isNotEmpty;
-
-  bool _extraWidgetsVisible = false;
-
-  /// Indicates whether extra widget views is visible.
-  bool get extraWidgetsVisible => _extraWidgetsVisible;
-
-  set extraWidgetsVisible(bool visible) {
-    _extraWidgetsVisible = visible;
-    notifyListeners();
-  }
-
   double _widthWeight;
 
   double get widthWeight => _widthWeight;
@@ -87,26 +68,22 @@ class DemoFluSettings extends ChangeNotifier {
     _example = null;
     notifyListeners();
 
-    String? code;
-    if (menuItem.codeFile != null) {
-      code = await rootBundle.loadString(menuItem.codeFile!);
-    }
-    _currentMenuItem = menuItem;
-    _resizable = menuItem.resizable ?? _defaultResizable;
-    _consoleEnabled = menuItem.consoleEnabled ?? _defaultConsoleEnabled;
-    _maxSize = menuItem.maxSize ?? _defaultMaxSize;
-    _code = code;
+    if (menuItem.example != null) {
+      final AbstractExample newExample = menuItem.example!;
+      String? code;
+      if (newExample.codeFile != null) {
+        code = await rootBundle.loadString(newExample.codeFile!);
+      }
+      _currentMenuItem = menuItem;
+      _resizable = newExample.resizable ?? _defaultResizable;
+      _consoleEnabled = newExample.consoleEnabled ?? _defaultConsoleEnabled;
+      _maxSize = newExample.maxSize ?? _defaultMaxSize;
+      _code = code;
 
-    _example = menuItem.builder!();
-    if (_example is ExtraWidgetsMixin) {
-      ExtraWidgetsMixin extraWidgetsMixin = _example as ExtraWidgetsMixin;
-      _extraWidgetsNames = extraWidgetsMixin.extraWidgetNames();
-    } else {
-      _extraWidgetsNames = [];
-    }
+      _example = newExample;
 
-    _extraWidgetsVisible = extraWidgetsEnabled;
-    notifyListeners();
+      notifyListeners();
+    }
   }
 
   final ConsoleController console = ConsoleController();
@@ -128,9 +105,9 @@ class DemoFluSettings extends ChangeNotifier {
 
   bool get consoleEnabled => _consoleEnabled;
 
-  Example? _example;
+  AbstractExample? _example;
 
-  Example? get example => _example;
+  AbstractExample? get example => _example;
 
   DemoMenuItem? _currentMenuItem;
 

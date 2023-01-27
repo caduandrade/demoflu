@@ -67,7 +67,7 @@ class _MenuItemWidgetState extends State<_MenuItemWidget> {
             style: TextStyle(color: _textColor(), fontStyle: _fontStyle())),
         padding: EdgeInsets.fromLTRB(left, 8, 8, 8));
 
-    if (widget.menuItem.builder == null) {
+    if (widget.menuItem.example == null) {
       return text;
     }
 

@@ -1,31 +1,46 @@
 import 'package:flutter/widgets.dart';
 
-abstract class Example {
-  _Notifier _mainWidgetNotifier = _Notifier();
+abstract class AbstractExample extends ChangeNotifier {
+  AbstractExample(
+      {this.codeFile, this.resizable, this.maxSize, this.consoleEnabled});
 
-  Widget buildMainWidget(BuildContext context);
+  final String? codeFile;
+  final bool? resizable;
+  final Size? maxSize;
+  final bool? consoleEnabled;
 
-  void addMainWidgetListener(VoidCallback listener) {
-    _mainWidgetNotifier.addListener(listener);
-  }
+  Widget buildWidget(BuildContext context);
 
-  void removeMainWidgetListener(VoidCallback listener) {
-    _mainWidgetNotifier.removeListener(listener);
-  }
+  List<Widget> buildBarWidgets(BuildContext context);
 
-  void notifyMainWidgetListeners() {
-    _mainWidgetNotifier.notify();
-  }
-}
+  void resetExample();
 
-mixin ExtraWidgetsMixin {
-  Widget? buildExtraWidget(BuildContext context, String name);
-
-  List<String> extraWidgetNames();
-}
-
-class _Notifier extends ChangeNotifier {
-  void notify() {
+  void rebuildWidget() {
     notifyListeners();
   }
+}
+
+class Example extends AbstractExample {
+  Example(
+      {String? codeFile,
+      bool? resizable,
+      Size? maxSize,
+      bool? consoleEnabled,
+      required this.widget})
+      : super(
+            codeFile: codeFile,
+            resizable: resizable,
+            maxSize: maxSize,
+            consoleEnabled: consoleEnabled);
+
+  final Widget widget;
+
+  @override
+  Widget buildWidget(BuildContext context) => widget;
+
+  @override
+  void resetExample() {}
+
+  @override
+  List<Widget> buildBarWidgets(BuildContext context) => [];
 }

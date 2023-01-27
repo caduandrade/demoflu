@@ -17,19 +17,19 @@ class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
   @override
   void initState() {
     super.initState();
-    widget.settings.example?.addMainWidgetListener(_rebuild);
+    widget.settings.example?.addListener(_rebuild);
   }
 
   @override
   void dispose() {
-    widget.settings.example?.removeMainWidgetListener(_rebuild);
+    widget.settings.example?.removeListener(_rebuild);
     super.dispose();
   }
 
   @override
   void didUpdateWidget(covariant ResizableExampleWidget oldWidget) {
-    oldWidget.settings.example?.removeMainWidgetListener(_rebuild);
-    widget.settings.example?.addMainWidgetListener(_rebuild);
+    oldWidget.settings.example?.removeListener(_rebuild);
+    widget.settings.example?.addListener(_rebuild);
     super.didUpdateWidget(oldWidget);
   }
 
@@ -82,7 +82,7 @@ class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
         maxHeight = maxHeight * widget.settings.heightWeight;
       }
       ConstrainedBox constrainedBox = ConstrainedBox(
-          child: widget.settings.example!.buildMainWidget(context),
+          child: widget.settings.example!.buildWidget(context),
           constraints:
               BoxConstraints.tightFor(width: maxWidth, height: maxHeight));
 

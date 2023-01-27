@@ -72,7 +72,7 @@ class DemoFluAppState extends State<DemoFluApp> {
   void initState() {
     super.initState();
     int menuItemIndex =
-        widget.menuItems.indexWhere((menuItem) => menuItem.builder != null);
+        widget.menuItems.indexWhere((menuItem) => menuItem.example != null);
     if (menuItemIndex > -1) {
       settings.updateCurrentExample(widget.menuItems[menuItemIndex]);
     }

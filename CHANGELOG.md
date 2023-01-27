@@ -5,6 +5,13 @@
   * `DemoFluApp`
     * Parameter `appMenuBuilder` has been changed to `menuItems` (list of `DemoMenu`).
     * `widgetBackground` renamed to `exampleBackground`
+  * `MenuItem`
+  * builder delete
+  * final String? codeFile;
+      final bool? resizable;
+      final Size? maxSize;
+      final bool? consoleEnabled;
+  + example
   * `AppMenuBuilder` has been removed
 
 ## 0.16.0
