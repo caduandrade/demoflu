@@ -109,7 +109,9 @@ class RenderDemofluSlider extends RenderBox {
   }
 
   Axis _axis;
+
   Axis get axis => _axis;
+
   set axis(Axis axis) {
     if (_axis != axis) {
       _axis = axis;
@@ -118,7 +120,9 @@ class RenderDemofluSlider extends RenderBox {
   }
 
   double _value;
+
   double get value => _value;
+
   set value(double value) {
     if (_value != value) {
       _value = value;
@@ -128,7 +132,9 @@ class RenderDemofluSlider extends RenderBox {
   }
 
   Color _barColor;
+
   Color get barColor => _barColor;
+
   set barColor(Color value) {
     if (_barColor != value) {
       _barColor = value;
@@ -137,7 +143,9 @@ class RenderDemofluSlider extends RenderBox {
   }
 
   Color _activeBarColor;
+
   Color get activeBarColor => _activeBarColor;
+
   set activeBarColor(Color value) {
     if (_activeBarColor != value) {
       _activeBarColor = value;
@@ -146,7 +154,9 @@ class RenderDemofluSlider extends RenderBox {
   }
 
   Color _markerColor;
+
   Color get markerColor => _markerColor;
+
   set markerColor(Color value) {
     if (_markerColor != value) {
       _markerColor = value;
