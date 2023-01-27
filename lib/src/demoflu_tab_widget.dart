@@ -1,9 +1,7 @@
 import 'package:demoflu/src/example.dart';
 import 'package:flutter/cupertino.dart';
 
-
 class DemofluTabWidget extends StatelessWidget {
-
   final Example example;
 
   const DemofluTabWidget({Key? key, required this.example}) : super(key: key);
@@ -13,6 +11,4 @@ class DemofluTabWidget extends StatelessWidget {
     // TODO: implement build
     throw UnimplementedError();
   }
-
 }
-

@@ -9,15 +9,13 @@ class DemoFluSettings extends ChangeNotifier {
       {required Color exampleBackground,
       required double? widthWeight,
       required double? heightWeight,
-      required bool defaultResizable,
+      required this.resizable,
       required Size? defaultMaxSize})
-      : this._defaultResizable = defaultResizable,
-        this._defaultMaxSize = defaultMaxSize,
+      : this._defaultMaxSize = defaultMaxSize,
         this._exampleBackground = exampleBackground,
         this._widthWeight = widthWeight ?? 1,
         this._heightWeight = heightWeight ?? 1;
 
-  final bool _defaultResizable;
   final Size? _defaultMaxSize;
 
   bool _settingsVisible = false;
@@ -72,7 +70,6 @@ class DemoFluSettings extends ChangeNotifier {
         code = await rootBundle.loadString(newExample.codeFile!);
       }
       _currentMenuItem = menuItem;
-      _resizable = newExample.resizable ?? _defaultResizable;
       _maxSize = newExample.maxSize ?? _defaultMaxSize;
       _code = code;
 
@@ -94,11 +91,7 @@ class DemoFluSettings extends ChangeNotifier {
 
   Size? get maxSize => _maxSize;
 
-  /// Indicates whether example is resizable.
-  bool _resizable = false;
-
-  bool get resizable => _resizable;
-
+  final bool resizable;
 
   AbstractExample? _example;
 

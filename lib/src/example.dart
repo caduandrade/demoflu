@@ -2,7 +2,10 @@ import 'package:flutter/widgets.dart';
 
 abstract class AbstractExample extends ChangeNotifier {
   AbstractExample(
-      {this.codeFile, this.resizable, this.maxSize, this.consoleEnabled=false});
+      {this.codeFile,
+      this.resizable,
+      this.maxSize,
+      this.consoleEnabled = false});
 
   final String? codeFile;
   final bool? resizable;
@@ -25,7 +28,7 @@ class Example extends AbstractExample {
       {String? codeFile,
       bool? resizable,
       Size? maxSize,
-      bool consoleEnabled=false,
+      bool consoleEnabled = false,
       required this.widget})
       : super(
             codeFile: codeFile,

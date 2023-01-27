@@ -16,16 +16,32 @@ class SwitchView extends StatefulWidget {
 
 class SwitchViewState extends State<SwitchView> {
   SwitchViewType _selectedType = SwitchViewType.example;
+  bool _resizeEnabled = false;
 
   @override
   Widget build(BuildContext context) {
-    ExampleContainer exampleWidget =
-        ExampleContainer(settings: widget.settings);
+    final bool resizable = widget.settings.example!.resizable != null
+        ? widget.settings.example!.resizable!
+        : widget.settings.resizable;
+
+    List<Widget> barExtraWidgets =
+        widget.settings.example!.buildBarWidgets(context);
+
+    if (resizable) {
+      barExtraWidgets.add(_CheckWidget(
+          value: _resizeEnabled,
+          title: 'resizable',
+          onChanged: (value) => setState(() {
+                _resizeEnabled = !_resizeEnabled;
+              })));
+    }
+
+    ExampleContainer exampleWidget = ExampleContainer(
+        settings: widget.settings,
+        resizable: resizable ? _resizeEnabled : false);
     CodeWidget? codeWidget = widget.settings.code != null
         ? CodeWidget(code: widget.settings.code!)
         : null;
-    List<Widget> barExtraWidgets =
-        widget.settings.example!.buildBarWidgets(context);
 
     if (codeWidget == null && barExtraWidgets.isEmpty) {
       // only example widget
@@ -66,7 +82,10 @@ class _BarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Wrap(children: children, spacing: 8),
+        child: Wrap(
+            children: children,
+            spacing: 16,
+            crossAxisAlignment: WrapCrossAlignment.center),
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
             boxShadow: [
@@ -79,5 +98,26 @@ class _BarWidget extends StatelessWidget {
             ],
             color: Colors.blueGrey[50],
             border: Border(bottom: BorderSide(color: Colors.blueGrey[700]!))));
+  }
+}
+
+class _CheckWidget extends StatelessWidget {
+  const _CheckWidget(
+      {Key? key,
+      required this.title,
+      required this.value,
+      required this.onChanged})
+      : super(key: key);
+
+  final String title;
+  final bool value;
+  final ValueChanged<bool?> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+        children: [Text(title), Checkbox(value: value, onChanged: onChanged)],
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center);
   }
 }

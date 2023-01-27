@@ -12,7 +12,7 @@ class DemoFluApp extends StatefulWidget {
   DemoFluApp(
       {required this.title,
       required this.menuItems,
-      this.resizable = false,
+      this.resizable = true,
       this.exampleBackground = Colors.white,
       this.maxSize,
       this.initialWidthWeight,
@@ -46,7 +46,7 @@ class DemoFluApp extends StatefulWidget {
           exampleBackground: exampleBackground,
           widthWeight: initialWidthWeight,
           heightWeight: initialHeightWeight,
-          defaultResizable: resizable,
+          resizable: resizable,
           defaultMaxSize: maxSize));
 }
 

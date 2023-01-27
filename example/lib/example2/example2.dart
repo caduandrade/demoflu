@@ -6,5 +6,6 @@ class Example2 extends Example {
       : super(
             widget: MainWidget(),
             codeFile: 'lib/example2/example2_widget.dart',
-            consoleEnabled: true);
+            consoleEnabled: true,
+  resizable: false);
 }

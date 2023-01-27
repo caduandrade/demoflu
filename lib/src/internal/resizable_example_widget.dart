@@ -15,52 +15,25 @@ class ResizableExampleWidget extends StatefulWidget {
 
 class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
   @override
-  void initState() {
-    super.initState();
-    widget.settings.example?.addListener(_rebuild);
-  }
-
-  @override
-  void dispose() {
-    widget.settings.example?.removeListener(_rebuild);
-    super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(covariant ResizableExampleWidget oldWidget) {
-    oldWidget.settings.example?.removeListener(_rebuild);
-    widget.settings.example?.addListener(_rebuild);
-    super.didUpdateWidget(oldWidget);
-  }
-
-  void _rebuild() {
-    setState(() {
-      // rebuilds
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     List<LayoutId> children = [];
 
     children.add(LayoutId(id: _Id.exampleWidget, child: _buildExampleWidget()));
-    if (widget.settings.resizable) {
-      children.add(LayoutId(
-          id: _Id.widthSlider,
-          child: DemofluSlider(
-              axis: Axis.horizontal,
-              value: widget.settings.widthWeight,
-              onChanged: (double value) =>
-                  widget.settings.widthWeight = value)));
 
-      children.add(LayoutId(
-          id: _Id.heightSlider,
-          child: DemofluSlider(
-              axis: Axis.vertical,
-              value: widget.settings.heightWeight,
-              onChanged: (double value) =>
-                  widget.settings.heightWeight = value)));
-    }
+    children.add(LayoutId(
+        id: _Id.widthSlider,
+        child: DemofluSlider(
+            axis: Axis.horizontal,
+            value: widget.settings.widthWeight,
+            onChanged: (double value) => widget.settings.widthWeight = value)));
+
+    children.add(LayoutId(
+        id: _Id.heightSlider,
+        child: DemofluSlider(
+            axis: Axis.vertical,
+            value: widget.settings.heightWeight,
+            onChanged: (double value) =>
+                widget.settings.heightWeight = value)));
 
     return Container(
         child: CustomMultiChildLayout(delegate: _Layout(), children: children),
@@ -77,10 +50,10 @@ class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
         maxWidth = math.min(maxWidth, maxSize.width);
         maxHeight = math.min(maxHeight, maxSize.height);
       }
-      if (widget.settings.resizable) {
-        maxWidth = maxWidth * widget.settings.widthWeight;
-        maxHeight = maxHeight * widget.settings.heightWeight;
-      }
+
+      maxWidth = maxWidth * widget.settings.widthWeight;
+      maxHeight = maxHeight * widget.settings.heightWeight;
+
       ConstrainedBox constrainedBox = ConstrainedBox(
           child: widget.settings.example!.buildWidget(context),
           constraints:
