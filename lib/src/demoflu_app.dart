@@ -15,7 +15,6 @@ class DemoFluApp extends StatefulWidget {
       this.resizable = false,
       this.exampleBackground = Colors.white,
       this.maxSize,
-      this.consoleEnabled = false,
       this.initialWidthWeight,
       this.initialHeightWeight}) {
     if (initialHeightWeight != null &&
@@ -38,7 +37,6 @@ class DemoFluApp extends StatefulWidget {
 
   final Size? maxSize;
   final bool resizable;
-  final bool consoleEnabled;
   final double? initialWidthWeight;
   final double? initialHeightWeight;
 
@@ -48,7 +46,6 @@ class DemoFluApp extends StatefulWidget {
           exampleBackground: exampleBackground,
           widthWeight: initialWidthWeight,
           heightWeight: initialHeightWeight,
-          defaultConsoleEnabled: consoleEnabled,
           defaultResizable: resizable,
           defaultMaxSize: maxSize));
 }

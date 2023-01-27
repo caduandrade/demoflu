@@ -30,7 +30,7 @@ class ExampleContainerState extends State<ExampleContainer> {
 
         children.add(exampleWidget);
 
-      if (constraints.maxHeight > 150) {
+      if (example.consoleEnabled && constraints.maxHeight > 150) {
         children.add(ConstrainedBox(
             constraints: BoxConstraints(maxHeight: 150, minHeight: 0),
             child: TitleContainer(

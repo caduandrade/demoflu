@@ -9,17 +9,14 @@ class DemoFluSettings extends ChangeNotifier {
       {required Color exampleBackground,
       required double? widthWeight,
       required double? heightWeight,
-      required bool defaultConsoleEnabled,
       required bool defaultResizable,
       required Size? defaultMaxSize})
-      : this._defaultConsoleEnabled = defaultConsoleEnabled,
-        this._defaultResizable = defaultResizable,
+      : this._defaultResizable = defaultResizable,
         this._defaultMaxSize = defaultMaxSize,
         this._exampleBackground = exampleBackground,
         this._widthWeight = widthWeight ?? 1,
         this._heightWeight = heightWeight ?? 1;
 
-  final bool _defaultConsoleEnabled;
   final bool _defaultResizable;
   final Size? _defaultMaxSize;
 
@@ -76,9 +73,10 @@ class DemoFluSettings extends ChangeNotifier {
       }
       _currentMenuItem = menuItem;
       _resizable = newExample.resizable ?? _defaultResizable;
-      _consoleEnabled = newExample.consoleEnabled ?? _defaultConsoleEnabled;
       _maxSize = newExample.maxSize ?? _defaultMaxSize;
       _code = code;
+
+      console.clear();
 
       _example = newExample;
 
@@ -101,9 +99,6 @@ class DemoFluSettings extends ChangeNotifier {
 
   bool get resizable => _resizable;
 
-  bool _consoleEnabled = false;
-
-  bool get consoleEnabled => _consoleEnabled;
 
   AbstractExample? _example;
 
