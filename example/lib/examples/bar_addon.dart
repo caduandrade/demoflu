@@ -1,10 +1,9 @@
 import 'package:demoflu/demoflu.dart';
-import 'package:demoflu_example/example3/example3_widget.dart';
 import 'package:flutter/material.dart';
 
-class Example3 extends AbstractExample {
-  Example3()
-      : super(codeFile: 'lib/example3/example3_widget.dart', resizable: true);
+class BarAddonExample extends AbstractExample {
+  BarAddonExample()
+      : super(codeFile: 'lib/examples/bar_addon.dart', resizable: true);
 
   int _count = 0;
 
@@ -23,5 +22,16 @@ class Example3 extends AbstractExample {
   @override
   void resetExample() {
     _count = 0;
+  }
+}
+
+class MainWidget extends StatelessWidget {
+  const MainWidget(this.count);
+
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(child: Text('Count: $count'));
   }
 }

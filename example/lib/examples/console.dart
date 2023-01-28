@@ -1,6 +1,14 @@
 import 'package:demoflu/demoflu.dart';
 import 'package:flutter/material.dart';
 
+class Console extends Example {
+  Console()
+      : super(
+            widget: MainWidget(),
+            codeFile: 'lib/examples/console.dart',
+            consoleEnabled: true);
+}
+
 class MainWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -9,6 +17,6 @@ class MainWidget extends StatelessWidget {
             onPressed: () {
               DemoFlu.printOnConsole(context, 'Hi!');
             },
-            child: Text('Example 2')));
+            child: Text('Print')));
   }
 }

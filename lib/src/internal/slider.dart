@@ -321,7 +321,7 @@ class RenderDemofluSlider extends RenderBox {
     final increased = value + _semanticActionUnit;
     config.increasedValue = '${((increased).clamp(0.0, 1.0) * 100).round()}%';
 
-    // descrease action
+    // decrease action
     config.onDecrease = decreaseAction;
     final decreased = value - _semanticActionUnit;
     config.decreasedValue = '${((decreased).clamp(0.0, 1.0) * 100).round()}%';

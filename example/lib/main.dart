@@ -1,16 +1,18 @@
 import 'package:demoflu/demoflu.dart';
-import 'package:demoflu_example/example1/example1.dart';
-import 'package:demoflu_example/example2/example2.dart';
-import 'package:demoflu_example/example3/example3.dart';
-import 'package:demoflu_example/example4/example4.dart';
+import 'package:demoflu_example/examples/bar_addon.dart';
+import 'package:demoflu_example/examples/not_resizable.dart';
+import 'package:demoflu_example/examples/stateless.dart';
+import 'package:demoflu_example/examples/console.dart';
+import 'package:demoflu_example/examples/stateful.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(DemoFluApp(heightWeight: .5, title: 'Example Demo', menuItems: [
     DemoMenuItem(name: 'Section', italic: true),
-    DemoMenuItem(name: 'Example 1', example: Example1(), indentation: 2),
-    DemoMenuItem(name: 'Example 2', example: Example2(), indentation: 2),
-    DemoMenuItem(name: 'Example 3', example: Example3(), indentation: 2),
-    DemoMenuItem(name: 'Example 4', example: Example4(), indentation: 2)
+    DemoMenuItem(name: 'Stateless', example: Stateless(), indentation: 2),
+    DemoMenuItem(name: 'Stateful', example: StatefulExample(), indentation: 2),
+    DemoMenuItem(name: 'Console', example: Console(), indentation: 2),
+    DemoMenuItem(name: 'Bar addon', example: BarAddonExample(), indentation: 2),
+    DemoMenuItem(name: 'Not resizable', example: NotResizable(), indentation: 2)
   ]));
 }
