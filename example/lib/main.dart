@@ -1,11 +1,11 @@
 import 'package:demoflu/demoflu.dart';
-import 'package:demoflu_example/examples/bar_addon.dart';
-import 'package:demoflu_example/examples/console.dart';
-import 'package:demoflu_example/examples/ignore.dart';
-import 'package:demoflu_example/examples/random.dart';
-import 'package:demoflu_example/examples/not_resizable.dart';
-import 'package:demoflu_example/examples/stateful.dart';
-import 'package:demoflu_example/examples/stateless.dart';
+import 'package:example/examples/bar_addon.dart';
+import 'package:example/examples/console.dart';
+import 'package:example/examples/ignore.dart';
+import 'package:example/examples/random.dart';
+import 'package:example/examples/not_resizable.dart';
+import 'package:example/examples/stateful.dart';
+import 'package:example/examples/stateless.dart';
 import 'package:flutter/material.dart';
 
 void main() {
