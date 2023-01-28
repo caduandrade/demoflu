@@ -8,3 +8,17 @@ void main() {
     DemoMenuItem(name: 'Stateless', example: StatelessExample(), indent: 2)
   ]));
 }
+
+void alternativeMain() {
+  runApp(DemoFluApp(title: 'Tutorial', menuItems: _menuItems()));
+}
+
+List<DemoMenuItem> _menuItems() {
+  var builder = DemoMenuItem.builder();
+  builder
+    ..indent(1)
+    ..add('Section')
+    ..indent(2)
+    ..add('Stateless', example: StatelessExample());
+  return builder.menuItems;
+}

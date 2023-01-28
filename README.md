@@ -29,6 +29,24 @@ void main() {
 }
 ```
 
+Or formatted using cascade notation
+
+```dart
+  runApp(DemoFluApp(title: 'Tutorial', menuItems: _menuItems()));
+```
+
+```dart
+List<DemoMenuItem> _menuItems() {
+  var builder = DemoMenuItem.builder();
+  builder
+    ..indent(1)
+    ..add('Section')
+    ..indent(2)
+    ..add('Stateless', example: StatelessExample());
+  return builder.menuItems;
+}
+```
+
 ### Examples
 
 Create examples using your package.
