@@ -8,6 +8,72 @@
 
 Package demo builder. Web application to display package widgets usage.
 
-![](https://caduandrade.github.io/demoflu/screenshot_1_v1.png)
+![](https://caduandrade.github.io/demoflu/screenshot_1_v2.png)
 
-![](https://caduandrade.github.io/demoflu/screenshot_2_v1.png)
+## Tutorial
+
+### main.dart
+
+Use the `DemoFluApp` configuring menu and examples.
+
+```dart
+import 'package:demoflu/demoflu.dart';
+import 'package:flutter/material.dart';
+import 'package:tutorial/examples/stateless.dart';
+
+void main() {
+  runApp(DemoFluApp(title: 'Tutorial', menuRoots: [
+    DemoMenuItem(name: 'Section', children: [
+      DemoMenuItem(name: 'Stateless', example: StatelessExample())
+    ])
+  ]));
+}
+```
+
+### Examples
+
+Create examples using your package.
+
+```dart
+import 'package:demoflu/demoflu.dart';
+import 'package:flutter/material.dart';
+
+class StatelessExample extends Example {
+  StatelessExample()
+      : super(
+            widget: const MainWidget(),
+            codeFile: 'lib/examples/stateless.dart',
+            resizable: true);
+}
+
+class MainWidget extends StatelessWidget {
+  const MainWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        color: Colors.blue[200], child: const Center(child: Text('Stateless')));
+  }
+}
+```
+
+### pubspec.yaml
+
+Configure the assets to make the source code available.
+
+```yaml
+  assets:
+    - lib/examples/
+```
+
+### Build for web
+
+```
+flutter build web --release
+```
+
+> Use `--base-href` if necessary
+
+### Need more?
+
+See the committed example for more details.
