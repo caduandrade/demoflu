@@ -1,22 +1,27 @@
-import 'package:demoflu/src/internal/switch_view/switch_view_type.dart';
+import 'package:demoflu/src/internal/demoflu_settings.dart';
+import 'package:demoflu/src/internal/view.dart';
 import 'package:flutter/material.dart';
 
-typedef OnSwitchViewChange = void Function(SwitchViewType viewType);
-
 class SwitchViewToggleButtons extends StatelessWidget {
-  const SwitchViewToggleButtons(
-      {Key? key, required this.onChange, required this.selected})
+  const SwitchViewToggleButtons({Key? key, required this.settings})
       : super(key: key);
 
-  final OnSwitchViewChange onChange;
-  final SwitchViewType selected;
+  final DemoFluSettings settings;
 
-  static const List<Widget> views = <Widget>[Text('Code'), Text('Example')];
+  static const List<Widget> views = <Widget>[
+    Text('Code'),
+    Text('Example'),
+    Text('Both')
+  ];
 
   List<bool> get _selectedViews {
-    List<bool> list = [];
-    for (SwitchViewType type in SwitchViewType.values) {
-      list.add(selected == type);
+    List<bool> list;
+    if (settings.view == DemofluView.code) {
+      list = [true, false, false];
+    } else if (settings.view == DemofluView.example) {
+      list = [false, true, false];
+    } else {
+      list = [false, false, true];
     }
     return list;
   }
@@ -25,7 +30,7 @@ class SwitchViewToggleButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return ToggleButtons(
       direction: Axis.horizontal,
-      onPressed: (int index) => onChange(SwitchViewType.values[index]),
+      onPressed: _onPressed,
       borderRadius: const BorderRadius.all(Radius.circular(8)),
       borderColor: Colors.blueGrey[200],
       selectedBorderColor: Colors.blueGrey[200],
@@ -39,5 +44,16 @@ class SwitchViewToggleButtons extends StatelessWidget {
       isSelected: _selectedViews,
       children: views,
     );
+  }
+
+  void _onPressed(int index) {
+    print(index);
+    if (index == 0) {
+      settings.view = DemofluView.code;
+    } else if (index == 1) {
+      settings.view = DemofluView.example;
+    } else if (index == 2) {
+      settings.view = DemofluView.both;
+    }
   }
 }

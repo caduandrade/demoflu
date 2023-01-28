@@ -7,11 +7,13 @@ import 'package:demoflu/src/internal/title_container.dart';
 import 'package:flutter/material.dart';
 
 class ExampleContainer extends StatefulWidget {
-  const ExampleContainer(
-      {required this.settings,
+  ExampleContainer(
+      {required Key key,
+      required this.settings,
       required this.resizable,
       required this.example,
-      required this.console});
+      required this.console})
+      : super(key: key);
 
   final DemoFluSettings settings;
   final bool resizable;

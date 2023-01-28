@@ -4,7 +4,8 @@ import 'package:flutter_highlight/flutter_highlight.dart';
 import 'package:flutter_highlight/themes/github.dart';
 
 class CodeWidget extends StatefulWidget {
-  const CodeWidget({required this.codeFile});
+  const CodeWidget({required Key key, required this.codeFile})
+      : super(key: key);
 
   final String codeFile;
 

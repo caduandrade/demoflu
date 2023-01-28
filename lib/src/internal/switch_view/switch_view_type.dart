@@ -1,1 +1,0 @@
-enum SwitchViewType { code, example }

@@ -4,10 +4,10 @@ import 'package:demoflu/src/internal/console_controller.dart';
 import 'package:demoflu/src/internal/demoflu_settings.dart';
 import 'package:demoflu/src/internal/example_container.dart';
 import 'package:demoflu/src/internal/switch_view/switch_view_toggle_buttons.dart';
-import 'package:demoflu/src/internal/switch_view/switch_view_type.dart';
+import 'package:demoflu/src/internal/view.dart';
 import 'package:flutter/material.dart';
 
-class SwitchView extends StatefulWidget {
+class SwitchView extends StatelessWidget {
   const SwitchView(
       {Key? key,
       required this.settings,
@@ -15,71 +15,75 @@ class SwitchView extends StatefulWidget {
       required this.console})
       : super(key: key);
 
+  static final GlobalKey exampleGlobalKey = GlobalKey(debugLabel: 'example');
+  static final GlobalKey codeGlobalKey = GlobalKey(debugLabel: 'code');
+
   final DemoFluSettings settings;
   final AbstractExample example;
   final ConsoleController console;
 
   @override
-  State<StatefulWidget> createState() => SwitchViewState();
-}
-
-class SwitchViewState extends State<SwitchView> {
-  SwitchViewType _selectedType = SwitchViewType.example;
-
-  @override
   Widget build(BuildContext context) {
-    List<Widget> barExtraWidgets = widget.example.buildBarWidgets(context);
+    List<Widget> barExtraWidgets = example.buildBarWidgets(context);
 
-    final bool resizable =
-        widget.example.resizable ?? widget.settings.resizable;
+    final bool resizable = example.resizable ?? settings.resizable;
 
     if (resizable) {
       barExtraWidgets.insert(
           0,
           _CheckWidget(
-              value: widget.settings.resizeEnabled,
+              value: settings.resizeEnabled,
               title: 'resizable',
-              onChanged: (value) => widget.settings.resizeEnabled =
-                  !widget.settings.resizeEnabled));
+              onChanged: (value) =>
+                  settings.resizeEnabled = !settings.resizeEnabled));
     }
 
-    ExampleContainer exampleWidget = ExampleContainer(
-        settings: widget.settings,
-        console: widget.console,
-        resizable: resizable ? widget.settings.resizeEnabled : false,
-        example: widget.example);
-    CodeWidget? codeWidget = widget.example.codeFile != null
-        ? CodeWidget(codeFile: widget.example.codeFile!)
+    Widget exampleWidget = ExampleContainer(
+        key: exampleGlobalKey,
+        settings: settings,
+        console: console,
+        resizable: resizable ? settings.resizeEnabled : false,
+        example: example);
+    CodeWidget? codeWidget = example.codeFile != null
+        ? CodeWidget(key: codeGlobalKey, codeFile: example.codeFile!)
         : null;
 
     if (codeWidget == null && barExtraWidgets.isEmpty) {
-      // only example widget
+      // example widget only
       return exampleWidget;
     }
 
     List<Widget> barWidgetChildren = [];
-    List<Widget> stackChildren = [exampleWidget];
+    Widget? bodyWidget;
     if (codeWidget != null) {
-      barWidgetChildren.add(SwitchViewToggleButtons(
-          onChange: _onViewChange, selected: _selectedType));
-      if (_selectedType == SwitchViewType.example) {
-        stackChildren.insert(0, codeWidget);
+      barWidgetChildren.add(SwitchViewToggleButtons(settings: settings));
+      if (settings.view == DemofluView.both) {
+        bodyWidget = Row(children: [
+          Expanded(child: codeWidget),
+          Container(width: 2, color: Colors.blueGrey[800]),
+          Expanded(child: exampleWidget)
+        ], crossAxisAlignment: CrossAxisAlignment.stretch);
       } else {
-        stackChildren.add(codeWidget);
+        List<Widget> stackChildren = [];
+        if (settings.view == DemofluView.example) {
+          stackChildren.add(codeWidget);
+          stackChildren.add(exampleWidget);
+        } else if (settings.view == DemofluView.code) {
+          stackChildren.add(exampleWidget);
+          stackChildren.add(codeWidget);
+        }
+        bodyWidget = Stack(children: stackChildren, fit: StackFit.expand);
       }
+    } else {
+      bodyWidget = exampleWidget;
     }
+
     barWidgetChildren.addAll(barExtraWidgets);
 
     return Column(children: [
       _BarWidget(children: barWidgetChildren),
-      Expanded(child: Stack(children: stackChildren, fit: StackFit.expand))
+      Expanded(child: bodyWidget)
     ], crossAxisAlignment: CrossAxisAlignment.stretch);
-  }
-
-  void _onViewChange(SwitchViewType type) {
-    setState(() {
-      _selectedType = type;
-    });
   }
 }
 

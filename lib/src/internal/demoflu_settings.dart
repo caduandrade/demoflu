@@ -1,3 +1,4 @@
+import 'package:demoflu/src/internal/view.dart';
 import 'package:flutter/widgets.dart';
 
 class DemoFluSettings extends ChangeNotifier {
@@ -22,6 +23,15 @@ class DemoFluSettings extends ChangeNotifier {
   set resizeEnabled(bool value) {
     if (_resizeEnabled != value) {
       _resizeEnabled = value;
+      notifyListeners();
+    }
+  }
+
+  DemofluView _view = DemofluView.example;
+  DemofluView get view => _view;
+  set view(DemofluView value) {
+    if (_view != value) {
+      _view = value;
       notifyListeners();
     }
   }
