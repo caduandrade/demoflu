@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 class DemoFluApp extends StatefulWidget {
   DemoFluApp(
       {required this.title,
-      required this.menuItems,
+      required this.menuRoots,
       this.resizable = true,
       this.exampleBackground = Colors.white,
       this.maxSize,
@@ -28,7 +28,7 @@ class DemoFluApp extends StatefulWidget {
   }
 
   final String title;
-  final List<DemoMenuItem> menuItems;
+  final List<DemoMenuItem> menuRoots;
 
   /// Defines the default widget background for all examples.
   final Color exampleBackground;
@@ -59,12 +59,8 @@ class DemoFluAppState extends State<DemoFluApp> {
         heightWeight: widget.heightWeight,
         resizable: widget.resizable,
         maxSize: widget.maxSize);
-    int menuItemIndex =
-        widget.menuItems.indexWhere((menuItem) => menuItem.example != null);
-    if (menuItemIndex > -1) {
-      _selectedMenuItem = widget.menuItems[menuItemIndex];
-      _example = _selectedMenuItem?.example;
-    }
+    _selectedMenuItem = DemoMenuItem.findFirstExample(widget.menuRoots);
+    _example = _selectedMenuItem?.example;
   }
 
   @override
@@ -105,7 +101,7 @@ class DemoFluAppState extends State<DemoFluApp> {
           child: MenuWidget(
               onMenuItemTap: _onMenuSelect,
               selectedMenuItem: _selectedMenuItem,
-              menuItems: widget.menuItems))
+              menuRoots: widget.menuRoots))
     ];
 
     Widget exampleArea =

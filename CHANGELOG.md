@@ -1,4 +1,4 @@
-## 0.17.0
+## 1.0.0
 
 * New layout
 * Refactor
@@ -8,6 +8,7 @@
   * `MenuItem` 
     * Parameters `codeFile`, `resizable`, `maxSize` and `consoleEnabled` has been moved to class `AbstractExample`.
     * The `builder` parameter has been replaced by `example`.
+    * Nested items.
 
 ## 0.16.0
 

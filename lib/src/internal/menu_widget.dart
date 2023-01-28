@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 
 class MenuWidget extends StatelessWidget {
   MenuWidget(
-      {required this.menuItems,
+      {required this.menuRoots,
       required this.selectedMenuItem,
       required this.onMenuItemTap});
 
-  final List<DemoMenuItem> menuItems;
+  final List<DemoMenuItem> menuRoots;
   final DemoMenuItem? selectedMenuItem;
   final OnMenuItemTap onMenuItemTap;
 
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [];
-    for (DemoMenuItem menuItem in menuItems) {
+    for (DemoMenuItem menuItem in DemoMenuItem.recursiveFetch(menuRoots)) {
       children.add(_MenuItemWidget(
           onMenuItemTap: onMenuItemTap,
           selected: selectedMenuItem == menuItem,
@@ -83,7 +83,7 @@ class _MenuItemWidgetState extends State<_MenuItemWidget> {
   }
 
   FontStyle _fontStyle() {
-    if (widget.menuItem.italic) {
+    if (widget.menuItem.children.isNotEmpty) {
       return FontStyle.italic;
     }
     return FontStyle.normal;

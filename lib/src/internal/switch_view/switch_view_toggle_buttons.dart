@@ -47,7 +47,6 @@ class SwitchViewToggleButtons extends StatelessWidget {
   }
 
   void _onPressed(int index) {
-    print(index);
     if (index == 0) {
       settings.view = DemofluView.code;
     } else if (index == 1) {
