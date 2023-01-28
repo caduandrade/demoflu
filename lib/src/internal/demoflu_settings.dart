@@ -1,3 +1,4 @@
+import 'package:demoflu/src/internal/ratio.dart';
 import 'package:demoflu/src/internal/view.dart';
 import 'package:flutter/widgets.dart';
 
@@ -23,6 +24,15 @@ class DemoFluSettings extends ChangeNotifier {
   set resizeEnabled(bool value) {
     if (_resizeEnabled != value) {
       _resizeEnabled = value;
+      notifyListeners();
+    }
+  }
+
+  DemofluRatio _ratio = DemofluRatio.ratio1_1;
+  DemofluRatio get ratio => _ratio;
+  set ratio(DemofluRatio value) {
+    if (_ratio != value) {
+      _ratio = value;
       notifyListeners();
     }
   }

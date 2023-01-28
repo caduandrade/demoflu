@@ -3,6 +3,8 @@ import 'package:demoflu/src/internal/code_widget.dart';
 import 'package:demoflu/src/internal/console_controller.dart';
 import 'package:demoflu/src/internal/demoflu_settings.dart';
 import 'package:demoflu/src/internal/example_container.dart';
+import 'package:demoflu/src/internal/ratio.dart';
+import 'package:demoflu/src/internal/switch_view/ratio_toggle_buttons.dart';
 import 'package:demoflu/src/internal/switch_view/switch_view_toggle_buttons.dart';
 import 'package:demoflu/src/internal/view.dart';
 import 'package:flutter/material.dart';
@@ -58,10 +60,18 @@ class SwitchView extends StatelessWidget {
     if (codeWidget != null) {
       barWidgetChildren.add(SwitchViewToggleButtons(settings: settings));
       if (settings.view == DemofluView.both) {
+        barWidgetChildren.add(RatioToggleButtons(settings: settings));
+        int codeFlex = 1;
+        int exampleFlex = 1;
+        if (settings.ratio == DemofluRatio.ratio1_2) {
+          exampleFlex = 2;
+        } else if (settings.ratio == DemofluRatio.ratio_2_1) {
+          codeFlex = 2;
+        }
         bodyWidget = Row(children: [
-          Expanded(child: codeWidget),
+          Expanded(child: codeWidget, flex: codeFlex),
           Container(width: 2, color: Colors.blueGrey[800]),
-          Expanded(child: exampleWidget)
+          Expanded(child: exampleWidget, flex: exampleFlex)
         ], crossAxisAlignment: CrossAxisAlignment.stretch);
       } else {
         List<Widget> stackChildren = [];
