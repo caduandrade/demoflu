@@ -4,15 +4,17 @@ import 'package:flutter/material.dart';
 class StatelessExample extends Example {
   StatelessExample()
       : super(
-            widget: MainWidget(),
+            widget: const MainWidget(),
             codeFile: 'lib/examples/stateless.dart',
             resizable: true);
 }
 
 class MainWidget extends StatelessWidget {
+  const MainWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Center(child: Text('Stateless')), color: Colors.blue[200]);
+        color: Colors.blue[200], child: const Center(child: Text('Stateless')));
   }
 }

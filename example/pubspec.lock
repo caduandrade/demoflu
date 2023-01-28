@@ -42,7 +42,7 @@ packages:
     source: hosted
     version: "1.17.0"
   demoflu:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       path: ".."
       relative: true

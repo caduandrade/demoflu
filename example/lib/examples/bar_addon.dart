@@ -13,8 +13,10 @@ class BarAddonExample extends AbstractExample {
   }
 
   @override
-  List<Widget> buildBarWidgets(BuildContext context) =>
-      [ElevatedButton(child: Text('Increment'), onPressed: () => _incCount())];
+  List<Widget> buildBarWidgets(BuildContext context) => [
+        ElevatedButton(
+            child: const Text('Increment'), onPressed: () => _incCount())
+      ];
 
   @override
   Widget buildWidget(BuildContext context) => MainWidget(_count);
@@ -26,7 +28,7 @@ class BarAddonExample extends AbstractExample {
 }
 
 class MainWidget extends StatelessWidget {
-  const MainWidget(this.count);
+  const MainWidget(this.count, {super.key});
 
   final int count;
 

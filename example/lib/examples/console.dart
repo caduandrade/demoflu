@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 class ConsoleExample extends Example {
   ConsoleExample()
       : super(
-            widget: MainWidget(),
+            widget: const MainWidget(),
             codeFile: 'lib/examples/console.dart',
             consoleEnabled: true);
 }
 
 class MainWidget extends StatelessWidget {
+  const MainWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -17,6 +19,6 @@ class MainWidget extends StatelessWidget {
             onPressed: () {
               DemoFlu.printOnConsole(context, 'Hi!');
             },
-            child: Text('Print')));
+            child: const Text('Print')));
   }
 }
