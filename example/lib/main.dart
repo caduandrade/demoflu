@@ -9,7 +9,7 @@ import 'package:demoflu_example/examples/stateless.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(DemoFluApp(heightWeight: .5, title: 'Example Demo', menuRoots: [
+  runApp(DemoFluApp(heightWeight: .5, title: 'Demoflu Demo', menuRoots: [
     DemoMenuItem(name: 'Section', children: [
       DemoMenuItem(name: 'Stateless', example: StatelessExample()),
       DemoMenuItem(name: 'Stateful', example: StatefulExample()),
