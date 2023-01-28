@@ -108,6 +108,7 @@ class _BarWidget extends StatelessWidget {
         child: Wrap(
             children: children,
             spacing: 16,
+            runSpacing: 8,
             crossAxisAlignment: WrapCrossAlignment.center),
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
