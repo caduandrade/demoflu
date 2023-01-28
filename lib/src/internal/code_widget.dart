@@ -32,9 +32,23 @@ class CodeWidgetState extends State<CodeWidget> {
   }
 
   void _loadCode() async {
-    String code = await rootBundle.loadString(widget.codeFile);
+    String rawCode = await rootBundle.loadString(widget.codeFile);
+    List<String> code = [];
+    bool ignore = false;
+    for (String str in rawCode.split('\n')) {
+      if (str.trim() == '//@demoflu_ignore_start') {
+        ignore = true;
+        continue;
+      } else if (str.trim() == '//@demoflu_ignore_end') {
+        ignore = false;
+        continue;
+      }
+      if (!ignore) {
+        code.add(str);
+      }
+    }
     setState(() {
-      _code = code;
+      _code = code.join('\n');
     });
   }
 

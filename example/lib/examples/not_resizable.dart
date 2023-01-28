@@ -1,8 +1,8 @@
 import 'package:demoflu/demoflu.dart';
 import 'package:flutter/material.dart';
 
-class NotResizable extends Example {
-  NotResizable()
+class NotResizableExample extends Example {
+  NotResizableExample()
       : super(
             widget: MainWidget(),
             codeFile: 'lib/examples/not_resizable.dart',

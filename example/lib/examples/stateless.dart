@@ -1,8 +1,8 @@
 import 'package:demoflu/demoflu.dart';
 import 'package:flutter/material.dart';
 
-class Stateless extends Example {
-  Stateless()
+class StatelessExample extends Example {
+  StatelessExample()
       : super(
             widget: MainWidget(),
             codeFile: 'lib/examples/stateless.dart',

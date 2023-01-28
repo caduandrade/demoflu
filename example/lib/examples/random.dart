@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:demoflu/demoflu.dart';
 import 'package:flutter/material.dart';
 
-class RandomWidget extends Example {
-  RandomWidget()
+class RandomWidgetExample extends Example {
+  RandomWidgetExample()
       : super(
             widget: MainWidget(),
             codeFile: 'lib/examples/random.dart',

@@ -1,8 +1,8 @@
 import 'package:demoflu/demoflu.dart';
 import 'package:flutter/material.dart';
 
-class Console extends Example {
-  Console()
+class ConsoleExample extends Example {
+  ConsoleExample()
       : super(
             widget: MainWidget(),
             codeFile: 'lib/examples/console.dart',
