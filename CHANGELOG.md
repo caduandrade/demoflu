@@ -2,13 +2,14 @@
 
 * New layout
 * Refactor
-  * `DemoFluApp`
-    * Parameter `appMenuBuilder` has been replaced by `menuItems` (list of `DemoMenu`).
-    * Parameter `widgetBackground` has been renamed to `exampleBackground`.
-  * `MenuItem` 
-    * Parameters `codeFile`, `resizable`, `maxSize` and `consoleEnabled` has been moved to class `AbstractExample`.
-    * The `builder` parameter has been replaced by `example`.
-    * Nested items.
+    * `DemoFluApp`
+        * Parameter `appMenuBuilder` has been replaced by `menuItems` (list of `DemoMenu`).
+        * Parameter `widgetBackground` has been renamed to `exampleBackground`.
+    * `DemoMenuItem`
+        * Parameters `codeFile`, `resizable`, `maxSize` and `consoleEnabled` has been moved to
+          class `AbstractExample`.
+        * The `builder` parameter has been replaced by `example`.
+        * The `indentation` parameter has been renamed to `indent`.
 
 ## 0.16.0
 
@@ -76,7 +77,7 @@
 ## 0.7.1
 
 * Bugfix
-  * `MultiSplitViewTheme` being propagated to example widgets
+    * `MultiSplitViewTheme` being propagated to example widgets
 
 ## 0.7.0
 

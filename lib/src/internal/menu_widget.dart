@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 
 class MenuWidget extends StatelessWidget {
   MenuWidget(
-      {required this.menuRoots,
+      {required this.menuItems,
       required this.selectedMenuItem,
       required this.onMenuItemTap});
 
-  final List<DemoMenuItem> menuRoots;
+  final List<DemoMenuItem> menuItems;
   final DemoMenuItem? selectedMenuItem;
   final OnMenuItemTap onMenuItemTap;
 
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [];
-    for (DemoMenuItem menuItem in DemoMenuItem.recursiveFetch(menuRoots)) {
+    for (DemoMenuItem menuItem in menuItems) {
       children.add(_MenuItemWidget(
           onMenuItemTap: onMenuItemTap,
           selected: selectedMenuItem == menuItem,
@@ -63,8 +63,8 @@ class _MenuItemWidgetState extends State<_MenuItemWidget> {
   @override
   Widget build(BuildContext context) {
     double left = 8;
-    if (widget.menuItem.indentation > 1) {
-      left = left * widget.menuItem.indentation;
+    if (widget.menuItem.indent > 1) {
+      left = left * widget.menuItem.indent;
     }
     Widget text = Padding(
         child: Text(widget.menuItem.name,
@@ -83,10 +83,10 @@ class _MenuItemWidgetState extends State<_MenuItemWidget> {
   }
 
   FontStyle _fontStyle() {
-    if (widget.menuItem.children.isNotEmpty) {
-      return FontStyle.italic;
+    if (widget.menuItem.example != null) {
+      return FontStyle.normal;
     }
-    return FontStyle.normal;
+    return FontStyle.italic;
   }
 
   Color _textColor() {
