@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+/// Abstract example
 abstract class AbstractExample extends ChangeNotifier {
   AbstractExample(
       {this.codeFile,
@@ -12,17 +13,22 @@ abstract class AbstractExample extends ChangeNotifier {
   final Size? maxSize;
   final bool consoleEnabled;
 
+  /// Builds the example widget.
   Widget buildWidget(BuildContext context);
 
+  /// Builds extra bar widgets.
   List<Widget> buildBarWidgets(BuildContext context);
 
+  /// Resets the example.
   void resetExample();
 
+  /// Trigger notification to rebuild example widget
   void rebuildWidget() {
     notifyListeners();
   }
 }
 
+/// Simple example
 class Example extends AbstractExample {
   Example(
       {String? codeFile,

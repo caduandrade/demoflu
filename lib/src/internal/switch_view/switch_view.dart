@@ -9,6 +9,7 @@ import 'package:demoflu/src/internal/switch_view/switch_view_toggle_buttons.dart
 import 'package:demoflu/src/internal/view.dart';
 import 'package:flutter/material.dart';
 
+/// Switch view widget
 class SwitchView extends StatelessWidget {
   const SwitchView(
       {Key? key,

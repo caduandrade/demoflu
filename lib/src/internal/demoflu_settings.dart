@@ -2,6 +2,7 @@ import 'package:demoflu/src/internal/ratio.dart';
 import 'package:demoflu/src/internal/view.dart';
 import 'package:flutter/widgets.dart';
 
+/// Settings
 class DemoFluSettings extends ChangeNotifier {
   DemoFluSettings(
       {required Color exampleBackground,

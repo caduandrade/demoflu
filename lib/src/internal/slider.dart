@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+/// Slider to resize widget
 class DemofluSlider extends LeafRenderObjectWidget {
   DemofluSlider({this.value = 0.5, required this.axis, this.onChanged});
 

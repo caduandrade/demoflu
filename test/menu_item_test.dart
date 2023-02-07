@@ -4,12 +4,12 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('DemoMenuItem', () {
     test('indent', () {
-      DemoMenuItem item = DemoMenuItem(name: 'name', indent: 0);
-      expect(item.indent, 1);
-      item = DemoMenuItem(name: 'name', indent: 2);
-      expect(item.indent, 2);
-      item = DemoMenuItem(name: 'name', indent: -10);
-      expect(item.indent, 1);
+      DemoMenuItem leaf = DemoMenuItem('leaf');
+      DemoMenuItem middle = DemoMenuItem('middle', children: [leaf]);
+      DemoMenuItem root = DemoMenuItem('root', children: [middle]);
+      expect(root.indent, 0);
+      expect(middle.indent, 1);
+      expect(leaf.indent, 2);
     });
   });
 }

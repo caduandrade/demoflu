@@ -5,6 +5,7 @@ import 'package:demoflu/src/internal/demoflu_settings.dart';
 import 'package:demoflu/src/internal/slider.dart';
 import 'package:flutter/material.dart';
 
+/// Resizable example widget
 class ResizableExampleWidget extends StatefulWidget {
   const ResizableExampleWidget({required this.settings, required this.example});
 

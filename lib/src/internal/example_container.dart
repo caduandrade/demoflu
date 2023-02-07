@@ -6,6 +6,7 @@ import 'package:demoflu/src/internal/resizable_example_widget.dart';
 import 'package:demoflu/src/internal/title_container.dart';
 import 'package:flutter/material.dart';
 
+/// Example container
 class ExampleContainer extends StatefulWidget {
   ExampleContainer(
       {required Key key,

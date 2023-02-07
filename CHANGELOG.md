@@ -1,12 +1,19 @@
+## 1.1.0
+
+* `DemoMenuItem`
+  * Has been changed to store the hierarchy between parent and child menu.
+* `DemoFluApp`  
+  * The `menuItems` parameter has been renamed to `rootMenu`.
+
 ## 1.0.0
 
 * New layout
 * Refactor
     * `DemoFluApp`
-        * Parameter `appMenuBuilder` has been replaced by `menuItems` (list of `DemoMenu`).
-        * Parameter `widgetBackground` has been renamed to `exampleBackground`.
+        * The `appMenuBuilder` parameter has been replaced by `menuItems` (list of `DemoMenu`).
+        * The `widgetBackground` parameter has been renamed to `exampleBackground`.
     * `DemoMenuItem`
-        * Parameters `codeFile`, `resizable`, `maxSize` and `consoleEnabled` has been moved to
+        * The `codeFile`, `resizable`, `maxSize` and `consoleEnabled` parameters has been moved to
           class `AbstractExample`.
         * The `builder` parameter has been replaced by `example`.
         * The `indentation` parameter has been renamed to `indent`.

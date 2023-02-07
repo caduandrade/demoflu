@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/widgets.dart';
 
+/// Console controller
 class ConsoleController extends ChangeNotifier {
   int _count = 0;
   final List<String> _values = [];

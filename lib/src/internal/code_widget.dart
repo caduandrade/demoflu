@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_highlight/flutter_highlight.dart';
 import 'package:flutter_highlight/themes/github.dart';
 
+/// Code widget.
 class CodeWidget extends StatefulWidget {
   const CodeWidget({required Key key, required this.codeFile})
       : super(key: key);

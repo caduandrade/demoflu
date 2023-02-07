@@ -2,6 +2,7 @@ import 'package:demoflu/src/internal/demoflu_settings.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 
+/// Settings widget
 class SettingsWidget extends StatelessWidget {
   const SettingsWidget(
       {Key? key, required this.settings, required this.onClose})

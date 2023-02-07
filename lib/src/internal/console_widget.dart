@@ -12,8 +12,8 @@ class ConsoleWidget extends StatelessWidget {
         animation: console,
         builder: (context, child) {
           return Container(
+              padding: EdgeInsets.all(8),
               child: ListView.builder(
-                  padding: EdgeInsets.all(8),
                   shrinkWrap: true,
                   itemBuilder: _itemBuilder,
                   itemCount: console.values.length),

@@ -5,13 +5,14 @@ import 'package:demoflu/src/internal/demoflu_settings.dart';
 import 'package:demoflu/src/internal/menu_widget.dart';
 import 'package:demoflu/src/internal/settings_widget.dart';
 import 'package:demoflu/src/internal/switch_view/switch_view.dart';
+import 'package:demoflu/src/internal/rebuild_notifier.dart';
 import 'package:flutter/material.dart';
 
 /// Demo app to be instantiated.
 class DemoFluApp extends StatefulWidget {
   DemoFluApp(
       {required this.title,
-      required this.menuItems,
+      required this.rootMenus,
       this.resizable = true,
       this.exampleBackground = Colors.white,
       this.maxSize,
@@ -28,7 +29,9 @@ class DemoFluApp extends StatefulWidget {
   }
 
   final String title;
-  final List<DemoMenuItem> menuItems;
+
+  /// List with root menus.
+  final List<DemoMenuItem> rootMenus;
 
   /// Defines the default widget background for all examples.
   final Color exampleBackground;
@@ -47,8 +50,11 @@ class DemoFluAppState extends State<DemoFluApp> {
   late final DemoFluSettings settings;
   final ConsoleController _console = ConsoleController();
   DemoMenuItem? _selectedMenuItem;
-  AbstractExample? _example;
+
+  AbstractExample? get _example => _selectedMenuItem?.example;
   bool _settingsVisible = false;
+  RebuildNotifier _rebuildNotifier = RebuildNotifier();
+  List<DemoMenuItem> _menuItems = [];
 
   @override
   void initState() {
@@ -59,12 +65,51 @@ class DemoFluAppState extends State<DemoFluApp> {
         heightWeight: widget.heightWeight,
         resizable: widget.resizable,
         maxSize: widget.maxSize);
-    int firstMenuItemIndex =
-        widget.menuItems.indexWhere((item) => item.example != null);
-    if (firstMenuItemIndex != -1) {
-      _selectedMenuItem = widget.menuItems[firstMenuItemIndex];
+    _rebuildMenuItemsList();
+    _rebuildNotifier.addListener(() {
+      setState(() {
+        _rebuildMenuItemsList();
+      });
+    });
+  }
+
+  /// Rebuilds the menus according to the expanded ones.
+  void _rebuildMenuItemsList() {
+    _menuItems = recursiveFetch(widget.rootMenus);
+    if (_selectedMenuItem == null) {
+      int firstMenuItemIndex =
+          _menuItems.indexWhere((item) => item.example != null);
+      if (firstMenuItemIndex != -1) {
+        _selectedMenuItem = widget.rootMenus[firstMenuItemIndex];
+      }
     }
-    _example = _selectedMenuItem?.example;
+  }
+
+  /// Recursive fetch considering only the expanded ones.
+  List<DemoMenuItem> recursiveFetch(List<DemoMenuItem> rootMenus) {
+    List<DemoMenuItem> children = [];
+    for (DemoMenuItem root in rootMenus) {
+      _recursiveFetchChildren(root, children);
+    }
+    return children;
+  }
+
+  /// Recursive fetch considering only the expanded ones.
+  void _recursiveFetchChildren(
+      DemoMenuItem parent, List<DemoMenuItem> children) {
+    children.add(parent);
+    if (parent.expanded) {
+      for (int index = 0; index < parent.childrenLength; index++) {
+        DemoMenuItem child = parent.childAt(index);
+        _recursiveFetchChildren(child, children);
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _rebuildNotifier.dispose();
+    super.dispose();
   }
 
   @override
@@ -105,11 +150,12 @@ class DemoFluAppState extends State<DemoFluApp> {
           child: MenuWidget(
               onMenuItemTap: _onMenuSelect,
               selectedMenuItem: _selectedMenuItem,
-              menuItems: widget.menuItems))
+              menuItems: _menuItems,
+              rebuildNotifier: _rebuildNotifier))
     ];
 
     Widget exampleArea =
-        CustomMultiChildLayout(delegate: _Layout(), children: children);
+        CustomMultiChildLayout(delegate: _LayoutDelegate(), children: children);
 
     List<Widget> stackChildren = [Positioned.fill(child: exampleArea)];
     if (_settingsVisible) {
@@ -124,19 +170,19 @@ class DemoFluAppState extends State<DemoFluApp> {
     _console.clear();
     setState(() {
       _selectedMenuItem = menuItem;
-      _example = menuItem.example;
     });
   }
 }
 
-class _Layout extends MultiChildLayoutDelegate {
+/// The main layout delegate
+class _LayoutDelegate extends MultiChildLayoutDelegate {
   @override
   void performLayout(Size size) {
     Size appMenuSize = layoutChild(
         1,
         BoxConstraints(
             minWidth: 0,
-            maxWidth: 200,
+            maxWidth: size.width,
             minHeight: size.height,
             maxHeight: size.height));
     positionChild(1, Offset.zero);
