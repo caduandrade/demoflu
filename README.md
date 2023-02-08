@@ -13,7 +13,7 @@ Package demo builder. Web application to display package widgets usage.
 
 ### main.dart
 
-Use the `DemoFluApp` configuring menu and examples.
+Use the `DemoFluApp` to configure the menu.
 
 ```dart
 import 'package:demoflu/demoflu.dart';
@@ -21,29 +21,17 @@ import 'package:flutter/material.dart';
 import 'package:tutorial/examples/stateless.dart';
 
 void main() {
-  runApp(DemoFluApp(title: 'Tutorial', menuItems: [
-    DemoMenuItem(name: 'Section'),
-    DemoMenuItem(name: 'Stateless', example: StatelessExample(), indent: 2)
-  ]));
+  runApp(DemoFluApp(title: 'Tutorial', rootMenus: [_firstExample, _section]));
 }
-```
 
-Or formatted using cascade notation
+DemoMenuItem get _firstExample =>
+    DemoMenuItem('First', example: StatelessExample());
 
-```dart
-  runApp(DemoFluApp(title: 'Tutorial', menuItems: _menuItems()));
-```
+DemoMenuItem get _section =>
+    DemoMenuItem('Section', children: [_secondExample]);
 
-```dart
-List<DemoMenuItem> _menuItems() {
-  var builder = DemoMenuItem.builder();
-  builder
-    ..indent(1)
-    ..add('Section')
-    ..indent(2)
-    ..add('Stateless', example: StatelessExample());
-  return builder.menuItems;
-}
+DemoMenuItem get _secondExample =>
+    DemoMenuItem('Second', example: StatelessExample());
 ```
 
 ### Examples
@@ -85,6 +73,7 @@ Configure the assets to make the source code available.
 ### Build for web
 
 ```
+flutter clean
 flutter build web --release
 ```
 
