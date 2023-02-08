@@ -1,6 +1,7 @@
 import 'package:demoflu/src/internal/console_controller.dart';
 import 'package:flutter/material.dart';
 
+/// Console widget
 class ConsoleWidget extends StatelessWidget {
   ConsoleWidget({required this.console});
 

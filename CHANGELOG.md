@@ -1,9 +1,9 @@
 ## 1.1.0
 
 * `DemoMenuItem`
-  * Has been changed to store the hierarchy between parent and child menu.
+  * Has been changed to store the menu children.
 * `DemoFluApp`  
-  * The `menuItems` parameter has been renamed to `rootMenu`.
+  * The `menuItems` parameter has been renamed to `rootMenus`.
 
 ## 1.0.0
 

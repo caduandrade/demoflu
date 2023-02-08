@@ -104,7 +104,12 @@ class _MenuItemWidgetState extends State<_MenuItemWidget> {
         onHover: _onHover,
         onTap: widget.menuItem.example != null ? _onItemTap : null));
 
-    return Container(color: _background, child: Row(children: children));
+    return Container(
+        color: _background,
+        child: IntrinsicHeight(
+            child: Row(
+                children: children,
+                crossAxisAlignment: CrossAxisAlignment.stretch)));
   }
 
   void _onExpand(bool expanded) {
@@ -156,7 +161,7 @@ class Indent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        child: Container(height: 32, width: (16 * indent).toDouble()),
+        child: SizedBox(width: (16 * indent).toDouble()),
         onTap: onTap,
         onHover: onHover);
   }
@@ -180,13 +185,10 @@ class MenuItemText extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
         child: Container(
-            height: 32,
             padding: EdgeInsets.fromLTRB(0, 8, 8, 8),
-            child: FittedBox(
-                child: Text(text,
-                    style:
-                        TextStyle(color: foreground, fontStyle: _fontStyle())),
-                fit: BoxFit.fitHeight)),
+            child: Text(text,
+                style: TextStyle(
+                    color: foreground, fontSize: 12, fontStyle: _fontStyle()))),
         onHover: onHover,
         onTap: onTap);
   }
@@ -209,6 +211,7 @@ class _MenuItemIcon extends StatefulWidget {
       required this.foreground,
       required this.onTap,
       required this.onHover});
+
   final _IconType iconType;
   final Color foreground;
   final GestureTapCallback? onTap;
@@ -221,33 +224,36 @@ class _MenuItemIcon extends StatefulWidget {
 /// The [_MenuItemIcon] state.
 class _MenuItemIconState extends State<_MenuItemIcon> {
   bool _hover = false;
+
   @override
   Widget build(BuildContext context) {
     if (widget.iconType == _IconType.item) {
       return InkWell(
-          child: Container(
-              height: 32,
-              width: 32,
-              padding: EdgeInsets.all(12),
-              child: FittedBox(
-                  child: Icon(Icons.circle, color: widget.foreground)),
-              color: _background),
+          child: AspectRatio(
+              aspectRatio: 1,
+              child: Container(
+                  padding: EdgeInsets.all(12),
+                  child: FittedBox(
+                      child: Icon(Icons.circle,
+                          color: widget.foreground, size: 1)),
+                  color: _background)),
           onTap: widget.onTap,
           onHover: _onHover);
     }
 
     return InkWell(
-        child: Container(
-            height: 32,
-            width: 32,
-            child: FittedBox(
-                child: Icon(
-                    widget.iconType == _IconType.more
-                        ? Icons.expand_more
-                        : Icons.expand_less,
-                    color: widget.foreground),
-                fit: BoxFit.fitHeight),
-            color: _background),
+        child: AspectRatio(
+            aspectRatio: 1,
+            child: Container(
+                child: FittedBox(
+                    child: Icon(
+                        widget.iconType == _IconType.more
+                            ? Icons.expand_more
+                            : Icons.expand_less,
+                        color: widget.foreground,
+                        size: 1),
+                    fit: BoxFit.fitHeight),
+                color: _background)),
         onTap: widget.onTap,
         onHover: _onHover);
   }
