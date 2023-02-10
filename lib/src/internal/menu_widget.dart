@@ -27,10 +27,11 @@ class MenuWidget extends StatelessWidget {
     }
     return Container(
       child: SingleChildScrollView(
-          child: IntrinsicWidth(
-              child: Column(
-                  children: children,
-                  crossAxisAlignment: CrossAxisAlignment.stretch))),
+        child: IntrinsicWidth(
+            child: Column(
+                children: children,
+                crossAxisAlignment: CrossAxisAlignment.stretch)),
+      ),
       decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
@@ -98,11 +99,12 @@ class _MenuItemWidgetState extends State<_MenuItemWidget> {
             onTap: () => _onExpand(true)));
       }
     }
-    children.add(MenuItemText(
-        text: widget.menuItem.name,
-        foreground: _foreground,
-        onHover: _onHover,
-        onTap: widget.menuItem.example != null ? _onItemTap : null));
+    children.add(Flexible(
+        child: MenuItemText(
+            text: widget.menuItem.name,
+            foreground: _foreground,
+            onHover: _onHover,
+            onTap: widget.menuItem.example != null ? _onItemTap : null)));
 
     return Container(
         color: _background,
@@ -225,25 +227,26 @@ class _MenuItemIcon extends StatefulWidget {
 class _MenuItemIconState extends State<_MenuItemIcon> {
   bool _hover = false;
 
+  final double _width = 28;
+
   @override
   Widget build(BuildContext context) {
     if (widget.iconType == _IconType.item) {
       return InkWell(
-          child: AspectRatio(
-              aspectRatio: 1,
-              child: Container(
-                  padding: EdgeInsets.all(12),
-                  child: FittedBox(
-                      child: Icon(Icons.circle,
-                          color: widget.foreground, size: 1)),
-                  color: _background)),
+          child: Container(
+              padding: EdgeInsets.all(10),
+              width: _width,
+              child: FittedBox(
+                  child: Icon(Icons.circle, color: widget.foreground, size: 1),
+                  fit: BoxFit.fitWidth),
+              color: _background),
           onTap: widget.onTap,
           onHover: _onHover);
     }
 
     return InkWell(
-        child: AspectRatio(
-            aspectRatio: 1,
+        child: SizedBox(
+            width: _width,
             child: Container(
                 child: FittedBox(
                     child: Icon(
@@ -252,7 +255,7 @@ class _MenuItemIconState extends State<_MenuItemIcon> {
                             : Icons.expand_less,
                         color: widget.foreground,
                         size: 1),
-                    fit: BoxFit.fitHeight),
+                    fit: BoxFit.fitWidth),
                 color: _background)),
         onTap: widget.onTap,
         onHover: _onHover);

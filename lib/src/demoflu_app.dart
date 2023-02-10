@@ -3,9 +3,9 @@ import 'package:demoflu/src/internal/console_controller.dart';
 import 'package:demoflu/src/internal/demoflu_logo.dart';
 import 'package:demoflu/src/internal/demoflu_settings.dart';
 import 'package:demoflu/src/internal/menu_widget.dart';
+import 'package:demoflu/src/internal/rebuild_notifier.dart';
 import 'package:demoflu/src/internal/settings_widget.dart';
 import 'package:demoflu/src/internal/switch_view/switch_view.dart';
-import 'package:demoflu/src/internal/rebuild_notifier.dart';
 import 'package:flutter/material.dart';
 
 /// Demo app to be instantiated.
@@ -17,6 +17,7 @@ class DemoFluApp extends StatefulWidget {
       this.exampleBackground = Colors.white,
       this.maxSize,
       this.widthWeight = 1,
+      this.maxMenuWidth = 400,
       this.heightWeight = 1}) {
     if (heightWeight < 0 || heightWeight > 1) {
       throw ArgumentError(
@@ -29,6 +30,8 @@ class DemoFluApp extends StatefulWidget {
   }
 
   final String title;
+
+  final double maxMenuWidth;
 
   /// List with root menus.
   final List<DemoMenuItem> rootMenus;
@@ -154,8 +157,8 @@ class DemoFluAppState extends State<DemoFluApp> {
               rebuildNotifier: _rebuildNotifier))
     ];
 
-    Widget exampleArea =
-        CustomMultiChildLayout(delegate: _LayoutDelegate(), children: children);
+    Widget exampleArea = CustomMultiChildLayout(
+        delegate: _LayoutDelegate(widget.maxMenuWidth), children: children);
 
     List<Widget> stackChildren = [Positioned.fill(child: exampleArea)];
     if (_settingsVisible) {
@@ -176,13 +179,17 @@ class DemoFluAppState extends State<DemoFluApp> {
 
 /// The main layout delegate
 class _LayoutDelegate extends MultiChildLayoutDelegate {
+  _LayoutDelegate(this.maxWidth);
+
+  final double maxWidth;
+
   @override
   void performLayout(Size size) {
     Size appMenuSize = layoutChild(
         1,
         BoxConstraints(
             minWidth: 0,
-            maxWidth: size.width,
+            maxWidth: maxWidth,
             minHeight: size.height,
             maxHeight: size.height));
     positionChild(1, Offset.zero);
@@ -195,9 +202,8 @@ class _LayoutDelegate extends MultiChildLayoutDelegate {
   }
 
   @override
-  bool shouldRelayout(covariant MultiChildLayoutDelegate oldDelegate) {
-    return false;
-  }
+  bool shouldRelayout(covariant _LayoutDelegate oldDelegate) =>
+      maxWidth != oldDelegate.maxWidth;
 }
 
 /// Utilities.
