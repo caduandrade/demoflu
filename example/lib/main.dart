@@ -9,7 +9,7 @@ import 'package:example/examples/text.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(DemoFluApp(title: 'Demoflu(1.1.0) Demo', rootMenus: [
+  runApp(DemoFluApp(title: 'DemoFlu', rootMenus: [
     _stateless,
     _stateful,
     _console,

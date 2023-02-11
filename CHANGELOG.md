@@ -1,3 +1,9 @@
+## 1.2.0
+
+* `DemoFluApp`  
+  * New parameters: `minMenuWidth` and `maxMenuWidth`.
+  * Menu item wrapping.
+
 ## 1.1.0
 
 * `DemoMenuItem`

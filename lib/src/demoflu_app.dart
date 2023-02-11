@@ -17,6 +17,7 @@ class DemoFluApp extends StatefulWidget {
       this.exampleBackground = Colors.white,
       this.maxSize,
       this.widthWeight = 1,
+      this.minMenuWidth = 0,
       this.maxMenuWidth = 400,
       this.heightWeight = 1}) {
     if (heightWeight < 0 || heightWeight > 1) {
@@ -31,6 +32,7 @@ class DemoFluApp extends StatefulWidget {
 
   final String title;
 
+  final double minMenuWidth;
   final double maxMenuWidth;
 
   /// List with root menus.
@@ -158,7 +160,9 @@ class DemoFluAppState extends State<DemoFluApp> {
     ];
 
     Widget exampleArea = CustomMultiChildLayout(
-        delegate: _LayoutDelegate(widget.maxMenuWidth), children: children);
+        delegate: _LayoutDelegate(
+            minWidth: widget.minMenuWidth, maxWidth: widget.maxMenuWidth),
+        children: children);
 
     List<Widget> stackChildren = [Positioned.fill(child: exampleArea)];
     if (_settingsVisible) {
@@ -179,8 +183,9 @@ class DemoFluAppState extends State<DemoFluApp> {
 
 /// The main layout delegate
 class _LayoutDelegate extends MultiChildLayoutDelegate {
-  _LayoutDelegate(this.maxWidth);
+  _LayoutDelegate({required this.minWidth, required this.maxWidth});
 
+  final double minWidth;
   final double maxWidth;
 
   @override
@@ -188,7 +193,7 @@ class _LayoutDelegate extends MultiChildLayoutDelegate {
     Size appMenuSize = layoutChild(
         1,
         BoxConstraints(
-            minWidth: 0,
+            minWidth: minWidth,
             maxWidth: maxWidth,
             minHeight: size.height,
             maxHeight: size.height));
@@ -203,7 +208,7 @@ class _LayoutDelegate extends MultiChildLayoutDelegate {
 
   @override
   bool shouldRelayout(covariant _LayoutDelegate oldDelegate) =>
-      maxWidth != oldDelegate.maxWidth;
+      maxWidth != oldDelegate.maxWidth || minWidth != oldDelegate.minWidth;
 }
 
 /// Utilities.
