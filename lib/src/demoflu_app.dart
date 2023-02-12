@@ -80,12 +80,10 @@ class DemoFluAppState extends State<DemoFluApp> {
 
   /// Rebuilds the menus according to the expanded ones.
   void _rebuildMenuItemsList() {
-    print('_rebuildMenuItemsList');
     _menuItems = recursiveFetch(widget.rootMenus);
     if (_selectedMenuItem == null) {
       int firstMenuItemIndex =
           _menuItems.indexWhere((item) => item.example != null);
-      print('firstMenuItemIndex: $firstMenuItemIndex');
       if (firstMenuItemIndex != -1) {
         _selectedMenuItem = _menuItems[firstMenuItemIndex];
       }
