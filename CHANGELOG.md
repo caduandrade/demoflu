@@ -1,3 +1,8 @@
+## 1.3.0
+
+* Bugfix
+  * Failing to find first menu item with example.
+
 ## 1.2.0
 
 * `DemoFluApp`  

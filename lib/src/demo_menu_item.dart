@@ -56,4 +56,9 @@ class DemoMenuItem extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  @override
+  String toString() {
+    return 'DemoMenuItem{name: $name}';
+  }
 }
