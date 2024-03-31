@@ -1,9 +1,10 @@
 import 'dart:collection';
 
 import 'package:flutter/widgets.dart';
+import 'package:meta/meta.dart';
 
-/// Console controller
-class ConsoleController extends ChangeNotifier {
+@internal
+class PrintNotifier extends ChangeNotifier {
   int _count = 0;
   final List<String> _values = [];
   late UnmodifiableListView<String> values =
@@ -15,9 +16,11 @@ class ConsoleController extends ChangeNotifier {
     notifyListeners();
   }
 
-  clear() {
+  clear({required bool notify}) {
     _count = 0;
     _values.clear();
-    notifyListeners();
+    if (notify) {
+      notifyListeners();
+    }
   }
 }

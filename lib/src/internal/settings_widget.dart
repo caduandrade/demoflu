@@ -1,14 +1,14 @@
-import 'package:demoflu/src/internal/demoflu_settings.dart';
+import 'package:demoflu/src/internal/model.dart';
+import 'package:demoflu/src/internal/provider.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 /// Settings widget
+@internal
 class SettingsWidget extends StatelessWidget {
-  const SettingsWidget(
-      {Key? key, required this.settings, required this.onClose})
-      : super(key: key);
+  const SettingsWidget({Key? key, required this.onClose}) : super(key: key);
 
-  final DemoFluSettings settings;
   final VoidCallback onClose;
 
   @override
@@ -44,9 +44,10 @@ class SettingsWidget extends StatelessWidget {
   }
 
   Widget _colorPicker(BuildContext context) {
+    DemoFluModel model = DemoFluProvider.modelOf(context);
     return ColorPicker(
-      color: settings.exampleBackground,
-      onColorChanged: (Color color) => settings.exampleBackground = color,
+      color: model.exampleBackground,
+      onColorChanged: (Color color) => model.exampleBackground = color,
       width: 40,
       height: 40,
       borderRadius: 4,

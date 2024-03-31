@@ -1,6 +1,6 @@
 name: demoflu
 description: Package demo builder. Web application to display package widgets usage.
-version: 1.2.1
+version: 1.3.0
 repository: https://github.com/caduandrade/demoflu
 
 environment:
@@ -13,6 +13,8 @@ dependencies:
   url_launcher: ^6.1.9
   flutter_highlight: ^0.7.0
   flex_color_picker: ^3.0.0
+  syntax_highlight: ^0.4.0 #
+  meta: ^1.11.0
 
 dev_dependencies:
   flutter_test:

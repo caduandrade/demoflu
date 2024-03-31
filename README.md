@@ -18,7 +18,7 @@ Use the `DemoFluApp` to configure the menu.
 ```dart
 import 'package:demoflu/demoflu.dart';
 import 'package:flutter/material.dart';
-import 'package:tutorial/examples/stateless.dart';
+import 'package:tutorial/examples/stateless_example.dart';
 
 void main() {
   runApp(DemoFluApp(title: 'Tutorial', rootMenus: [_firstExample, _section]));
@@ -46,7 +46,7 @@ class StatelessExample extends Example {
   StatelessExample()
       : super(
             widget: const MainWidget(),
-            codeFile: 'lib/examples/stateless.dart',
+            codeFile: 'lib/examples/stateless_example.dart',
             resizable: true);
 }
 
