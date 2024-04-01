@@ -1,5 +1,9 @@
 import 'package:demoflu/src/demo_menu_item.dart';
-import 'package:demoflu/src/internal/print_notifier.dart';
+import 'package:demoflu/src/internal/breadcrumb.dart';
+import 'package:demoflu/src/internal/bullets_widget.dart';
+import 'package:demoflu/src/internal/console_widget.dart';
+import 'package:demoflu/src/internal/example_widget.dart';
+import 'package:demoflu/src/internal/source_code_widget.dart';
 import 'package:demoflu/src/page.dart';
 import 'package:demoflu/src/internal/model.dart';
 import 'package:demoflu/src/internal/provider.dart';
@@ -17,13 +21,10 @@ class DemoFluPageWidget extends StatelessWidget {
 
     final DemoMenuItem menuItem = model.selectedMenuItem;
     if (menuItem.page != null) {
-      final DemoFluPage page = menuItem.page!;
+      final DemoFluPage page = menuItem.page!();
 
       children.add(BreadcrumbWidget(menuItem: menuItem));
-
-      for (DemoFluPageSection section in page.getSections()) {
-        children.add(section.buildWidget(context));
-      }
+      children.addAll(_widgetsFromPage(page));
     }
 
     return LayoutBuilder(builder: (context, constraints) {
@@ -34,52 +35,33 @@ class DemoFluPageWidget extends StatelessWidget {
           itemCount: children.length);
     });
   }
-}
 
-class BreadcrumbWidget extends StatelessWidget {
-  const BreadcrumbWidget({super.key, required this.menuItem});
-
-  final DemoMenuItem menuItem;
-
-  @override
-  Widget build(BuildContext context) {
-    DemoFluModel model = DemoFluProvider.modelOf(context);
-
-    List<Widget> children = [];
-    DemoMenuItem? currentMenuItem = menuItem;
-    while (currentMenuItem != null) {
-      if (children.isNotEmpty) {
-        children.insert(
-            0, Icon(Icons.navigate_next, size: 14, color: Colors.grey[600]));
-      }
-      if (children.isEmpty) {
-        children.insert(
-            0,
-            Text(currentMenuItem.name,
-                style: TextStyle(fontWeight: FontWeight.bold)));
+  List<Widget> _widgetsFromPage(DemoFluPage page) {
+    List<Widget> list = [];
+    for (PageSection section in PageHelper.sectionsFrom(page)) {
+      if (section is TextSection) {
+        list.add(SelectableText(section.text));
+      } else if (section is ExampleSection) {
+        list.add(ExampleWidget(section));
+      } else if (section is DartCodeSection) {
+        list.add(SourceCodeWidget(
+          title: section.title,
+          file: section.file,
+          wrap: section.wrap,
+          ignoreEnabled: section.ignoreEnabled,
+          key: ValueKey(section.file),
+        ));
+      } else if (section is ConsoleSection) {
+        list.add(ConsoleWidget(title: section.title, height: section.height));
+      } else if (section is BulletsSection) {
+        list.add(BulletsWidget(bullets: section.bullets));
+      } else if (section is TitleSection) {
+        list.add(Text(section.title,
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)));
       } else {
-        if (currentMenuItem.page == null) {
-          children.insert(0, Text(currentMenuItem.name));
-        } else {
-          final DemoMenuItem targetMenuItem = currentMenuItem;
-          children.insert(
-              0,
-              InkWell(
-                  onTap: () {
-                    PrintNotifier printNotifier =
-                        DemoFluProvider.printNotifierOf(context);
-                    printNotifier.clear(notify: false);
-                    model.selectedMenuItem = targetMenuItem;
-                  },
-                  child: Text(currentMenuItem.name)));
-        }
+        list.add(Text(section.runtimeType.toString()));
       }
-      currentMenuItem = currentMenuItem.parent;
     }
-    return Wrap(
-        spacing: 4,
-        runSpacing: 4,
-        children: children,
-        crossAxisAlignment: WrapCrossAlignment.center);
+    return list;
   }
 }

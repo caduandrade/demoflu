@@ -1,3 +1,4 @@
+import 'package:demoflu/src/internal/titled_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
@@ -8,11 +9,13 @@ import 'package:syntax_highlight/syntax_highlight.dart';
 class SourceCodeWidget extends StatefulWidget {
   const SourceCodeWidget(
       {required Key key,
+      required this.title,
       required this.file,
       required this.wrap,
       required this.ignoreEnabled})
       : super(key: key);
 
+  final String? title;
   final String file;
   final bool wrap;
   final bool ignoreEnabled;
@@ -67,10 +70,11 @@ class SourceCodeWidgetState extends State<SourceCodeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-            color: Colors.grey[100], border: Border.all(color: Colors.black12)),
-        child: _contentWidget());
+    return TitledWidget(
+        title: widget.title,
+        child: Container(
+            decoration: BoxDecoration(color: Colors.grey[100]),
+            child: _contentWidget()));
   }
 
   Widget _contentWidget() {

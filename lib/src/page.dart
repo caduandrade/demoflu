@@ -1,187 +1,159 @@
-import 'package:demoflu/src/internal/source_code_widget.dart';
-import 'package:demoflu/src/internal/console_widget.dart';
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 
+import 'package:meta/meta.dart';
+
 abstract class DemoFluPage {
-  const DemoFluPage();
+  List<PageSection> _sections = [];
 
-  List<DemoFluPageSection> getSections();
-}
+  TitleSection addTitle(String title) {
+    TitleSection section = TitleSection._(title);
+    _sections.add(section);
+    return section;
+  }
 
-class DemoFluPageSection {
-  DemoFluPageSection.title(String title)
-      : _builder = _TitleWidgetBuilder(title);
-  DemoFluPageSection.example(
+  TextSection textSection([String? text]) {
+    TextSection section = TextSection._(text ?? '');
+    _sections.add(section);
+    return section;
+  }
+
+  BulletsSection bulletsSection() {
+    BulletsSection section = BulletsSection._();
+    _sections.add(section);
+    return section;
+  }
+
+  ExampleSection exampleSection(WidgetBuilder widgetBuilder,
       {String? title,
-      required WidgetBuilder builder,
       Listenable? listenable,
       double minWidth = 0.0,
       double maxWidth = double.infinity,
       double minHeight = 0.0,
       double maxHeight = double.infinity,
-      double? aspectRatio})
-      : _builder = _ExampleWidgetBuilder(
-            builder: builder,
-            title: title,
-            listenable: listenable,
-            minHeight: minHeight,
-            minWidth: minWidth,
-            maxHeight: maxHeight,
-            maxWidth: maxWidth,
-            aspectRatio: aspectRatio);
-  DemoFluPageSection.dartCode(
-      {String? title,
-      required String file,
-      bool wrap = true,
-      bool ignoreEnabled = true})
-      : _builder = _DartCodeWidgetBuilder(
-            title: title, file: file, wrap: wrap, ignoreEnabled: ignoreEnabled);
-  DemoFluPageSection.console({String? title = 'Console', double height = 150})
-      : _builder = _ConsoleWidgetBuilder(title: title, height: height);
+      double? aspectRatio}) {
+    ExampleSection section = ExampleSection._(
+        title: title,
+        widgetBuilder: widgetBuilder,
+        listenable: listenable,
+        minWidth: minWidth,
+        maxWidth: maxWidth,
+        minHeight: minHeight,
+        maxHeight: maxHeight);
+    _sections.add(section);
+    return section;
+  }
 
-  final _WidgetBuilder _builder;
+  DartCodeSection sourceCodeSection(String file,
+      {String? title, bool wrap = true, bool ignoreEnabled = true}) {
+    DartCodeSection section = DartCodeSection(
+        title: title, file: file, wrap: wrap, ignoreEnabled: ignoreEnabled);
+    _sections.add(section);
+    return section;
+  }
 
-  Widget buildWidget(BuildContext context) {
-    return _builder.build(context);
+  ConsoleSection consoleSection(
+      {String? title = 'Console', double height = 150}) {
+    ConsoleSection section = ConsoleSection(title: title, height: height);
+    _sections.add(section);
+    return section;
   }
 }
 
-typedef WidgetBuilder = Widget Function(BuildContext context);
+abstract class PageSection {}
 
-abstract class _WidgetBuilder {
-  const _WidgetBuilder();
-  Widget build(BuildContext context);
+abstract class TitledPageSection extends PageSection {
+  TitledPageSection({required this.title});
+  String? title;
 }
 
-class _TitleWidgetBuilder extends _WidgetBuilder {
-  const _TitleWidgetBuilder(this.title);
+class TitleSection extends PageSection {
+  TitleSection._(this.title);
 
   final String title;
+}
 
-  @override
-  Widget build(BuildContext context) {
-    return Text(title,
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold));
+class TextSection extends PageSection {
+  TextSection._(this._text);
+
+  String _text;
+  String get text => _text;
+
+  void add(String value) {
+    _text += value;
   }
 }
 
-class _ExampleWidgetBuilder extends _WidgetBuilder {
-  const _ExampleWidgetBuilder(
-      {required this.builder,
-      required this.title,
+class BulletsSection extends PageSection {
+  BulletsSection._() {
+    bullets = UnmodifiableListView(_bullets);
+  }
+
+  List<Bullet> _bullets = [];
+  late List<Bullet> bullets;
+
+  Bullet create({int indent = 0, String? text}) {
+    indent = indent < 0 ? 0 : indent;
+    indent = indent > 3 ? 3 : indent;
+    Bullet bullet = Bullet(indent: indent, text: text ?? '');
+    _bullets.add(bullet);
+    return bullet;
+  }
+}
+
+class Bullet {
+  Bullet({required this.indent, required String text}) : _text = text;
+
+  final int indent;
+  String _text;
+  String get text => _text;
+
+  void add(String value) {
+    _text += value;
+  }
+}
+
+class ExampleSection extends TitledPageSection {
+  ExampleSection._(
+      {required super.title,
+      required this.widgetBuilder,
       required this.listenable,
       required this.minWidth,
       required this.maxWidth,
       required this.minHeight,
-      required this.maxHeight,
-      required this.aspectRatio});
+      required this.maxHeight});
 
-  final WidgetBuilder builder;
-  final String? title;
-  final Listenable? listenable;
-  final double minWidth;
-  final double maxWidth;
-  final double minHeight;
-  final double maxHeight;
-  final double? aspectRatio;
-
-  @override
-  Widget build(BuildContext context) {
-    if (title != null) {
-      return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [Text(title!), _exampleInListenable(context)]);
-    }
-    return _exampleInListenable(context);
-  }
-
-  Widget _exampleInListenable(BuildContext context) {
-    if (listenable != null) {
-      return ListenableBuilder(
-          listenable: listenable!,
-          builder: (BuildContext context, Widget? child) {
-            return _exampleInContainer(context);
-          });
-    }
-    return _exampleInContainer(context);
-  }
-
-  Widget _exampleInContainer(BuildContext context) {
-    return Align(
-        alignment: Alignment.centerLeft,
-        child: ConstrainedBox(
-            constraints: BoxConstraints(
-                minWidth: minWidth,
-                minHeight: minHeight,
-                maxWidth: maxWidth,
-                maxHeight: maxHeight),
-            child: Container(
-                child: _exampleInAspectRatio(context),
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black26, width: 1)))));
-  }
-
-  Widget _exampleInAspectRatio(BuildContext context) {
-    Widget widget = this.builder(context);
-    if (aspectRatio != null) {
-      return AspectRatio(aspectRatio: aspectRatio!, child: widget);
-    }
-    return widget;
-  }
+  final WidgetBuilder widgetBuilder;
+  Listenable? listenable;
+  double minWidth;
+  double maxWidth;
+  double minHeight;
+  double maxHeight;
+  double? aspectRatio;
 }
 
-class _DartCodeWidgetBuilder extends _WidgetBuilder {
-  _DartCodeWidgetBuilder(
-      {required this.title,
+class DartCodeSection extends TitledPageSection {
+  DartCodeSection(
+      {required super.title,
       required this.file,
       required this.wrap,
       required this.ignoreEnabled});
 
-  final String? title;
   final String file;
-  final bool wrap;
-  final bool ignoreEnabled;
-
-  @override
-  Widget build(BuildContext context) {
-    if (title != null) {
-      return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [Text(title!), _codeInContainer(context)]);
-    }
-    return _codeInContainer(context);
-  }
-
-  Widget _codeInContainer(BuildContext context) {
-    return SourceCodeWidget(
-      file: file,
-      wrap: wrap,
-      ignoreEnabled: ignoreEnabled,
-      key: ValueKey(file),
-    );
-  }
+  bool wrap;
+  bool ignoreEnabled;
 }
 
-class _ConsoleWidgetBuilder extends _WidgetBuilder {
-  _ConsoleWidgetBuilder({required this.title, required this.height});
+class ConsoleSection extends TitledPageSection {
+  ConsoleSection({required super.title, required this.height});
 
-  final String? title;
-  final double height;
+  double height;
+}
 
-  @override
-  Widget build(BuildContext context) {
-    if (title != null) {
-      return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [Text(title!), _consoleInContainer(context)]);
-    }
-    return _consoleInContainer(context);
-  }
-
-  Widget _consoleInContainer(BuildContext context) {
-    return Container(
-        child: ConsoleWidget(height: height),
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.black26, width: 1)));
+@internal
+class PageHelper {
+  static List<PageSection> sectionsFrom(DemoFluPage page) {
+    return page._sections;
   }
 }

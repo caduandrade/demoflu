@@ -1,5 +1,7 @@
 import 'package:demoflu/src/page.dart';
 
+typedef PageBuilder = DemoFluPage Function();
+
 /// Represents a menu item in the app menu.
 class DemoMenuItem {
   DemoMenuItem(this.name, {this.page, List<DemoMenuItem> children = const []}) {
@@ -12,7 +14,7 @@ class DemoMenuItem {
   /// The menu name.
   final String name;
 
-  final DemoFluPage? page;
+  final PageBuilder? page;
 
   /// Sub menus
   final List<DemoMenuItem> _children = [];
