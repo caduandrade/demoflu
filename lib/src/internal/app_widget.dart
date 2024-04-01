@@ -13,24 +13,33 @@ class DemoFluAppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DemoFluModel model = DemoFluProvider.modelOf(context);
-    return Scaffold(
-        appBar: AppBar(
-            title: Text(model.title),
-            scrolledUnderElevation: 0,
-            shadowColor: Colors.black,
-            backgroundColor: Colors.white,
-            shape:
-                Border(bottom: BorderSide(color: Colors.grey[300]!, width: 2)),
-            elevation: 0,
-            actions: [
-              IconButton(
-                  onPressed: () =>
-                      model.settingsVisible = !model.settingsVisible,
-                  icon: Icon(Icons.settings),
-                  tooltip: 'Settings'),
-              DemoFluLogo()
-            ]),
-        body: _buildBody(context));
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: model.title,
+        theme: ThemeData(
+            textTheme: Theme.of(context).textTheme.apply(
+                  fontSizeFactor: 1.1,
+                  fontSizeDelta: 2.0,
+                ),
+            scaffoldBackgroundColor: Colors.white),
+        home: Scaffold(
+            appBar: AppBar(
+                title: Text(model.title),
+                scrolledUnderElevation: 0,
+                shadowColor: Colors.black,
+                backgroundColor: Colors.white,
+                shape: Border(
+                    bottom: BorderSide(color: Colors.grey[300]!, width: 2)),
+                elevation: 0,
+                actions: [
+                  IconButton(
+                      onPressed: () =>
+                          model.settingsVisible = !model.settingsVisible,
+                      icon: Icon(Icons.settings),
+                      tooltip: 'Settings'),
+                  DemoFluLogo()
+                ]),
+            body: _buildBody(context)));
   }
 
   Widget _buildBody(BuildContext context) {

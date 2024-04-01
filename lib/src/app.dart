@@ -39,16 +39,10 @@ class DemoFluApp {
     runZonedGuarded<Future<void>>(() async {
       WidgetsFlutterBinding.ensureInitialized();
       await model.initializeHighlighter();
-      runApp(MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: model.title,
-          theme: ThemeData(
-              primarySwatch: Colors.blueGrey,
-              scaffoldBackgroundColor: Colors.white),
-          home: DemoFluProvider(
-              model: model,
-              printNotifier: printNotifier,
-              child: DemoFluAppWidget())));
+      runApp(DemoFluProvider(
+          model: model,
+          printNotifier: printNotifier,
+          child: DemoFluAppWidget()));
     }, (error, stackTrace) {
       print('Error: $error');
       print(stackTrace);
