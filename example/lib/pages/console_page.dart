@@ -3,8 +3,10 @@ import 'package:example/pages/console_example.dart';
 
 class ConsolePage extends DemoFluPage {
   ConsolePage() {
-    exampleSection((context) => const ConsoleExample());
+    widgetSection((context) => const ConsoleExample(), title: 'Widget');
     consoleSection();
-    sourceCodeSection('lib/pages/console_example.dart');
+    sourceCodeSection('lib/pages/console_example.dart',
+        title: 'Widget source code');
+    sourceCodeSection('lib/pages/console_page.dart', title: 'Page source code');
   }
 }

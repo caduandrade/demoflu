@@ -1,11 +1,14 @@
 import 'package:demoflu/demoflu.dart';
-import 'package:example/pages/text_example.dart';
+import 'package:flutter/material.dart';
 
 class TextPage extends DemoFluPage {
-  TextPage(this.name) {
-    exampleSection((context) => TextExample(name: name));
-    sourceCodeSection('lib/pages/text_example.dart');
-  }
+  TextPage() {
+    textSection(text: 'You can add texts using the textSection method.');
 
-  final String name;
+    textSection(icon: Icons.check, text: 'The text can start with an icon.');
+
+    //TODO adicionar cores , spans...
+
+    sourceCodeSection('lib/pages/text_page.dart', title: 'Page source code');
+  }
 }

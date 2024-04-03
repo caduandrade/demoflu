@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AddonExample extends StatelessWidget {
-  const AddonExample(this.count, {super.key});
+class ListenableExample extends StatelessWidget {
+  const ListenableExample(this.count, {super.key});
 
   final int count;
 

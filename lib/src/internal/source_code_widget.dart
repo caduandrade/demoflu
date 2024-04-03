@@ -12,13 +12,17 @@ class SourceCodeWidget extends StatefulWidget {
       required this.title,
       required this.file,
       required this.wrap,
-      required this.ignoreEnabled})
+      required this.ignoreEnabled,
+      required this.discardMultipleEmptyLines,
+      required this.discardLastEmptyLine})
       : super(key: key);
 
   final String? title;
   final String file;
   final bool wrap;
   final bool ignoreEnabled;
+  final bool discardMultipleEmptyLines;
+  final bool discardLastEmptyLine;
 
   @override
   State<StatefulWidget> createState() => SourceCodeWidgetState();
@@ -49,29 +53,47 @@ class SourceCodeWidgetState extends State<SourceCodeWidget> {
     String rawCode = await rootBundle.loadString(widget.file);
     List<String> code = [];
     bool ignore = false;
-    for (String str in rawCode.split('\n')) {
+    String? lastAddedTrimLine;
+    for (String currentLine in rawCode.split('\n')) {
+      String currentTrimLine = currentLine.trim();
       if (widget.ignoreEnabled) {
-        if (str.trim() == '//@demoflu_ignore_start') {
+        if (currentTrimLine == '//@demoflu_ignore_start') {
           ignore = true;
           continue;
-        } else if (str.trim() == '//@demoflu_ignore_end') {
+        } else if (currentTrimLine == '//@demoflu_ignore_end') {
           ignore = false;
           continue;
         }
       }
-      if (!ignore) {
-        code.add(str);
+      bool discard = false;
+      if (widget.discardMultipleEmptyLines &&
+          lastAddedTrimLine != null &&
+          lastAddedTrimLine.isEmpty &&
+          currentTrimLine.isEmpty) {
+        discard = true;
+      }
+      if (!ignore && !discard) {
+        code.add(currentLine);
+        lastAddedTrimLine = currentTrimLine;
       }
     }
-    setState(() {
-      _code = code.join('\n');
-    });
+    if (widget.discardLastEmptyLine) {
+      if (code.isNotEmpty && code.last.isEmpty) {
+        code.removeLast();
+      }
+    }
+    if (mounted) {
+      setState(() {
+        _code = code.join('\n');
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return TitledWidget(
         title: widget.title,
+        bordered: true,
         child: Container(
             decoration: BoxDecoration(color: Colors.grey[100]),
             child: _contentWidget()));

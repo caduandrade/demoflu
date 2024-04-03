@@ -1,37 +1,49 @@
 import 'package:demoflu/demoflu.dart';
-import 'package:example/pages/addon_page.dart';
+import 'package:example/pages/banner_page.dart';
+import 'package:example/pages/listenable_page.dart';
 import 'package:example/pages/console_page.dart';
+import 'package:example/pages/boostrap.dart';
 import 'package:example/pages/get_started_page.dart';
-import 'package:example/pages/ignore_page.dart';
+import 'package:example/pages/ignoring_page.dart';
+import 'package:example/pages/page.dart';
+import 'package:example/pages/source_code_page.dart';
 import 'package:example/pages/stateful_page.dart';
 import 'package:example/pages/stateless_page.dart';
 import 'package:example/pages/text_page.dart';
 
-class X {
-  void add(String name, DemoFluPage? page) {}
-}
-
 void main() {
-  X x = X();
-  x.add('Teste', null);
-  x.add('*Teste f', null);
-  x.add('*Teste', null);
-  x.add('**Teste', null);
-  x.add('Teste', null);
   DemoFluApp(title: 'DemoFlu (2.0.0)', rootMenus: [
     _getStarted,
-    _stateless,
-    _stateful,
-    _console,
-    _addon,
-    // _notResizable,
-    _ignoreMarkedCode,
-    _nestedSection
+    _main,
+    _page,
+    _pageSections,
+    // _notResizable
   ]).run();
 }
 
 DemoMenuItem get _getStarted =>
     DemoMenuItem('Get started', page: () => GetStartedPage());
+
+DemoMenuItem get _main =>
+    DemoMenuItem('Bootstrap', page: () => BootstrapPage());
+
+DemoMenuItem get _page => DemoMenuItem('Page', page: () => Page());
+
+DemoMenuItem get _pageSections => DemoMenuItem('Page sections',
+    children: [_sourceCode, _text, _banner, _widgetSection, _console]);
+
+DemoMenuItem get _sourceCode => DemoMenuItem('Source code',
+    page: () => SourceCodePage(), children: [_ignoringMarkedCode]);
+
+DemoMenuItem get _ignoringMarkedCode =>
+    DemoMenuItem('Ignoring marked code', page: () => IgnoringPage());
+
+DemoMenuItem get _text => DemoMenuItem('Text', page: () => TextPage());
+
+DemoMenuItem get _banner => DemoMenuItem('Banner', page: () => BannerPage());
+
+DemoMenuItem get _widgetSection =>
+    DemoMenuItem('Widget', children: [_stateless, _stateful, _listenable]);
 
 DemoMenuItem get _stateless =>
     DemoMenuItem('Stateless', page: () => StatelessPage());
@@ -39,41 +51,12 @@ DemoMenuItem get _stateless =>
 DemoMenuItem get _stateful =>
     DemoMenuItem('Stateful', page: () => StatefulPage());
 
-DemoMenuItem get _console => DemoMenuItem('Console', page: () => ConsolePage());
+DemoMenuItem get _listenable =>
+    DemoMenuItem('Listenable', page: () => ListenablePage());
 
-DemoMenuItem get _addon => DemoMenuItem('Addon', page: () => AddonPage());
+DemoMenuItem get _console => DemoMenuItem('Console', page: () => ConsolePage());
 
 /*
 DemoMenuItem get _notResizable =>
     DemoMenuItem('Not resizable', example: NotResizableExample());
-
-
  */
-DemoMenuItem get _ignoreMarkedCode =>
-    DemoMenuItem('Ignore marked code', page: () => IgnorePage());
-
-DemoMenuItem get _nestedSection => DemoMenuItem('Nested sections')
-  ..add(_section1WithExample)
-  ..add(_section2WithExample);
-
-DemoMenuItem get _section1WithExample =>
-    DemoMenuItem('Section 1', page: () => TextPage('Section 1'))
-      ..add(_leaf1a)
-      ..add(_leaf1b);
-
-DemoMenuItem get _leaf1a =>
-    DemoMenuItem('Leaf 1a', page: () => TextPage('Leaf 1a'));
-
-DemoMenuItem get _leaf1b =>
-    DemoMenuItem('Leaf 1b', page: () => TextPage('Leaf 1b'));
-
-DemoMenuItem get _section2WithExample =>
-    DemoMenuItem('Section 2', page: () => TextPage('Section 2'))
-      ..add(_leaf2a)
-      ..add(_leaf2b);
-
-DemoMenuItem get _leaf2a =>
-    DemoMenuItem('Leaf 2a', page: () => TextPage('Leaf 2a'));
-
-DemoMenuItem get _leaf2b =>
-    DemoMenuItem('Leaf 2b', page: () => TextPage('Leaf 2b'));

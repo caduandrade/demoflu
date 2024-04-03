@@ -17,10 +17,7 @@ class DemoFluAppWidget extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: model.title,
         theme: ThemeData(
-            textTheme: Theme.of(context).textTheme.apply(
-                  fontSizeFactor: 1.1,
-                  fontSizeDelta: 2.0,
-                ),
+            textTheme: Theme.of(context).textTheme.apply(fontSizeFactor: 1.2),
             scaffoldBackgroundColor: Colors.white),
         home: Scaffold(
             appBar: AppBar(

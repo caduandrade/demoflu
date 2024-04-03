@@ -15,6 +15,7 @@ class ConsoleWidget extends StatelessWidget {
     PrintNotifier printNotifier = DemoFluProvider.printNotifierOf(context);
     return TitledWidget(
         title: title,
+        bordered: true,
         child: ListenableBuilder(
             listenable: printNotifier,
             builder: (context, child) {

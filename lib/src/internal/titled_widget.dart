@@ -3,9 +3,11 @@ import 'package:meta/meta.dart';
 
 @internal
 class TitledWidget extends StatelessWidget {
-  const TitledWidget({super.key, this.title, required this.child});
+  const TitledWidget(
+      {super.key, this.title, required this.child, required this.bordered});
 
   final String? title;
+  final bool bordered;
   final Widget child;
 
   @override
@@ -19,9 +21,12 @@ class TitledWidget extends StatelessWidget {
   }
 
   Widget buildContent(BuildContext context) {
-    return Container(
-        child: child,
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.black26, width: 1)));
+    if (bordered) {
+      return Container(
+          child: child,
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey[200]!, width: 1)));
+    }
+    return child;
   }
 }

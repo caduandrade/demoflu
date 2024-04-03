@@ -4,29 +4,31 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 @internal
-class ExampleWidget extends StatelessWidget {
-  ExampleWidget(this.section);
+class WidgetContainer extends StatelessWidget {
+  WidgetContainer(this.section);
 
-  final ExampleSection section;
+  final WidgetSection section;
 
   @override
   Widget build(BuildContext context) {
     return TitledWidget(
-        child: _exampleInListenable(context), title: section.title);
+        child: _listenable(context),
+        title: section.title,
+        bordered: section.bordered);
   }
 
-  Widget _exampleInListenable(BuildContext context) {
+  Widget _listenable(BuildContext context) {
     if (section.listenable != null) {
       return ListenableBuilder(
           listenable: section.listenable!,
           builder: (BuildContext context, Widget? child) {
-            return _exampleInContainer(context);
+            return _container(context);
           });
     }
-    return _exampleInContainer(context);
+    return _container(context);
   }
 
-  Widget _exampleInContainer(BuildContext context) {
+  Widget _container(BuildContext context) {
     return Align(
         alignment: Alignment.centerLeft,
         child: ConstrainedBox(
@@ -35,11 +37,11 @@ class ExampleWidget extends StatelessWidget {
               minHeight: section.minHeight,
               maxWidth: section.maxWidth,
               maxHeight: section.maxHeight),
-          child: _exampleInAspectRatio(context),
+          child: _aspectRatio(context),
         ));
   }
 
-  Widget _exampleInAspectRatio(BuildContext context) {
+  Widget _aspectRatio(BuildContext context) {
     if (section.aspectRatio != null) {
       return AspectRatio(
           aspectRatio: section.aspectRatio!,
