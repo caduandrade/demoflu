@@ -1,7 +1,5 @@
 import 'package:demoflu/demoflu.dart';
-import 'package:flutter/material.dart';
 
-//TODO mudar nome para: criando app?
 class BootstrapPage extends DemoFluPage {
   BootstrapPage() {
     titleSection('App');

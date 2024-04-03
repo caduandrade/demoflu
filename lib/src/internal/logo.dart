@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// The DemoFlu logo widget.
+@internal
 class DemoFluLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -2,8 +2,10 @@ import 'package:demoflu/src/internal/print_notifier.dart';
 import 'package:demoflu/src/internal/provider.dart';
 import 'package:demoflu/src/internal/titled_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 /// Console widget
+@internal
 class ConsoleWidget extends StatelessWidget {
   ConsoleWidget({required this.title, required this.height});
 

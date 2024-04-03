@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
+@internal
 class BannerWidget extends StatelessWidget {
   const BannerWidget(
       {super.key,
