@@ -14,8 +14,6 @@ class DemoFluModel extends ChangeNotifier {
       required Color exampleBackground,
       required this.maxSize,
       required double widthWeight,
-      required this.minMenuWidth,
-      required this.maxMenuWidth,
       required double heightWeight})
       : _exampleBackground = exampleBackground,
         _widthWeight = widthWeight,
@@ -37,9 +35,6 @@ class DemoFluModel extends ChangeNotifier {
   }
 
   final String title;
-
-  final double minMenuWidth;
-  final double maxMenuWidth;
 
   /// List with root menus.
   final List<DemoMenuItem> rootMenus;

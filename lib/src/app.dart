@@ -18,8 +18,6 @@ class DemoFluApp {
       Color exampleBackground = Colors.white,
       Size? maxSize,
       double widthWeight = 1,
-      double minMenuWidth = 0,
-      double maxMenuWidth = 400,
       double heightWeight = 1})
       : model = DemoFluModel(
             title: title,
@@ -28,8 +26,6 @@ class DemoFluApp {
             exampleBackground: exampleBackground,
             maxSize: maxSize,
             widthWeight: widthWeight,
-            minMenuWidth: minMenuWidth,
-            maxMenuWidth: maxMenuWidth,
             heightWeight: heightWeight);
 
   final DemoFluModel model;
