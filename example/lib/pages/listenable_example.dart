@@ -7,6 +7,8 @@ class ListenableExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('Count: $count'));
+    return Center(
+        child: Padding(
+            padding: const EdgeInsets.all(16), child: Text('Count: $count')));
   }
 }

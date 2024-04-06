@@ -7,17 +7,20 @@ import 'package:flutter/material.dart';
 
 /// Resizable example widget
 class ResizableExampleWidget extends StatefulWidget {
-  const ResizableExampleWidget();
+  const ResizableExampleWidget(this.child);
+
+  final Widget child;
 
   @override
   State<StatefulWidget> createState() => ResizableExampleWidgetState();
 }
 
 class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
+  double _widthWeight = 1;
+  double _heightWeight = 1;
+
   @override
   Widget build(BuildContext context) {
-    DemoFluModel model = DemoFluProvider.modelOf(context);
-
     List<LayoutId> children = [];
 
     children.add(
@@ -27,15 +30,19 @@ class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
         id: _Id.widthSlider,
         child: DemofluSlider(
             axis: Axis.horizontal,
-            value: model.widthWeight,
-            onChanged: (double value) => model.widthWeight = value)));
+            value: _widthWeight,
+            onChanged: (double value) => setState(() {
+                  _widthWeight = value;
+                }))));
 
     children.add(LayoutId(
         id: _Id.heightSlider,
         child: DemofluSlider(
             axis: Axis.vertical,
-            value: model.heightWeight,
-            onChanged: (double value) => model.heightWeight = value)));
+            value: _heightWeight,
+            onChanged: (double value) => setState(() {
+                  _heightWeight = value;
+                }))));
 
     return Container(
         child: CustomMultiChildLayout(delegate: _Layout(), children: children),
@@ -48,7 +55,7 @@ class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
         builder: (BuildContext context, BoxConstraints constraints) {
       double maxWidth = constraints.maxWidth;
       double maxHeight = constraints.maxHeight;
-      //TODO here
+
       //Size? maxSize = widget.example.maxSize ?? model.maxSize;
       Size? maxSize;
       if (maxSize != null) {
@@ -56,12 +63,11 @@ class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
         maxHeight = math.min(maxHeight, maxSize.height);
       }
 
-      maxWidth = maxWidth * model.widthWeight;
-      maxHeight = maxHeight * model.heightWeight;
+      maxWidth = maxWidth * _widthWeight;
+      maxHeight = maxHeight * _heightWeight;
 
-      //TODO here
       ConstrainedBox constrainedBox = ConstrainedBox(
-          child: Container(), //widget.example.buildWidget(context),
+          child: widget.child,
           constraints:
               BoxConstraints.tightFor(width: maxWidth, height: maxHeight));
 

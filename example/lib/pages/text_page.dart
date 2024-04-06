@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 
 class TextPage extends DemoFluPage {
   TextPage() {
-    textSection(text: 'You can add texts using the textSection method.');
+    text(text: 'You can add texts using the textSection method.');
 
-    textSection(icon: Icons.check, text: 'The text can start with an icon.');
+    text(icon: Icons.check, text: 'The text can start with an icon.');
 
-    //TODO adicionar cores , spans...
-
-    sourceCodeSection('lib/pages/text_page.dart', title: 'Page source code');
+    code('lib/pages/text_page.dart', title: 'The source code of this page');
   }
 }

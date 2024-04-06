@@ -1,6 +1,6 @@
 import 'package:demoflu/src/internal/print_notifier.dart';
 import 'package:demoflu/src/internal/provider.dart';
-import 'package:demoflu/src/internal/titled_widget.dart';
+import 'package:demoflu/src/internal/sections/titled_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 

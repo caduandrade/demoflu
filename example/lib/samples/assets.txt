@@ -1,0 +1,4 @@
+flutter:
+
+  assets:
+    - lib/pages/

@@ -68,12 +68,24 @@ class _MenuItemWidgetState extends State<_MenuItemWidget> {
     children.add(Indent(
         indent: widget.menuItem.indent, onHover: _onHover, onTap: _onItemTap));
 
-    children.add(Expanded(
-        child: MenuItemText(
-            text: widget.menuItem.name,
-            foreground: _foreground,
-            onHover: _onHover,
-            onTap: _onItemTap)));
+    if (widget.menuItem.page != null ||
+        (widget.menuItem.childrenLength > 0 && !widget.menuItem.expanded)) {
+      children.add(Expanded(
+          child: _MenuItemText(
+              text: widget.menuItem.name,
+              foreground: _foreground,
+              selected: widget.selected,
+              onHover: _onHover,
+              onTap: _onItemTap)));
+    } else {
+      children.add(Expanded(
+          child: _MenuItemText(
+              text: widget.menuItem.name,
+              foreground: _foreground,
+              selected: widget.selected,
+              onHover: null,
+              onTap: null)));
+    }
 
     if (!widget.menuItem.isChildrenEmpty) {
       if (widget.menuItem.expanded) {
@@ -115,9 +127,13 @@ class _MenuItemWidgetState extends State<_MenuItemWidget> {
 
   Color get _foreground {
     if (widget.selected) {
+      // return Colors.black;
       return Colors.grey[900]!;
     }
-    return Colors.grey[900]!;
+    if (widget.menuItem.page != null) {
+      return Colors.grey[900]!;
+    }
+    return Colors.grey[600]!;
   }
 
   Color get _background {
@@ -169,18 +185,19 @@ class Indent extends StatelessWidget {
 }
 
 /// Menu item text widget
-class MenuItemText extends StatelessWidget {
-  const MenuItemText(
-      {super.key,
-      required this.text,
+class _MenuItemText extends StatelessWidget {
+  const _MenuItemText(
+      {required this.text,
       required this.foreground,
       required this.onHover,
-      required this.onTap});
+      required this.onTap,
+      required this.selected});
 
   final String text;
   final ValueChanged<bool>? onHover;
   final GestureTapCallback? onTap;
   final Color foreground;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
@@ -188,16 +205,12 @@ class MenuItemText extends StatelessWidget {
         child: Container(
             padding: EdgeInsets.fromLTRB(0, 8, 8, 8),
             child: Text(text,
-                style: TextStyle(color: foreground, fontStyle: _fontStyle()))),
+                style: TextStyle(
+                    color: foreground,
+                    fontWeight:
+                        selected ? FontWeight.bold : FontWeight.normal))),
         onHover: onHover,
         onTap: onTap);
-  }
-
-  FontStyle _fontStyle() {
-    if (onTap != null) {
-      return FontStyle.normal;
-    }
-    return FontStyle.italic;
   }
 }
 

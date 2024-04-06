@@ -3,27 +3,59 @@ import 'package:flutter/material.dart';
 
 class BannerPage extends DemoFluPage {
   BannerPage() {
-    bannerSection(
-        text: 'This is a banner created with the bannerSection method');
+    code('lib/pages/banner_page.dart',
+        mark: 'banner', loadMode: LoadMode.readOnlyMarked);
 
-    bannerSection(text: 'You can add any icon.', icon: Icons.search);
+    //@demoflu_start:banner
+    banner(text: 'My first banner.');
+    //@demoflu_end:banner
 
-    bannerSection(
+    titleSection('Icon');
+
+    code('lib/pages/banner_page.dart',
+        mark: 'icon', loadMode: LoadMode.readOnlyMarked);
+
+    //@demoflu_start:icon
+    banner(text: 'You can add any icon.', icon: Icons.search);
+    //@demoflu_end:icon
+
+    titleSection('Custom colors');
+
+    code('lib/pages/banner_page.dart',
+        mark: 'custom', loadMode: LoadMode.readOnlyMarked);
+
+    //@demoflu_start:custom
+    banner(
         text: 'You can also change the colors.',
         background: Colors.purple[50],
         border: Colors.purple[700]);
+    //@demoflu_end:custom
 
-    warningBannerSection(
-        text:
-            'It is also possible to create a default warning banner with the warningBannerSection method.');
+    titleSection('Warning');
 
-    infoBannerSection(
-        text:
-            'There is also the default info banner with the infoBannerSection method.');
+    code('lib/pages/banner_page.dart',
+        mark: 'warning', loadMode: LoadMode.readOnlyMarked);
 
-    tipBannerSection(
-        text: 'And the default tip banner with the tipBannerSection method.');
+    //@demoflu_start:warning
+    warningBanner(text: 'This is a warning banner.');
+    //@demoflu_end:warning
 
-    sourceCodeSection('lib/pages/banner_page.dart', title: 'Page source code');
+    titleSection('Info');
+
+    code('lib/pages/banner_page.dart',
+        mark: 'info', loadMode: LoadMode.readOnlyMarked);
+
+    //@demoflu_start:info
+    infoBanner(text: 'This is an info banner.');
+    //@demoflu_end:info
+
+    titleSection('Tip');
+
+    code('lib/pages/banner_page.dart',
+        mark: 'tip', loadMode: LoadMode.readOnlyMarked);
+
+    //@demoflu_start:tip
+    tipBanner(text: 'This is a tip banner.');
+    //@demoflu_end:tip
   }
 }

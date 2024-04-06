@@ -1,10 +1,10 @@
 import 'package:demoflu/src/demo_menu_item.dart';
-import 'package:demoflu/src/internal/banner_widget.dart';
+import 'package:demoflu/src/internal/sections/banner_widget.dart';
 import 'package:demoflu/src/internal/breadcrumb.dart';
-import 'package:demoflu/src/internal/bullets_widget.dart';
-import 'package:demoflu/src/internal/console_widget.dart';
-import 'package:demoflu/src/internal/example_widget.dart';
-import 'package:demoflu/src/internal/source_code_widget.dart';
+import 'package:demoflu/src/internal/sections/bullets_widget.dart';
+import 'package:demoflu/src/internal/sections/console_widget.dart';
+import 'package:demoflu/src/internal/sections/example_widget.dart';
+import 'package:demoflu/src/internal/sections/source_code_widget.dart';
 import 'package:demoflu/src/page.dart';
 import 'package:demoflu/src/internal/model.dart';
 import 'package:demoflu/src/internal/provider.dart';
@@ -34,7 +34,7 @@ class DemoFluPageWidget extends StatelessWidget {
       return ListView.separated(
           padding: EdgeInsets.fromLTRB(32, 16, 32, 32),
           itemBuilder: (context, index) => children[index],
-          separatorBuilder: (context, index) => SizedBox(height: 16),
+          separatorBuilder: (context, index) => SizedBox(height: 24),
           itemCount: children.length);
     });
   }
@@ -55,14 +55,9 @@ class DemoFluPageWidget extends StatelessWidget {
         list.add(SelectableText.rich(TextSpan(children: children)));
       } else if (section is WidgetSection) {
         list.add(WidgetContainer(section));
-      } else if (section is SourceCodeSection) {
+      } else if (section is CodeSection) {
         list.add(SourceCodeWidget(
-          title: section.title,
-          file: section.file,
-          wrap: section.wrap,
-          ignoreEnabled: section.ignoreEnabled,
-          discardLastEmptyLine: section.discardLastEmptyLine,
-          discardMultipleEmptyLines: section.discardMultipleEmptyLines,
+          section: section,
           key: ValueKey(section.file),
         ));
       } else if (section is BannerSection) {
@@ -84,6 +79,8 @@ class DemoFluPageWidget extends StatelessWidget {
               .merge(TextStyle(fontWeight: FontWeight.bold));
         }
         list.add(Text(section.title, style: style));
+      } else if (section is DividerSection) {
+        list.add(Divider(height: 1, color: Colors.grey[300], thickness: 1));
       } else {
         list.add(Text(section.runtimeType.toString()));
       }

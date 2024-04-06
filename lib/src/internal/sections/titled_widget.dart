@@ -14,7 +14,7 @@ class TitledWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     if (title != null) {
       return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [Text(title!), buildContent(context)]);
     }
     return buildContent(context);

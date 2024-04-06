@@ -13,40 +13,38 @@ abstract class DemoFluPage {
     return section;
   }
 
-  TextSection textSection({String text = '', IconData? icon}) {
+  TextSection text({String text = '', IconData? icon}) {
     TextSection section = TextSection._(text, icon);
     _sections.add(section);
     return section;
   }
 
-  BannerSection infoBannerSection(
-      {String text = '', IconData icon = Icons.info}) {
-    return bannerSection(
+  BannerSection infoBanner({String text = '', IconData icon = Icons.info}) {
+    return banner(
         text: text,
         background: Colors.blue[50]!,
         border: Colors.blue[700]!,
         icon: icon);
   }
 
-  BannerSection tipBannerSection(
-      {String text = '', IconData icon = Icons.lightbulb}) {
-    return bannerSection(
+  BannerSection tipBanner({String text = '', IconData icon = Icons.lightbulb}) {
+    return banner(
         text: text,
         background: Colors.green[50]!,
         border: Colors.green[700]!,
         icon: icon);
   }
 
-  BannerSection warningBannerSection(
+  BannerSection warningBanner(
       {String text = '', IconData icon = Icons.warning}) {
-    return bannerSection(
+    return banner(
         text: text,
         background: Colors.yellow[100]!,
         border: Colors.yellow[700]!,
         icon: icon);
   }
 
-  BannerSection bannerSection(
+  BannerSection banner(
       {String text = '', Color? background, Color? border, IconData? icon}) {
     BannerSection section = BannerSection._(
         text: text,
@@ -57,13 +55,19 @@ abstract class DemoFluPage {
     return section;
   }
 
+  DividerSection divider() {
+    DividerSection section = DividerSection();
+    _sections.add(section);
+    return section;
+  }
+
   BulletsSection bulletsSection() {
     BulletsSection section = BulletsSection._();
     _sections.add(section);
     return section;
   }
 
-  WidgetSection widgetSection(WidgetBuilder widgetBuilder,
+  WidgetSection widget(WidgetBuilder widgetBuilder,
       {String? title,
       Listenable? listenable,
       double minWidth = 0.0,
@@ -85,25 +89,26 @@ abstract class DemoFluPage {
     return section;
   }
 
-  SourceCodeSection sourceCodeSection(String file,
+  CodeSection code(String file,
       {String? title,
       bool wrap = true,
-      bool ignoreEnabled = true,
+      LoadMode loadMode = LoadMode.readAll,
+      String? mark,
       bool discardMultipleEmptyLines = true,
       bool discardLastEmptyLine = true}) {
-    SourceCodeSection section = SourceCodeSection(
+    CodeSection section = CodeSection(
         title: title,
         file: file,
         wrap: wrap,
-        ignoreEnabled: ignoreEnabled,
+        loadMode: loadMode,
+        mark: mark,
         discardLastEmptyLine: discardLastEmptyLine,
         discardMultipleEmptyLines: discardMultipleEmptyLines);
     _sections.add(section);
     return section;
   }
 
-  ConsoleSection consoleSection(
-      {String? title = 'Console', double height = 150}) {
+  ConsoleSection console({String? title = 'Console', double height = 150}) {
     ConsoleSection section = ConsoleSection(title: title, height: height);
     _sections.add(section);
     return section;
@@ -116,6 +121,8 @@ abstract class TitledPageSection extends PageSection {
   TitledPageSection({required this.title});
   String? title;
 }
+
+class DividerSection extends PageSection {}
 
 class TitleSection extends PageSection {
   TitleSection._(this.title);
@@ -186,18 +193,31 @@ class WidgetSection extends TitledPageSection {
   bool bordered;
 }
 
-class SourceCodeSection extends TitledPageSection {
-  SourceCodeSection(
+enum LoadMode {
+  /// Read all code, including marked sections
+  readAll,
+
+  /// Read only the marked code
+  readOnlyMarked,
+
+  /// Ignore the marked code
+  ignoreMarked
+}
+
+class CodeSection extends TitledPageSection {
+  CodeSection(
       {required super.title,
       required this.file,
       required this.wrap,
-      required this.ignoreEnabled,
+      required this.loadMode,
+      required this.mark,
       required this.discardLastEmptyLine,
       required this.discardMultipleEmptyLines});
 
   final String file;
   bool wrap;
-  bool ignoreEnabled;
+  LoadMode loadMode;
+  String? mark;
   bool discardMultipleEmptyLines;
   bool discardLastEmptyLine;
 }

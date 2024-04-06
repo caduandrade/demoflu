@@ -1,0 +1,13 @@
+flutter:
+
+  fonts:
+    - family: code
+      fonts:
+        - asset: fonts/RobotoMono-Regular.ttf
+        - asset: fonts/RobotoMono-Bold.ttf
+          weight: 700
+        - asset: fonts/RobotoMono-Italic.ttf
+          style: italic
+        - asset: fonts/RobotoMono-BoldItalic.ttf
+          weight: 700
+          style: italic

@@ -1,12 +1,13 @@
 import 'package:demoflu/demoflu.dart';
 import 'package:example/pages/banner_page.dart';
+import 'package:example/pages/build_for_web.dart';
 import 'package:example/pages/listenable_page.dart';
 import 'package:example/pages/console_page.dart';
 import 'package:example/pages/boostrap.dart';
 import 'package:example/pages/get_started_page.dart';
-import 'package:example/pages/ignoring_page.dart';
+import 'package:example/pages/marks_page.dart';
 import 'package:example/pages/page.dart';
-import 'package:example/pages/source_code_page.dart';
+import 'package:example/pages/code_page.dart';
 import 'package:example/pages/stateful_page.dart';
 import 'package:example/pages/stateless_page.dart';
 import 'package:example/pages/text_page.dart';
@@ -17,6 +18,7 @@ void main() {
     _main,
     _page,
     _pageSections,
+    _buildForWeb
     // _notResizable
   ]).run();
 }
@@ -30,13 +32,13 @@ DemoMenuItem get _main =>
 DemoMenuItem get _page => DemoMenuItem('Page', page: () => Page());
 
 DemoMenuItem get _pageSections => DemoMenuItem('Page sections',
-    children: [_sourceCode, _text, _banner, _widgetSection, _console]);
+    children: [_code, _text, _banner, _widgetSection, _console]);
 
-DemoMenuItem get _sourceCode => DemoMenuItem('Source code',
-    page: () => SourceCodePage(), children: [_ignoringMarkedCode]);
+DemoMenuItem get _code =>
+    DemoMenuItem('Code', page: () => CodePage(), children: [_markedCode]);
 
-DemoMenuItem get _ignoringMarkedCode =>
-    DemoMenuItem('Ignoring marked code', page: () => IgnoringPage());
+DemoMenuItem get _markedCode =>
+    DemoMenuItem('Marked code', page: () => MarksPage());
 
 DemoMenuItem get _text => DemoMenuItem('Text', page: () => TextPage());
 
@@ -55,6 +57,9 @@ DemoMenuItem get _listenable =>
     DemoMenuItem('Listenable', page: () => ListenablePage());
 
 DemoMenuItem get _console => DemoMenuItem('Console', page: () => ConsolePage());
+
+DemoMenuItem get _buildForWeb =>
+    DemoMenuItem('Build for web', page: () => BuildForWeb());
 
 /*
 DemoMenuItem get _notResizable =>

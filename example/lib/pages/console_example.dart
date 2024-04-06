@@ -7,7 +7,7 @@ class ConsoleExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Padding(
-            padding: const EdgeInsets.all(32),
+            padding: const EdgeInsets.all(16),
             child: ElevatedButton(
                 onPressed: () {
                   print('Hi!');

@@ -3,7 +3,7 @@ import 'package:example/pages/not_resizable_example.dart';
 
 class NotResizablePage extends DemoFluPage {
   NotResizablePage() {
-    widgetSection((context) => const NotResizableExample());
-    sourceCodeSection('lib/pages/not_resizable_example.dart');
+    widget((context) => const NotResizableExample());
+    code('lib/pages/not_resizable_example.dart');
   }
 }
