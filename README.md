@@ -11,8 +11,8 @@ Easily create interactive examples with explanatory sections, source code, and f
 
 Follow these three steps to start showcasing your package widgets:
 
-* Set up the menu
+* Set up the main with the menu
 * Define pages, sections and contents
-* Publish
+* Build and publish
 
 Explore and learn more by clicking [here](https://caduandrade.github.io/demoflu_demo/).

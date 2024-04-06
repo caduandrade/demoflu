@@ -13,14 +13,10 @@ import 'package:example/pages/stateless_page.dart';
 import 'package:example/pages/text_page.dart';
 
 void main() {
-  DemoFluApp(title: 'DemoFlu (2.0.0)', rootMenus: [
-    _getStarted,
-    _main,
-    _page,
-    _pageSections,
-    _buildForWeb
-    // _notResizable
-  ]).run();
+  DemoFluApp(
+          title: 'DemoFlu (2.0.0)',
+          rootMenus: [_getStarted, _main, _page, _pageSections, _buildForWeb])
+      .run();
 }
 
 DemoMenuItem get _getStarted =>
@@ -60,8 +56,3 @@ DemoMenuItem get _console => DemoMenuItem('Console', page: () => ConsolePage());
 
 DemoMenuItem get _buildForWeb =>
     DemoMenuItem('Build for web', page: () => BuildForWeb());
-
-/*
-DemoMenuItem get _notResizable =>
-    DemoMenuItem('Not resizable', example: NotResizableExample());
- */
