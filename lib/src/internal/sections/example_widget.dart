@@ -1,4 +1,3 @@
-import 'package:demoflu/src/internal/resizable_example_widget.dart';
 import 'package:demoflu/src/internal/sections/titled_widget.dart';
 import 'package:demoflu/src/page.dart';
 import 'package:flutter/material.dart';
@@ -10,20 +9,7 @@ class WidgetContainer extends StatelessWidget {
 
   final WidgetSection section;
 
-  //@override
-  Widget build3(BuildContext context) {
-    return Align(
-        alignment: Alignment.centerLeft,
-        child: Container(
-            height: 20,
-            color: Colors.green,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [Text('?')],
-            )));
-  }
-
-  //@override
+  @override
   Widget build(BuildContext context) {
     if (section.listenable != null) {
       return ListenableBuilder(
@@ -52,25 +38,14 @@ class WidgetContainer extends StatelessWidget {
 
   Widget _aspectRatio(BuildContext context) {
     Widget widget = TitledWidget(
-        child: _ex(context), title: section.title, bordered: section.bordered);
+        child: section.widgetBuilder(context),
+        title: section.title,
+        bordered: section.bordered,
+        background: section.background);
 
     if (section.aspectRatio != null) {
       return AspectRatio(aspectRatio: section.aspectRatio!, child: widget);
     }
     return widget;
-  }
-
-  Widget _ex(BuildContext context) {
-    if (false) {
-      return Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Container(
-          color: Colors.yellow,
-          width: 20,
-          height: 22,
-        ),
-        Expanded(child: section.widgetBuilder(context))
-      ]);
-    }
-    return section.widgetBuilder(context);
   }
 }

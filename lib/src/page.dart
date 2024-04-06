@@ -75,7 +75,8 @@ abstract class DemoFluPage {
       double minHeight = 0.0,
       double maxHeight = double.infinity,
       double? aspectRatio,
-      bool bordered = true}) {
+      bool bordered = true,
+      Color? background}) {
     WidgetSection section = WidgetSection._(
         title: title,
         widgetBuilder: widgetBuilder,
@@ -84,7 +85,8 @@ abstract class DemoFluPage {
         maxWidth: maxWidth,
         minHeight: minHeight,
         maxHeight: maxHeight,
-        bordered: bordered);
+        bordered: bordered,
+        background: background);
     _sections.add(section);
     return section;
   }
@@ -181,7 +183,8 @@ class WidgetSection extends TitledPageSection {
       required this.maxWidth,
       required this.minHeight,
       required this.maxHeight,
-      required this.bordered});
+      required this.bordered,
+      required this.background});
 
   final WidgetBuilder widgetBuilder;
   Listenable? listenable;
@@ -191,6 +194,7 @@ class WidgetSection extends TitledPageSection {
   double maxHeight;
   double? aspectRatio;
   bool bordered;
+  Color? background;
 }
 
 enum LoadMode {

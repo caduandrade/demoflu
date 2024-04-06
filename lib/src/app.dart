@@ -7,8 +7,6 @@ import 'package:demoflu/src/internal/provider.dart';
 import 'package:demoflu/src/internal/print_notifier.dart';
 import 'package:flutter/material.dart';
 
-//TODO menu starting collapsed or expanded?
-
 /// DemoFlu bootstrap.
 class DemoFluApp {
   DemoFluApp(

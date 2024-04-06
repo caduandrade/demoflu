@@ -177,6 +177,7 @@ class SourceCodeWidgetState extends State<SourceCodeWidget> {
         child: TitledWidget(
             title: widget.section.title,
             bordered: true,
+            background: null,
             child: Container(
                 decoration: BoxDecoration(color: Colors.grey[100]),
                 child: _contentWidget())));
@@ -199,13 +200,11 @@ class SourceCodeWidgetState extends State<SourceCodeWidget> {
         onExit: (event) => setState(() {
               _hover = false;
             }),
-        child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Stack(fit: StackFit.passthrough, children: [
-              _textWidget(),
-              if (_hover)
-                Positioned(child: _copyToClipboardWidget(), right: 0, top: 0)
-            ])));
+        child: Stack(fit: StackFit.passthrough, children: [
+          Padding(padding: EdgeInsets.all(16), child: _textWidget()),
+          if (_hover)
+            Positioned(child: _copyToClipboardWidget(), right: 0, top: 0)
+        ]));
   }
 
   Widget _textWidget() {
@@ -224,15 +223,19 @@ class SourceCodeWidgetState extends State<SourceCodeWidget> {
   }
 
   Widget _copyToClipboardWidget() {
-    return Container(
-        color: Colors.white.withOpacity(.5),
-        child: IconButton(
-          icon: const Icon(Icons.content_copy),
-          tooltip: 'Copy to clipboard',
-          onPressed: () {
-            _copyToClipboard(context, _code!);
-          },
-        ));
+    return Tooltip(
+        message: 'Copy to clipboard',
+        child: Container(
+            padding: EdgeInsets.all(8),
+            color: Colors.white.withOpacity(.7),
+            child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () {
+                    _copyToClipboard(context, _code!);
+                  },
+                  child: const Icon(Icons.content_copy),
+                ))));
   }
 
   Future<void> _copyToClipboard(BuildContext context, String text) async {

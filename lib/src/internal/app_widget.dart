@@ -29,11 +29,11 @@ class DemoFluAppWidget extends StatelessWidget {
                     bottom: BorderSide(color: Colors.grey[300]!, width: 2)),
                 elevation: 0,
                 actions: [
-                  IconButton(
+                  /*  IconButton(
                       onPressed: () =>
                           model.settingsVisible = !model.settingsVisible,
                       icon: Icon(Icons.settings),
-                      tooltip: 'Settings'),
+                      tooltip: 'Settings'),*/
                   DemoFluLogo()
                 ]),
             body: _buildBody(context)));
