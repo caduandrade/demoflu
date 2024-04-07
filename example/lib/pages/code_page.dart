@@ -15,7 +15,7 @@ class CodePage extends DemoFluPage {
 
     code('lib/samples/assets.txt', title: 'Assets example in pubspec.yaml');
 
-    titleSection('Font');
+    title('Font');
 
     text()
       ..add('The expected font family name for the code section is "code".')

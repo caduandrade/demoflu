@@ -2,7 +2,7 @@ import 'package:demoflu/demoflu.dart';
 
 class GetStartedPage extends DemoFluPage {
   GetStartedPage() {
-    titleSection('Welcome to DemoFlu');
+    title('Welcome to DemoFlu');
 
     text()
       ..add('Allows you to create demonstrations by structuring')
@@ -21,7 +21,7 @@ class GetStartedPage extends DemoFluPage {
     bullets.create(text: 'Title');
     bullets.create(text: 'Widget example');
 
-    titleSection('Creating new demo app');
+    title('Creating new demo app');
 
     text()
       ..add('Follow these three steps to start')

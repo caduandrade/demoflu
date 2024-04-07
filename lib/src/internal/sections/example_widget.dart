@@ -3,6 +3,7 @@ import 'package:demoflu/src/page.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
+/// Container for widget example session
 @internal
 class WidgetContainer extends StatelessWidget {
   WidgetContainer(this.section);

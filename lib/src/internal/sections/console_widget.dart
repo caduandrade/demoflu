@@ -4,7 +4,7 @@ import 'package:demoflu/src/internal/sections/titled_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-/// Console widget
+/// Widget for console session.
 @internal
 class ConsoleWidget extends StatelessWidget {
   ConsoleWidget({required this.title, required this.height});

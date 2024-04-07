@@ -10,7 +10,7 @@ class BannerPage extends DemoFluPage {
     banner(text: 'My first banner.');
     //@demoflu_end:banner
 
-    titleSection('Icon');
+    title('Icon');
 
     code('lib/pages/banner_page.dart',
         mark: 'icon', loadMode: LoadMode.readOnlyMarked);
@@ -19,7 +19,7 @@ class BannerPage extends DemoFluPage {
     banner(text: 'You can add any icon.', icon: Icons.search);
     //@demoflu_end:icon
 
-    titleSection('Custom colors');
+    title('Custom colors');
 
     code('lib/pages/banner_page.dart',
         mark: 'custom', loadMode: LoadMode.readOnlyMarked);
@@ -31,7 +31,7 @@ class BannerPage extends DemoFluPage {
         border: Colors.purple[700]);
     //@demoflu_end:custom
 
-    titleSection('Warning');
+    title('Warning');
 
     code('lib/pages/banner_page.dart',
         mark: 'warning', loadMode: LoadMode.readOnlyMarked);
@@ -40,7 +40,7 @@ class BannerPage extends DemoFluPage {
     warningBanner(text: 'This is a warning banner.');
     //@demoflu_end:warning
 
-    titleSection('Info');
+    title('Info');
 
     code('lib/pages/banner_page.dart',
         mark: 'info', loadMode: LoadMode.readOnlyMarked);
@@ -49,7 +49,7 @@ class BannerPage extends DemoFluPage {
     infoBanner(text: 'This is an info banner.');
     //@demoflu_end:info
 
-    titleSection('Tip');
+    title('Tip');
 
     code('lib/pages/banner_page.dart',
         mark: 'tip', loadMode: LoadMode.readOnlyMarked);

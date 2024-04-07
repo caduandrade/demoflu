@@ -2,7 +2,7 @@ import 'package:demoflu/demoflu.dart';
 
 class BootstrapPage extends DemoFluPage {
   BootstrapPage() {
-    titleSection('Main');
+    title('Main');
 
     text()
       ..add('In order to start the application, the main method needs to')
@@ -18,7 +18,7 @@ class BootstrapPage extends DemoFluPage {
       ..add(' with an empty menu list. Further configuration is')
       ..add(' required to populate this list');
 
-    titleSection('Menu');
+    title('Menu');
 
     text()
       ..add('The menus are defined by a list of DemoMenuItem. Each')

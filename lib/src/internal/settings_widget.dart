@@ -6,6 +6,7 @@ import 'package:meta/meta.dart';
 
 /// Settings widget
 @internal
+@deprecated
 class SettingsWidget extends StatelessWidget {
   const SettingsWidget({Key? key, required this.onClose}) : super(key: key);
 

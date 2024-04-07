@@ -5,6 +5,7 @@ import 'package:demoflu/src/internal/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
+/// Breadcrumb in the page.
 @internal
 class BreadcrumbWidget extends StatelessWidget {
   const BreadcrumbWidget({super.key, required this.menuItem});

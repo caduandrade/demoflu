@@ -15,7 +15,7 @@ class MarksPage extends DemoFluPage {
 
     code('lib/samples/marks_example.dart', title: 'Full source code');
 
-    titleSection('Ignoring marked code');
+    title('Ignoring marked code');
 
     code('lib/pages/marks_page.dart',
         loadMode: LoadMode.readOnlyMarked, mark: 'ignoreMarked');
@@ -27,7 +27,7 @@ class MarksPage extends DemoFluPage {
         mark: 'ignore');
     //@demoflu_end:ignoreMarked
 
-    titleSection('Showing only the marked code');
+    title('Showing only the marked code');
 
     code('lib/pages/marks_page.dart',
         loadMode: LoadMode.readOnlyMarked, mark: 'onlyMarked');

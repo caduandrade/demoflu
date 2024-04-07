@@ -3,7 +3,6 @@ import 'package:demoflu/src/internal/logo.dart';
 import 'package:demoflu/src/internal/model.dart';
 import 'package:demoflu/src/internal/provider.dart';
 import 'package:demoflu/src/internal/menu_widget.dart';
-import 'package:demoflu/src/internal/settings_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
@@ -63,13 +62,7 @@ class DemoFluAppWidget extends StatelessWidget {
             } else {
               body = DemoFluPageWidget();
             }
-
-            List<Widget> stackChildren = [Positioned.fill(child: body)];
-            if (model.settingsVisible) {
-              stackChildren.add(
-                  SettingsWidget(onClose: () => model.settingsVisible = false));
-            }
-            return Stack(children: stackChildren);
+            return body;
           });
         });
   }

@@ -4,21 +4,26 @@ import 'package:flutter/material.dart';
 
 import 'package:meta/meta.dart';
 
+/// Page to display content in sessions.
+/// Use different methods to create sessions according to your needs.
 abstract class DemoFluPage {
   List<PageSection> _sections = [];
 
-  TitleSection titleSection(String title) {
+  /// Creates a session to display a title.
+  TitleSection title(String title) {
     TitleSection section = TitleSection._(title);
     _sections.add(section);
     return section;
   }
 
+  /// Creates a session to display a text.
   TextSection text({String text = '', IconData? icon}) {
     TextSection section = TextSection._(text, icon);
     _sections.add(section);
     return section;
   }
 
+  /// Create a session to display an informational banner.
   BannerSection infoBanner({String text = '', IconData icon = Icons.info}) {
     return banner(
         text: text,
@@ -27,6 +32,7 @@ abstract class DemoFluPage {
         icon: icon);
   }
 
+  /// Create a session to display a tip banner.
   BannerSection tipBanner({String text = '', IconData icon = Icons.lightbulb}) {
     return banner(
         text: text,
@@ -35,6 +41,7 @@ abstract class DemoFluPage {
         icon: icon);
   }
 
+  /// Create a session to display an warning banner.
   BannerSection warningBanner(
       {String text = '', IconData icon = Icons.warning}) {
     return banner(
@@ -44,6 +51,7 @@ abstract class DemoFluPage {
         icon: icon);
   }
 
+  /// Create a session to display a banner.
   BannerSection banner(
       {String text = '', Color? background, Color? border, IconData? icon}) {
     BannerSection section = BannerSection._(
@@ -55,18 +63,22 @@ abstract class DemoFluPage {
     return section;
   }
 
+  /// Create a session to display a divider.
   DividerSection divider() {
     DividerSection section = DividerSection();
     _sections.add(section);
     return section;
   }
 
+  /// Create a session to display bullets.
   BulletsSection bulletsSection() {
     BulletsSection section = BulletsSection._();
     _sections.add(section);
     return section;
   }
 
+  /// Create a session to display some widget.
+  /// Use this session to demonstrate your package widget.
   WidgetSection widget(WidgetBuilder widgetBuilder,
       {String? title,
       Listenable? listenable,
@@ -91,6 +103,7 @@ abstract class DemoFluPage {
     return section;
   }
 
+  /// Creates a session to display some source code.
   CodeSection code(String file,
       {String? title,
       bool wrap = true,
@@ -110,6 +123,7 @@ abstract class DemoFluPage {
     return section;
   }
 
+  /// Create a session to display console output.
   ConsoleSection console({String? title = 'Console', double height = 150}) {
     ConsoleSection section = ConsoleSection(title: title, height: height);
     _sections.add(section);
@@ -117,21 +131,26 @@ abstract class DemoFluPage {
   }
 }
 
+/// Base page section class.
 abstract class PageSection {}
 
+/// Base class of sessions that can have a title.
 abstract class TitledPageSection extends PageSection {
   TitledPageSection({required this.title});
   String? title;
 }
 
+/// Session to display a divider.
 class DividerSection extends PageSection {}
 
+/// Session to display a title.
 class TitleSection extends PageSection {
   TitleSection._(this.title);
 
   final String title;
 }
 
+/// Session to display a text.
 class TextSection extends PageSection {
   TextSection._(this._text, this.iconData);
 
@@ -145,6 +164,7 @@ class TextSection extends PageSection {
   }
 }
 
+/// Session to display bullets.
 class BulletsSection extends PageSection {
   BulletsSection._() {
     bullets = UnmodifiableListView(_bullets);
@@ -174,6 +194,7 @@ class Bullet {
   }
 }
 
+/// Session to display a widget.
 class WidgetSection extends TitledPageSection {
   WidgetSection._(
       {required super.title,
@@ -208,6 +229,7 @@ enum LoadMode {
   ignoreMarked
 }
 
+/// Session to display a source code.
 class CodeSection extends TitledPageSection {
   CodeSection(
       {required super.title,
@@ -226,12 +248,14 @@ class CodeSection extends TitledPageSection {
   bool discardLastEmptyLine;
 }
 
+/// Session to display a console output.
 class ConsoleSection extends TitledPageSection {
   ConsoleSection({required super.title, required this.height});
 
   double height;
 }
 
+/// Session to display a banner.
 class BannerSection extends PageSection {
   BannerSection._(
       {required String text,

@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 import 'package:syntax_highlight/syntax_highlight.dart';
 
-/// Code widget.
+/// Widget for code session.
 @internal
 class SourceCodeWidget extends StatefulWidget {
   const SourceCodeWidget({required Key key, required this.section})

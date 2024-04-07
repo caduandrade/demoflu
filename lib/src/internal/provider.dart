@@ -3,6 +3,7 @@ import 'package:demoflu/src/internal/print_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
+/// Provider to provide the notifiers and model.
 @internal
 class DemoFluProvider extends InheritedWidget {
   DemoFluProvider({

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
+/// Widget for banner session.
 @internal
 class BannerWidget extends StatelessWidget {
   const BannerWidget(

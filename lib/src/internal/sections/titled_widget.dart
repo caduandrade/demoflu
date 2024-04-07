@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
+/// Widget for title session.
 @internal
 class TitledWidget extends StatelessWidget {
   const TitledWidget(

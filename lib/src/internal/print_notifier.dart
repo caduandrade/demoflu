@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
+/// Notifier for console output.
 @internal
 class PrintNotifier extends ChangeNotifier {
   int _count = 0;
