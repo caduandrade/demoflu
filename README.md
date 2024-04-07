@@ -7,7 +7,7 @@
 Simplify package demonstration with a versatile web application for showcasing widget usage.
 Easily create interactive examples with explanatory sections, source code, and functional widgets.
 
-![](https://caduandrade.github.io/demoflu/screenshot_2_v2.png)
+![](https://raw.githubusercontent.com/caduandrade/demoflu/main/screenshots/screenshot_2_v2.png)
 
 Follow these three steps to start showcasing your package widgets:
 
