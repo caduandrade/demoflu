@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 typedef OnResize = void Function(bool expanded);
 
+@deprecated
 class TitleContainer extends StatelessWidget {
   const TitleContainer(
       {Key? key,

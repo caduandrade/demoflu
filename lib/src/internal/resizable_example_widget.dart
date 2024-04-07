@@ -1,69 +1,80 @@
 import 'dart:math' as math;
 
-import 'package:demoflu/src/example.dart';
-import 'package:demoflu/src/internal/demoflu_settings.dart';
+import 'package:demoflu/src/internal/model.dart';
+import 'package:demoflu/src/internal/provider.dart';
 import 'package:demoflu/src/internal/slider.dart';
 import 'package:flutter/material.dart';
 
 /// Resizable example widget
 class ResizableExampleWidget extends StatefulWidget {
-  const ResizableExampleWidget({required this.settings, required this.example});
+  const ResizableExampleWidget(this.child);
 
-  final DemoFluSettings settings;
-  final AbstractExample example;
+  final Widget child;
 
   @override
   State<StatefulWidget> createState() => ResizableExampleWidgetState();
 }
 
 class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
+  double _widthWeight = 1;
+  double _heightWeight = 1;
+
   @override
   Widget build(BuildContext context) {
     List<LayoutId> children = [];
 
-    children.add(LayoutId(id: _Id.exampleWidget, child: _buildExampleWidget()));
+    children.add(
+        LayoutId(id: _Id.exampleWidget, child: _buildExampleWidget(context)));
 
     children.add(LayoutId(
         id: _Id.widthSlider,
         child: DemofluSlider(
             axis: Axis.horizontal,
-            value: widget.settings.widthWeight,
-            onChanged: (double value) => widget.settings.widthWeight = value)));
+            value: _widthWeight,
+            onChanged: (double value) => setState(() {
+                  _widthWeight = value;
+                }))));
 
     children.add(LayoutId(
         id: _Id.heightSlider,
         child: DemofluSlider(
             axis: Axis.vertical,
-            value: widget.settings.heightWeight,
-            onChanged: (double value) =>
-                widget.settings.heightWeight = value)));
+            value: _heightWeight,
+            onChanged: (double value) => setState(() {
+                  _heightWeight = value;
+                }))));
 
     return Container(
         child: CustomMultiChildLayout(delegate: _Layout(), children: children),
         color: Colors.blueGrey[100]);
   }
 
-  Widget _buildExampleWidget() {
+  Widget _buildExampleWidget(BuildContext context) {
+    DemoFluModel model = DemoFluProvider.modelOf(context);
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       double maxWidth = constraints.maxWidth;
       double maxHeight = constraints.maxHeight;
-      Size? maxSize = widget.example.maxSize ?? widget.settings.maxSize;
+
+      /*
+      Size? maxSize = widget.example.maxSize ?? model.maxSize;
+      Size? maxSize;
       if (maxSize != null) {
         maxWidth = math.min(maxWidth, maxSize.width);
         maxHeight = math.min(maxHeight, maxSize.height);
       }
+       */
 
-      maxWidth = maxWidth * widget.settings.widthWeight;
-      maxHeight = maxHeight * widget.settings.heightWeight;
+      maxWidth = maxWidth * _widthWeight;
+      maxHeight = maxHeight * _heightWeight;
 
       ConstrainedBox constrainedBox = ConstrainedBox(
-          child: widget.example.buildWidget(context),
+          child: widget.child,
           constraints:
               BoxConstraints.tightFor(width: maxWidth, height: maxHeight));
 
       return Container(
-          color: widget.settings.exampleBackground,
+          color: model.exampleBackground,
           child: Center(child: Container(child: constrainedBox)));
     });
   }

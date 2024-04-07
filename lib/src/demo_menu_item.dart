@@ -1,10 +1,10 @@
-import 'package:demoflu/src/example.dart';
-import 'package:flutter/material.dart';
+import 'package:demoflu/src/page.dart';
+
+typedef PageBuilder = DemoFluPage Function();
 
 /// Represents a menu item in the app menu.
-class DemoMenuItem extends ChangeNotifier {
-  DemoMenuItem(this.name,
-      {this.example, List<DemoMenuItem> children = const []}) {
+class DemoMenuItem {
+  DemoMenuItem(this.name, {this.page, List<DemoMenuItem> children = const []}) {
     for (DemoMenuItem child in children) {
       _children.add(child);
       child._parent = this;
@@ -14,8 +14,7 @@ class DemoMenuItem extends ChangeNotifier {
   /// The menu name.
   final String name;
 
-  /// Optional example
-  final AbstractExample? example;
+  final PageBuilder? page;
 
   /// Sub menus
   final List<DemoMenuItem> _children = [];
@@ -33,6 +32,7 @@ class DemoMenuItem extends ChangeNotifier {
 
   /// Parent menu. It will be [NULL] if it is root.
   DemoMenuItem? _parent;
+  DemoMenuItem? get parent => _parent;
 
   /// The indentation value according to the level in the tree hierarchy.
   int get indent {
@@ -53,7 +53,6 @@ class DemoMenuItem extends ChangeNotifier {
   set expanded(bool value) {
     if (_expanded != value) {
       _expanded = value;
-      notifyListeners();
     }
   }
 

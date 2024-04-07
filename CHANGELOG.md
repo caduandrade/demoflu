@@ -1,4 +1,12 @@
-## 1.3.0
+## 2.0.0
+
+Introducing a revised version of DemoFlu. In this update, each menu item now directs users
+to a page with multiple sections, such as texts, banners, and code samples.
+This enhancement offers a more comprehensive documentation experience, allowing users
+to explore various aspects of the package's functionality in a structured manner.
+This update significantly improves the usability and experimentation capabilities of the package.
+
+## 1.2.1
 
 * Bugfix
   * Failing to find first menu item with example.

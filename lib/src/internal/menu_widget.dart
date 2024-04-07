@@ -1,49 +1,43 @@
 import 'package:demoflu/src/demo_menu_item.dart';
-import 'package:demoflu/src/internal/rebuild_notifier.dart';
+import 'package:demoflu/src/internal/model.dart';
+import 'package:demoflu/src/internal/provider.dart';
+import 'package:demoflu/src/internal/print_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 /// Menu widget
-class MenuWidget extends StatelessWidget {
-  MenuWidget(
-      {required this.menuItems,
-      required this.selectedMenuItem,
-      required this.onMenuItemTap,
-      required this.rebuildNotifier});
+@internal
+class MenuWidget extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => MenuWidgetState();
+}
 
-  final List<DemoMenuItem> menuItems;
-  final DemoMenuItem? selectedMenuItem;
-  final OnMenuItemTap onMenuItemTap;
-  final RebuildNotifier rebuildNotifier;
+@internal
+class MenuWidgetState extends State<MenuWidget> {
+  void _rebuild() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
+    DemoFluModel model = DemoFluProvider.modelOf(context);
+
     List<Widget> children = [];
-    for (DemoMenuItem menuItem in menuItems) {
+    for (DemoMenuItem menuItem in model.fetchMenuItems()) {
       children.add(_MenuItemWidget(
-          onMenuItemTap: onMenuItemTap,
-          selected: selectedMenuItem == menuItem,
+          selected: model.selectedMenuItem == menuItem,
           menuItem: menuItem,
-          rebuildNotifier: rebuildNotifier));
+          onExpansionStateChanged: _rebuild));
     }
     return Container(
       child: SingleChildScrollView(
-        child: IntrinsicWidth(
-            child: Column(
-                children: children,
-                crossAxisAlignment: CrossAxisAlignment.stretch)),
-      ),
+          child: Column(
+              children: children,
+              crossAxisAlignment: CrossAxisAlignment.stretch)),
       decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.5),
-              spreadRadius: 1,
-              blurRadius: 1,
-              offset: Offset(0, 0), // changes position of shadow
-            ),
-          ],
-          color: Colors.blueGrey[900],
-          border: Border(
-              right: BorderSide(color: Colors.blueGrey[900]!, width: 2))),
+          color: Colors.white,
+          border:
+              Border(right: BorderSide(color: Colors.grey[300]!, width: 2))),
     );
   }
 }
@@ -51,15 +45,13 @@ class MenuWidget extends StatelessWidget {
 /// Menu item widget
 class _MenuItemWidget extends StatefulWidget {
   const _MenuItemWidget(
-      {required this.onMenuItemTap,
-      required this.selected,
+      {required this.selected,
       required this.menuItem,
-      required this.rebuildNotifier});
+      required this.onExpansionStateChanged});
 
-  final OnMenuItemTap onMenuItemTap;
   final bool selected;
   final DemoMenuItem menuItem;
-  final RebuildNotifier rebuildNotifier;
+  final Function onExpansionStateChanged;
 
   @override
   State<StatefulWidget> createState() => _MenuItemWidgetState();
@@ -74,49 +66,57 @@ class _MenuItemWidgetState extends State<_MenuItemWidget> {
     List<Widget> children = [];
 
     children.add(Indent(
-        indent: widget.menuItem.indent,
-        onHover: _onHover,
-        onTap: widget.menuItem.example != null ? _onItemTap : null));
+        indent: widget.menuItem.indent, onHover: _onHover, onTap: _onItemTap));
 
-    if (widget.menuItem.isChildrenEmpty) {
-      children.add(_MenuItemIcon(
-          iconType: _IconType.item,
-          foreground: _foreground,
-          onHover: _onHover,
-          onTap: widget.menuItem.example != null ? _onItemTap : null));
+    if (widget.menuItem.page != null ||
+        (widget.menuItem.childrenLength > 0 && !widget.menuItem.expanded)) {
+      children.add(Expanded(
+          child: _MenuItemText(
+              text: widget.menuItem.name,
+              foreground: _foreground,
+              selected: widget.selected,
+              onHover: _onHover,
+              onTap: _onItemTap)));
     } else {
+      children.add(Expanded(
+          child: _MenuItemText(
+              text: widget.menuItem.name,
+              foreground: _foreground,
+              selected: widget.selected,
+              onHover: null,
+              onTap: null)));
+    }
+
+    if (!widget.menuItem.isChildrenEmpty) {
       if (widget.menuItem.expanded) {
         children.add(_MenuItemIcon(
-            iconType: _IconType.less,
+            iconType: _IconType.expanded,
             foreground: _foreground,
             onHover: _onHover,
             onTap: () => _onExpand(false)));
       } else {
         children.add(_MenuItemIcon(
-            iconType: _IconType.more,
+            iconType: _IconType.collapsed,
             foreground: _foreground,
             onHover: _onHover,
             onTap: () => _onExpand(true)));
       }
     }
-    children.add(Flexible(
-        child: MenuItemText(
-            text: widget.menuItem.name,
-            foreground: _foreground,
-            onHover: _onHover,
-            onTap: widget.menuItem.example != null ? _onItemTap : null)));
 
     return Container(
         color: _background,
         child: IntrinsicHeight(
-            child: Row(
-                children: children,
-                crossAxisAlignment: CrossAxisAlignment.stretch)));
+            child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                    8, 0, widget.menuItem.isChildrenEmpty ? 8 : 0, 0),
+                child: Row(
+                    children: children,
+                    crossAxisAlignment: CrossAxisAlignment.stretch))));
   }
 
   void _onExpand(bool expanded) {
     widget.menuItem.expanded = expanded;
-    widget.rebuildNotifier.treeStructChange();
+    widget.onExpansionStateChanged();
   }
 
   void _onHover(bool value) {
@@ -127,26 +127,41 @@ class _MenuItemWidgetState extends State<_MenuItemWidget> {
 
   Color get _foreground {
     if (widget.selected) {
-      return Colors.black;
+      // return Colors.black;
+      return Colors.grey[900]!;
     }
-    return Colors.white;
+    if (widget.menuItem.page != null) {
+      return Colors.grey[900]!;
+    }
+    return Colors.grey[600]!;
   }
 
   Color get _background {
     if (widget.selected) {
-      return Colors.blueGrey[100]!;
+      return Colors.grey[200]!;
     } else if (_hover) {
-      return Colors.blueGrey[700]!;
+      return Colors.grey[300]!;
     }
     return Colors.transparent;
   }
 
   _onItemTap() {
-    widget.onMenuItemTap(widget.menuItem);
+    PrintNotifier printNotifier = DemoFluProvider.printNotifierOf(context);
+    printNotifier.clear(notify: false);
+
+    if (!widget.menuItem.isChildrenEmpty && !widget.menuItem.expanded) {
+      widget.menuItem.expanded = true;
+      if (widget.menuItem.page == null) {
+        widget.onExpansionStateChanged();
+      }
+    }
+
+    if (widget.menuItem.page != null) {
+      DemoFluModel model = DemoFluProvider.modelOf(context);
+      model.selectedMenuItem = widget.menuItem;
+    }
   }
 }
-
-typedef OnMenuItemTap = void Function(DemoMenuItem menuItem);
 
 /// Indent widget
 class Indent extends StatelessWidget {
@@ -170,18 +185,19 @@ class Indent extends StatelessWidget {
 }
 
 /// Menu item text widget
-class MenuItemText extends StatelessWidget {
-  const MenuItemText(
-      {super.key,
-      required this.text,
+class _MenuItemText extends StatelessWidget {
+  const _MenuItemText(
+      {required this.text,
       required this.foreground,
       required this.onHover,
-      required this.onTap});
+      required this.onTap,
+      required this.selected});
 
   final String text;
   final ValueChanged<bool>? onHover;
   final GestureTapCallback? onTap;
   final Color foreground;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
@@ -190,21 +206,16 @@ class MenuItemText extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(0, 8, 8, 8),
             child: Text(text,
                 style: TextStyle(
-                    color: foreground, fontSize: 12, fontStyle: _fontStyle()))),
+                    color: foreground,
+                    fontWeight:
+                        selected ? FontWeight.bold : FontWeight.normal))),
         onHover: onHover,
         onTap: onTap);
-  }
-
-  FontStyle _fontStyle() {
-    if (onTap != null) {
-      return FontStyle.normal;
-    }
-    return FontStyle.italic;
   }
 }
 
 /// Menu item icon type
-enum _IconType { more, less, item }
+enum _IconType { collapsed, expanded }
 
 /// Menu item icon widget
 class _MenuItemIcon extends StatefulWidget {
@@ -231,26 +242,13 @@ class _MenuItemIconState extends State<_MenuItemIcon> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.iconType == _IconType.item) {
-      return InkWell(
-          child: Container(
-              padding: EdgeInsets.all(10),
-              width: _width,
-              child: FittedBox(
-                  child: Icon(Icons.circle, color: widget.foreground, size: 1),
-                  fit: BoxFit.fitWidth),
-              color: _background),
-          onTap: widget.onTap,
-          onHover: _onHover);
-    }
-
     return InkWell(
         child: SizedBox(
             width: _width,
             child: Container(
                 child: FittedBox(
                     child: Icon(
-                        widget.iconType == _IconType.more
+                        widget.iconType == _IconType.collapsed
                             ? Icons.expand_more
                             : Icons.expand_less,
                         color: widget.foreground,
@@ -271,8 +269,8 @@ class _MenuItemIconState extends State<_MenuItemIcon> {
   }
 
   Color get _background {
-    if (_hover && widget.iconType != _IconType.item) {
-      return Colors.blueGrey[300]!;
+    if (_hover) {
+      return Colors.grey[400]!;
     }
     return Colors.transparent;
   }
