@@ -4,7 +4,7 @@ version: 2.0.0
 repository: https://github.com/caduandrade/demoflu
 
 screenshots:
-  - description: 'Shows an example of the widget being demonstrated.'
+  - description: Shows an example of the widget being demonstrated.
     path: docs/screenshot_2_v2.png
 
 topics:
