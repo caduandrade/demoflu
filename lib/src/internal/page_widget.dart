@@ -8,9 +8,7 @@ import 'package:demoflu/src/internal/sections/source_code_widget.dart';
 import 'package:demoflu/src/page.dart';
 import 'package:demoflu/src/internal/model.dart';
 import 'package:demoflu/src/internal/provider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
 /// Widget for page.

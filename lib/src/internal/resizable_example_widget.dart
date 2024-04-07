@@ -56,12 +56,14 @@ class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
       double maxWidth = constraints.maxWidth;
       double maxHeight = constraints.maxHeight;
 
-      //Size? maxSize = widget.example.maxSize ?? model.maxSize;
+      /*
+      Size? maxSize = widget.example.maxSize ?? model.maxSize;
       Size? maxSize;
       if (maxSize != null) {
         maxWidth = math.min(maxWidth, maxSize.width);
         maxHeight = math.min(maxHeight, maxSize.height);
       }
+       */
 
       maxWidth = maxWidth * _widthWeight;
       maxHeight = maxHeight * _heightWeight;

@@ -45,8 +45,6 @@ class DemoFluAppWidget extends StatelessWidget {
         builder: (BuildContext context, Widget? child) {
           return LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
-            DemoFluModel model = DemoFluProvider.modelOf(context);
-
             double menuWidth = 300;
 
             Widget menu = ConstrainedBox(
