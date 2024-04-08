@@ -19,6 +19,7 @@ class ConsoleWidget extends StatelessWidget {
         title: title,
         bordered: true,
         background: null,
+        padding: null,
         child: ListenableBuilder(
             listenable: printNotifier,
             builder: (context, child) {

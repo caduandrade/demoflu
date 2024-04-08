@@ -11,13 +11,8 @@ class DemoFluModel extends ChangeNotifier {
       {required this.title,
       required this.rootMenus,
       required this.resizable,
-      required Color exampleBackground,
-      required this.maxSize,
-      required double widthWeight,
-      required double heightWeight})
-      : _exampleBackground = exampleBackground,
-        _widthWeight = widthWeight,
-        _heightWeight = heightWeight {
+      required Color exampleBackground})
+      : _exampleBackground = exampleBackground {
     if (heightWeight < 0 || heightWeight > 1) {
       throw ArgumentError.value(
           heightWeight, 'Must be a value between 0 and 1', 'heightWeight');
@@ -48,10 +43,10 @@ class DemoFluModel extends ChangeNotifier {
     }
   }
 
-  final Size? maxSize;
+  final Size? maxSize=null;
   final bool resizable;
 
-  double _widthWeight;
+  double _widthWeight=1;
 
   double get widthWeight => _widthWeight;
 
@@ -60,7 +55,7 @@ class DemoFluModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  double _heightWeight;
+  double _heightWeight=1;
 
   double get heightWeight => _heightWeight;
 

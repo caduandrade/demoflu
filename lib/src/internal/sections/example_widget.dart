@@ -42,7 +42,8 @@ class WidgetContainer extends StatelessWidget {
         child: section.widgetBuilder(context),
         title: section.title,
         bordered: section.bordered,
-        background: section.background);
+        background: section.background,
+        padding: section.padding);
 
     if (section.aspectRatio != null) {
       return AspectRatio(aspectRatio: section.aspectRatio!, child: widget);

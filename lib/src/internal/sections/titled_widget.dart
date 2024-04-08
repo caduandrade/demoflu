@@ -9,12 +9,14 @@ class TitledWidget extends StatelessWidget {
       this.title,
       required this.child,
       required this.bordered,
-      required this.background});
+      required this.background,
+      required this.padding});
 
   final String? title;
   final bool bordered;
   final Widget child;
   final Color? background;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +31,11 @@ class TitledWidget extends StatelessWidget {
   Widget buildContent(BuildContext context) {
     if (bordered) {
       return Container(
-          child: child,
+          padding: padding,
           decoration: BoxDecoration(
               color: background,
-              border: Border.all(color: Colors.grey[200]!, width: 1)));
+              border: Border.all(color: Colors.grey[200]!, width: 1)),
+          child: child);
     }
     return child;
   }

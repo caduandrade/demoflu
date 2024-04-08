@@ -1,3 +1,7 @@
+## 2.1.0
+
+* Allow padding in the widget session.
+
 ## 2.0.0
 
 Introducing a revised version of DemoFlu. In this update, each menu item now directs users

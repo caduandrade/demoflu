@@ -13,18 +13,12 @@ class DemoFluApp {
       {required String title,
       required List<DemoMenuItem> rootMenus,
       bool resizable = true,
-      Color exampleBackground = Colors.white,
-      Size? maxSize,
-      double widthWeight = 1,
-      double heightWeight = 1})
+      Color exampleBackground = Colors.white})
       : model = DemoFluModel(
             title: title,
             rootMenus: rootMenus,
             resizable: resizable,
-            exampleBackground: exampleBackground,
-            maxSize: maxSize,
-            widthWeight: widthWeight,
-            heightWeight: heightWeight);
+            exampleBackground: exampleBackground);
 
   final DemoFluModel model;
   final PrintNotifier printNotifier = PrintNotifier();

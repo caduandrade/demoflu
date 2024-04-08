@@ -178,6 +178,7 @@ class SourceCodeWidgetState extends State<SourceCodeWidget> {
             title: widget.section.title,
             bordered: true,
             background: null,
+            padding: null,
             child: Container(
                 decoration: BoxDecoration(color: Colors.grey[100]),
                 child: _contentWidget())));

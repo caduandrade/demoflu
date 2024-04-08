@@ -88,11 +88,13 @@ abstract class DemoFluPage {
       double maxHeight = double.infinity,
       double? aspectRatio,
       bool bordered = true,
-      Color? background}) {
+      Color? background,
+      EdgeInsetsGeometry? padding}) {
     WidgetSection section = WidgetSection._(
         title: title,
         widgetBuilder: widgetBuilder,
         listenable: listenable,
+        padding: padding,
         minWidth: minWidth,
         maxWidth: maxWidth,
         minHeight: minHeight,
@@ -205,10 +207,12 @@ class WidgetSection extends TitledPageSection {
       required this.minHeight,
       required this.maxHeight,
       required this.bordered,
-      required this.background});
+      required this.background,
+      required this.padding});
 
   final WidgetBuilder widgetBuilder;
   Listenable? listenable;
+  EdgeInsetsGeometry? padding;
   double minWidth;
   double maxWidth;
   double minHeight;
