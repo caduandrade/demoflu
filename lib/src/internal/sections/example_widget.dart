@@ -25,29 +25,7 @@ class WidgetContainer extends StatelessWidget {
   Widget _container(BuildContext context) {
     return Align(
         alignment: Alignment.centerLeft,
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-              minWidth: section.minWidth,
-              minHeight: section.minHeight,
-              maxWidth: section.maxWidth,
-              maxHeight: section.maxHeight
-              // maxHeight: 400
-              ),
-          child: _aspectRatio(context),
-        ));
-  }
-
-  Widget _aspectRatio(BuildContext context) {
-    Widget widget = TitledWidget(
-        child: section.widgetBuilder(context),
-        title: section.title,
-        bordered: section.bordered,
-        background: section.background,
-        padding: section.padding);
-
-    if (section.aspectRatio != null) {
-      return AspectRatio(aspectRatio: section.aspectRatio!, child: widget);
-    }
-    return widget;
+        child: TitledWidget(
+            child: section.widgetBuilder(context), section: section));
   }
 }

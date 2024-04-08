@@ -43,10 +43,10 @@ class DemoFluModel extends ChangeNotifier {
     }
   }
 
-  final Size? maxSize=null;
+  final Size? maxSize = null;
   final bool resizable;
 
-  double _widthWeight=1;
+  double _widthWeight = 1;
 
   double get widthWeight => _widthWeight;
 
@@ -55,7 +55,7 @@ class DemoFluModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  double _heightWeight=1;
+  double _heightWeight = 1;
 
   double get heightWeight => _heightWeight;
 

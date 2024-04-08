@@ -66,7 +66,7 @@ class DemoFluPageWidget extends StatelessWidget {
             border: section.border,
             icon: section.icon));
       } else if (section is ConsoleSection) {
-        list.add(ConsoleWidget(title: section.title, height: section.height));
+        list.add(ConsoleWidget(section: section));
       } else if (section is BulletsSection) {
         list.add(BulletsWidget(bullets: section.bullets));
       } else if (section is TitleSection) {

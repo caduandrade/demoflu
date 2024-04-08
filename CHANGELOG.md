@@ -1,6 +1,6 @@
 ## 2.1.0
 
-* Allow padding in the widget session.
+* Improving console, code and widget session settings. 
 
 ## 2.0.0
 

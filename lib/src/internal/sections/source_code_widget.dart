@@ -174,14 +174,7 @@ class SourceCodeWidgetState extends State<SourceCodeWidget> {
   Widget build(BuildContext context) {
     return Align(
         alignment: Alignment.centerLeft,
-        child: TitledWidget(
-            title: widget.section.title,
-            bordered: true,
-            background: null,
-            padding: null,
-            child: Container(
-                decoration: BoxDecoration(color: Colors.grey[100]),
-                child: _contentWidget())));
+        child: TitledWidget(section: widget.section, child: _contentWidget()));
   }
 
   Widget _contentWidget() {

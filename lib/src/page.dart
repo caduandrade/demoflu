@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:meta/meta.dart';
@@ -112,13 +113,19 @@ abstract class DemoFluPage {
       LoadMode loadMode = LoadMode.readAll,
       String? mark,
       bool discardMultipleEmptyLines = true,
-      bool discardLastEmptyLine = true}) {
+      bool discardLastEmptyLine = true,
+      bool bordered = true,
+      Color? background,
+      EdgeInsetsGeometry? padding}) {
     CodeSection section = CodeSection(
         title: title,
         file: file,
         wrap: wrap,
         loadMode: loadMode,
         mark: mark,
+        bordered: bordered,
+        background: background,
+        padding: padding,
         discardLastEmptyLine: discardLastEmptyLine,
         discardMultipleEmptyLines: discardMultipleEmptyLines);
     _sections.add(section);
@@ -126,8 +133,18 @@ abstract class DemoFluPage {
   }
 
   /// Create a session to display console output.
-  ConsoleSection console({String? title = 'Console', double height = 150}) {
-    ConsoleSection section = ConsoleSection(title: title, height: height);
+  ConsoleSection console(
+      {String? title = 'Console',
+      double height = 150,
+      bool bordered = true,
+      Color? background = Colors.white,
+      EdgeInsetsGeometry? padding}) {
+    ConsoleSection section = ConsoleSection(
+        title: title,
+        height: height,
+        bordered: bordered,
+        background: background,
+        padding: padding ?? EdgeInsets.all(8));
     _sections.add(section);
     return section;
   }
@@ -138,8 +155,24 @@ abstract class PageSection {}
 
 /// Base class of sessions that can have a title.
 abstract class TitledPageSection extends PageSection {
-  TitledPageSection({required this.title});
+  TitledPageSection(
+      {required this.title,
+      required this.minWidth,
+      required this.maxWidth,
+      required this.minHeight,
+      required this.maxHeight,
+      required this.bordered,
+      required this.background,
+      required this.padding});
   String? title;
+  EdgeInsetsGeometry? padding;
+  double minWidth;
+  double maxWidth;
+  double minHeight;
+  double maxHeight;
+  double? aspectRatio;
+  bool bordered;
+  Color? background;
 }
 
 /// Session to display a divider.
@@ -202,24 +235,16 @@ class WidgetSection extends TitledPageSection {
       {required super.title,
       required this.widgetBuilder,
       required this.listenable,
-      required this.minWidth,
-      required this.maxWidth,
-      required this.minHeight,
-      required this.maxHeight,
-      required this.bordered,
-      required this.background,
-      required this.padding});
+      required super.minWidth,
+      required super.maxWidth,
+      required super.minHeight,
+      required super.maxHeight,
+      required super.bordered,
+      required super.background,
+      required super.padding});
 
   final WidgetBuilder widgetBuilder;
   Listenable? listenable;
-  EdgeInsetsGeometry? padding;
-  double minWidth;
-  double maxWidth;
-  double minHeight;
-  double maxHeight;
-  double? aspectRatio;
-  bool bordered;
-  Color? background;
 }
 
 enum LoadMode {
@@ -242,7 +267,17 @@ class CodeSection extends TitledPageSection {
       required this.loadMode,
       required this.mark,
       required this.discardLastEmptyLine,
-      required this.discardMultipleEmptyLines});
+      required this.discardMultipleEmptyLines,
+      bool bordered = true,
+      Color? background,
+      required super.padding})
+      : super(
+            minWidth: 0.0,
+            maxWidth: double.infinity,
+            minHeight: 0.0,
+            maxHeight: double.infinity,
+            bordered: bordered,
+            background: background ?? Colors.grey[100]!);
 
   final String file;
   bool wrap;
@@ -254,7 +289,17 @@ class CodeSection extends TitledPageSection {
 
 /// Session to display a console output.
 class ConsoleSection extends TitledPageSection {
-  ConsoleSection({required super.title, required this.height});
+  ConsoleSection(
+      {required super.title,
+      required this.height,
+      required super.bordered,
+      required super.background,
+      required super.padding})
+      : super(
+            minWidth: 0.0,
+            maxWidth: double.infinity,
+            minHeight: height,
+            maxHeight: height);
 
   double height;
 }
