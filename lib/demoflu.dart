@@ -3,6 +3,7 @@ library demoflu;
 export 'src/demo_menu_item.dart';
 export 'src/app.dart';
 export 'src/page.dart' hide PageHelper;
+export 'src/sections_defaults.dart';
 export 'src/sections/page_section.dart';
 export 'src/sections/banner_section.dart';
 export 'src/sections/console_section.dart';

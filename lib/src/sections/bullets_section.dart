@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:demoflu/src/internal/sections/bullets_widget.dart';
+import 'package:demoflu/src/internal/sections/bullets_section_ui.dart';
 import 'package:demoflu/src/sections/page_section.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
@@ -23,7 +23,7 @@ class BulletsSection extends PageSection {
 
   @override
   Widget buildWidget(BuildContext context) {
-    return BulletsWidget(bullets: bullets);
+    return BulletsSectionUI(bullets: bullets);
   }
 }
 

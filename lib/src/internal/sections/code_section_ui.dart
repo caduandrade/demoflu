@@ -1,4 +1,4 @@
-import 'package:demoflu/src/internal/sections/titled_widget.dart';
+import 'package:demoflu/src/internal/sections/titled_section_ui.dart';
 import 'package:demoflu/src/sections/code_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,17 +7,16 @@ import 'package:syntax_highlight/syntax_highlight.dart';
 
 /// Widget for code session.
 @internal
-class SourceCodeWidget extends StatefulWidget {
-  const SourceCodeWidget({required Key key, required this.section})
-      : super(key: key);
+class CodeSectionUI extends StatefulWidget {
+  const CodeSectionUI({Key? key, required this.section}) : super(key: key);
 
   final CodeSection section;
 
   @override
-  State<StatefulWidget> createState() => SourceCodeWidgetState();
+  State<StatefulWidget> createState() => CodeSectionUIState();
 }
 
-class SourceCodeWidgetState extends State<SourceCodeWidget> {
+class CodeSectionUIState extends State<CodeSectionUI> {
   String? _code;
   late HighlighterTheme _theme;
   bool _hover = false;
@@ -30,7 +29,7 @@ class SourceCodeWidgetState extends State<SourceCodeWidget> {
   }
 
   @override
-  void didUpdateWidget(covariant SourceCodeWidget oldWidget) {
+  void didUpdateWidget(covariant CodeSectionUI oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.section.file != oldWidget.section.file) {
       _code = null;
@@ -174,7 +173,8 @@ class SourceCodeWidgetState extends State<SourceCodeWidget> {
   Widget build(BuildContext context) {
     return Align(
         alignment: Alignment.centerLeft,
-        child: TitledWidget(section: widget.section, child: _contentWidget()));
+        child:
+            TitledSectionUI(section: widget.section, child: _contentWidget()));
   }
 
   Widget _contentWidget() {

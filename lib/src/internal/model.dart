@@ -7,21 +7,7 @@ import 'package:syntax_highlight/syntax_highlight.dart';
 /// DemoFlu model.
 @internal
 class DemoFluModel extends ChangeNotifier {
-  DemoFluModel(
-      {required this.title,
-      required this.rootMenus,
-      required this.resizable,
-      required Color exampleBackground})
-      : _exampleBackground = exampleBackground {
-    if (heightWeight < 0 || heightWeight > 1) {
-      throw ArgumentError.value(
-          heightWeight, 'Must be a value between 0 and 1', 'heightWeight');
-    }
-    if (widthWeight < 0 || widthWeight > 1) {
-      throw ArgumentError.value(
-          widthWeight, 'Must be a value between 0 and 1', 'widthWeight');
-    }
-
+  DemoFluModel({required this.title, required this.rootMenus}) {
     List<DemoMenuItem> menuItems = fetchMenuItems();
     int firstMenuItemIndex = menuItems.indexWhere((item) => item.page != null);
     if (firstMenuItemIndex != -1) {
@@ -33,36 +19,6 @@ class DemoFluModel extends ChangeNotifier {
 
   /// List with root menus.
   final List<DemoMenuItem> rootMenus;
-
-  /// Defines the default widget background for all examples.
-  Color _exampleBackground;
-  Color get exampleBackground => _exampleBackground;
-  set exampleBackground(Color color) {
-    if (_exampleBackground != color) {
-      _exampleBackground = color;
-    }
-  }
-
-  final Size? maxSize = null;
-  final bool resizable;
-
-  double _widthWeight = 1;
-
-  double get widthWeight => _widthWeight;
-
-  set widthWeight(double value) {
-    _widthWeight = value;
-    notifyListeners();
-  }
-
-  double _heightWeight = 1;
-
-  double get heightWeight => _heightWeight;
-
-  set heightWeight(double value) {
-    _heightWeight = value;
-    notifyListeners();
-  }
 
   Highlighter? _highlighter;
 
@@ -83,15 +39,6 @@ class DemoFluModel extends ChangeNotifier {
   }
 
   bool get hasValidSelectedMenuItem => _selectedMenuItem != noSelectedMenuItem;
-
-  bool _settingsVisible = false;
-  bool get settingsVisible => _settingsVisible;
-  set settingsVisible(bool value) {
-    if (_settingsVisible != value) {
-      _settingsVisible = value;
-      notifyListeners();
-    }
-  }
 
   List<DemoMenuItem> fetchMenuItems() {
     List<DemoMenuItem> children = [];

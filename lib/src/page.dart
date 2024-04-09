@@ -17,6 +17,9 @@ import 'package:meta/meta.dart';
 abstract class DemoFluPage {
   List<PageSection> _sections = [];
 
+  /// Adds a [SpaceSection] between other sections.
+  bool autoSpace = false;
+
   /// Creates a session to display a title.
   TitleSection title(String title) {
     TitleSection section = TitleSection(title);
@@ -32,7 +35,7 @@ abstract class DemoFluPage {
   }
 
   /// Creates a space session.
-  SpaceSection space({double height = 24}) {
+  SpaceSection space({double? height}) {
     SpaceSection section = SpaceSection(height: height);
     _sections.add(section);
     return section;

@@ -1,4 +1,4 @@
-import 'package:demoflu/src/internal/sections/banner_widget.dart';
+import 'package:demoflu/src/internal/sections/banner_section_ui.dart';
 import 'package:demoflu/src/sections/page_section.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +24,7 @@ class BannerSection extends PageSection {
 
   @override
   Widget buildWidget(BuildContext context) {
-    return BannerWidget(
+    return BannerSectionUI(
         text: TextSpan(text: text),
         background: background,
         border: border,

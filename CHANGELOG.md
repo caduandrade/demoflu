@@ -1,6 +1,10 @@
 ## 2.1.0
 
 * Improving console, code and widget session settings. 
+* Pages no longer have automatic spacing between sections.
+* `SpaceSection` to create spacing.
+* The `autoSpace` attribute on the page to automatically add a `SpaceSection` section between the other sections.
+* `SectionDefaults` class to define a default sections values.
 
 ## 2.0.0
 

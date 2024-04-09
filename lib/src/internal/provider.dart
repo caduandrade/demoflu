@@ -1,5 +1,6 @@
 import 'package:demoflu/src/internal/model.dart';
 import 'package:demoflu/src/internal/print_notifier.dart';
+import 'package:demoflu/src/sections_defaults.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
@@ -10,12 +11,15 @@ class DemoFluProvider extends InheritedWidget {
     super.key,
     required this.model,
     required this.printNotifier,
+    required this.sectionDefaults,
     required super.child,
   });
 
   final DemoFluModel model;
 
   final PrintNotifier printNotifier;
+
+  final SectionDefaults sectionDefaults;
 
   @override
   bool updateShouldNotify(DemoFluProvider oldWidget) => false;
@@ -37,5 +41,10 @@ class DemoFluProvider extends InheritedWidget {
   static PrintNotifier printNotifierOf(BuildContext context) {
     DemoFluProvider provider = _of(context);
     return provider.printNotifier;
+  }
+
+  static SectionDefaults sectionDefaultsOf(BuildContext context) {
+    DemoFluProvider provider = _of(context);
+    return provider.sectionDefaults;
   }
 }

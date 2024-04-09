@@ -4,8 +4,8 @@ import 'package:meta/meta.dart';
 
 /// Widget for bullets session.
 @internal
-class BulletsWidget extends StatelessWidget {
-  const BulletsWidget({super.key, required this.bullets});
+class BulletsSectionUI extends StatelessWidget {
+  const BulletsSectionUI({super.key, required this.bullets});
 
   final List<Bullet> bullets;
 

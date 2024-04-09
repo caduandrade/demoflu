@@ -3,8 +3,8 @@ import 'package:meta/meta.dart';
 
 /// Widget for banner session.
 @internal
-class BannerWidget extends StatelessWidget {
-  const BannerWidget(
+class BannerSectionUI extends StatelessWidget {
+  const BannerSectionUI(
       {super.key,
       required this.background,
       required this.border,

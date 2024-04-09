@@ -1,21 +1,21 @@
 import 'package:demoflu/src/internal/print_notifier.dart';
 import 'package:demoflu/src/internal/provider.dart';
-import 'package:demoflu/src/internal/sections/titled_widget.dart';
+import 'package:demoflu/src/internal/sections/titled_section_ui.dart';
 import 'package:demoflu/src/sections/titled_page_section.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 /// Widget for console session.
 @internal
-class ConsoleWidget extends StatelessWidget {
-  ConsoleWidget({required this.section});
+class ConsoleSectionUI extends StatelessWidget {
+  ConsoleSectionUI({required this.section});
 
   final TitledPageSection section;
 
   @override
   Widget build(BuildContext context) {
     PrintNotifier printNotifier = DemoFluProvider.printNotifierOf(context);
-    return TitledWidget(
+    return TitledSectionUI(
         section: section,
         child: ListenableBuilder(
             listenable: printNotifier,

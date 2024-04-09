@@ -1,4 +1,4 @@
-import 'package:demoflu/src/internal/sections/source_code_widget.dart';
+import 'package:demoflu/src/internal/sections/code_section_ui.dart';
 import 'package:demoflu/src/sections/titled_page_section.dart';
 import 'package:flutter/material.dart';
 
@@ -32,10 +32,7 @@ class CodeSection extends TitledPageSection {
 
   @override
   Widget buildWidget(BuildContext context) {
-    return SourceCodeWidget(
-      section: this,
-      key: ValueKey(file),
-    );
+    return CodeSectionUI(section: this);
   }
 }
 

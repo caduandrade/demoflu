@@ -4,8 +4,9 @@ import 'package:meta/meta.dart';
 
 /// Widget for title session.
 @internal
-class TitledWidget extends StatelessWidget {
-  const TitledWidget({super.key, required this.section, required this.child});
+class TitledSectionUI extends StatelessWidget {
+  const TitledSectionUI(
+      {super.key, required this.section, required this.child});
 
   final TitledPageSection section;
   final Widget child;

@@ -1,4 +1,4 @@
-import 'package:demoflu/src/internal/sections/console_widget.dart';
+import 'package:demoflu/src/internal/sections/console_section_ui.dart';
 import 'package:demoflu/src/sections/titled_page_section.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
@@ -20,6 +20,6 @@ class ConsoleSection extends TitledPageSection {
 
   @override
   Widget buildWidget(BuildContext context) {
-    return ConsoleWidget(section: this);
+    return ConsoleSectionUI(section: this);
   }
 }

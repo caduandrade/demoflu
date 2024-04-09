@@ -1,7 +1,5 @@
 import 'dart:math' as math;
 
-import 'package:demoflu/src/internal/model.dart';
-import 'package:demoflu/src/internal/provider.dart';
 import 'package:demoflu/src/internal/slider.dart';
 import 'package:flutter/material.dart';
 
@@ -50,7 +48,6 @@ class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
   }
 
   Widget _buildExampleWidget(BuildContext context) {
-    DemoFluModel model = DemoFluProvider.modelOf(context);
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       double maxWidth = constraints.maxWidth;
@@ -74,7 +71,7 @@ class ResizableExampleWidgetState extends State<ResizableExampleWidget> {
               BoxConstraints.tightFor(width: maxWidth, height: maxHeight));
 
       return Container(
-          color: model.exampleBackground,
+          color: Colors.white,
           child: Center(child: Container(child: constrainedBox)));
     });
   }

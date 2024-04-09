@@ -12,16 +12,12 @@ class DemoFluApp {
   DemoFluApp(
       {required String title,
       required List<DemoMenuItem> rootMenus,
-      bool resizable = true,
-      Color exampleBackground = Colors.white})
-      : model = DemoFluModel(
-            title: title,
-            rootMenus: rootMenus,
-            resizable: resizable,
-            exampleBackground: exampleBackground);
+      this.sectionDefaults = const SectionDefaults()})
+      : model = DemoFluModel(title: title, rootMenus: rootMenus);
 
   final DemoFluModel model;
   final PrintNotifier printNotifier = PrintNotifier();
+  final SectionDefaults sectionDefaults;
 
   void run() async {
     runZonedGuarded<Future<void>>(() async {
@@ -30,6 +26,7 @@ class DemoFluApp {
       runApp(DemoFluProvider(
           model: model,
           printNotifier: printNotifier,
+          sectionDefaults: sectionDefaults,
           child: DemoFluAppWidget()));
     }, (error, stackTrace) {
       print('Error: $error');

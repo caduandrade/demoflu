@@ -1,5 +1,3 @@
-import 'package:demoflu/src/internal/model.dart';
-import 'package:demoflu/src/internal/provider.dart';
 import 'package:flex_color_picker/flex_color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
@@ -45,10 +43,9 @@ class SettingsWidget extends StatelessWidget {
   }
 
   Widget _colorPicker(BuildContext context) {
-    DemoFluModel model = DemoFluProvider.modelOf(context);
     return ColorPicker(
-      color: model.exampleBackground,
-      onColorChanged: (Color color) => model.exampleBackground = color,
+      color: Colors.white,
+      onColorChanged: (Color color) => {},
       width: 40,
       height: 40,
       borderRadius: 4,
