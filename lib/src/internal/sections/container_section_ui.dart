@@ -1,14 +1,14 @@
-import 'package:demoflu/src/sections/titled_page_section.dart';
+import 'package:demoflu/src/sections/container_section.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-/// Widget for title session.
+/// Widget for container section.
 @internal
-class TitledSectionUI extends StatelessWidget {
-  const TitledSectionUI(
+class ContainerSectionUI extends StatelessWidget {
+  const ContainerSectionUI(
       {super.key, required this.section, required this.child});
 
-  final TitledPageSection section;
+  final ContainerSection section;
   final Widget child;
 
   @override

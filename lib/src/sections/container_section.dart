@@ -1,9 +1,9 @@
 import 'package:demoflu/src/sections/page_section.dart';
 import 'package:flutter/widgets.dart';
 
-/// Base class of sessions that can have a title.
-abstract class TitledPageSection extends PageSection {
-  TitledPageSection(
+/// Base class of container sections.
+abstract class ContainerSection extends PageSection {
+  ContainerSection(
       {required this.title,
       required this.minWidth,
       required this.maxWidth,

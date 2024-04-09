@@ -12,36 +12,36 @@ import 'package:flutter/material.dart';
 
 import 'package:meta/meta.dart';
 
-/// Page to display content in sessions.
-/// Use different methods to create sessions according to your needs.
+/// Page to display content in sections.
+/// Use different methods to create sections according to your needs.
 abstract class DemoFluPage {
   List<PageSection> _sections = [];
 
   /// Adds a [SpaceSection] between other sections.
   bool autoSpace = false;
 
-  /// Creates a session to display a title.
+  /// Creates a section to display a title.
   TitleSection title(String title) {
     TitleSection section = TitleSection(title);
     _sections.add(section);
     return section;
   }
 
-  /// Creates a session to display a text.
+  /// Creates a section to display a text.
   TextSection text({String text = '', IconData? icon}) {
     TextSection section = TextSection(text, icon);
     _sections.add(section);
     return section;
   }
 
-  /// Creates a space session.
+  /// Creates a space section.
   SpaceSection space({double? height}) {
     SpaceSection section = SpaceSection(height: height);
     _sections.add(section);
     return section;
   }
 
-  /// Create a session to display an informational banner.
+  /// Create a section to display an informational banner.
   BannerSection infoBanner({String text = '', IconData icon = Icons.info}) {
     return banner(
         text: text,
@@ -50,7 +50,7 @@ abstract class DemoFluPage {
         icon: icon);
   }
 
-  /// Create a session to display a tip banner.
+  /// Create a section to display a tip banner.
   BannerSection tipBanner({String text = '', IconData icon = Icons.lightbulb}) {
     return banner(
         text: text,
@@ -59,7 +59,7 @@ abstract class DemoFluPage {
         icon: icon);
   }
 
-  /// Create a session to display an warning banner.
+  /// Create a section to display an warning banner.
   BannerSection warningBanner(
       {String text = '', IconData icon = Icons.warning}) {
     return banner(
@@ -69,7 +69,7 @@ abstract class DemoFluPage {
         icon: icon);
   }
 
-  /// Create a session to display a banner.
+  /// Create a section to display a banner.
   BannerSection banner(
       {String text = '', Color? background, Color? border, IconData? icon}) {
     BannerSection section = BannerSection(
@@ -81,22 +81,22 @@ abstract class DemoFluPage {
     return section;
   }
 
-  /// Create a session to display a divider.
+  /// Create a section to display a divider.
   DividerSection divider() {
     DividerSection section = DividerSection();
     _sections.add(section);
     return section;
   }
 
-  /// Create a session to display bullets.
+  /// Create a section to display bullets.
   BulletsSection bulletsSection() {
     BulletsSection section = BulletsSection();
     _sections.add(section);
     return section;
   }
 
-  /// Create a session to display some widget.
-  /// Use this session to demonstrate your package widget.
+  /// Create a section to display some widget.
+  /// Use this section to demonstrate your package widget.
   WidgetSection widget(WidgetBuilder widgetBuilder,
       {String? title,
       Listenable? listenable,
@@ -123,7 +123,7 @@ abstract class DemoFluPage {
     return section;
   }
 
-  /// Creates a session to display some source code.
+  /// Creates a section to display some source code.
   CodeSection code(String file,
       {String? title,
       bool wrap = true,
@@ -149,7 +149,7 @@ abstract class DemoFluPage {
     return section;
   }
 
-  /// Create a session to display console output.
+  /// Create a section to display console output.
   ConsoleSection console(
       {String? title = 'Console',
       double height = 150,

@@ -1,9 +1,9 @@
-import 'package:demoflu/src/internal/sections/titled_section_ui.dart';
+import 'package:demoflu/src/internal/sections/container_section_ui.dart';
 import 'package:demoflu/src/sections/widget_section.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-/// Container for widget example session
+/// Container for widget example section
 @internal
 class WidgetSectionUI extends StatelessWidget {
   WidgetSectionUI(this.section);
@@ -25,7 +25,7 @@ class WidgetSectionUI extends StatelessWidget {
   Widget _container(BuildContext context) {
     return Align(
         alignment: Alignment.centerLeft,
-        child: TitledSectionUI(
+        child: ContainerSectionUI(
             child: section.widgetBuilder(context), section: section));
   }
 }

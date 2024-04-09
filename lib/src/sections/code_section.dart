@@ -1,9 +1,9 @@
 import 'package:demoflu/src/internal/sections/code_section_ui.dart';
-import 'package:demoflu/src/sections/titled_page_section.dart';
+import 'package:demoflu/src/sections/container_section.dart';
 import 'package:flutter/material.dart';
 
-/// Session to display a source code.
-class CodeSection extends TitledPageSection {
+/// Section to display a source code.
+class CodeSection extends ContainerSection {
   CodeSection(
       {required super.title,
       required this.file,

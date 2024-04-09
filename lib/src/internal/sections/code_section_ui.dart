@@ -1,11 +1,11 @@
-import 'package:demoflu/src/internal/sections/titled_section_ui.dart';
+import 'package:demoflu/src/internal/sections/container_section_ui.dart';
 import 'package:demoflu/src/sections/code_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 import 'package:syntax_highlight/syntax_highlight.dart';
 
-/// Widget for code session.
+/// Widget for code section.
 @internal
 class CodeSectionUI extends StatefulWidget {
   const CodeSectionUI({Key? key, required this.section}) : super(key: key);
@@ -174,7 +174,7 @@ class CodeSectionUIState extends State<CodeSectionUI> {
     return Align(
         alignment: Alignment.centerLeft,
         child:
-            TitledSectionUI(section: widget.section, child: _contentWidget()));
+            ContainerSectionUI(section: widget.section, child: _contentWidget()));
   }
 
   Widget _contentWidget() {

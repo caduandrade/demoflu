@@ -2,7 +2,7 @@ import 'package:demoflu/src/internal/sections/banner_section_ui.dart';
 import 'package:demoflu/src/sections/page_section.dart';
 import 'package:flutter/material.dart';
 
-/// Session to display a banner.
+/// Section to display a banner.
 class BannerSection extends PageSection {
   BannerSection(
       {required String text,

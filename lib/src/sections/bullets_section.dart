@@ -4,7 +4,7 @@ import 'package:demoflu/src/internal/sections/bullets_section_ui.dart';
 import 'package:demoflu/src/sections/page_section.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-/// Session to display bullets.
+/// Section to display bullets.
 class BulletsSection extends PageSection {
   BulletsSection() {
     bullets = UnmodifiableListView(_bullets);

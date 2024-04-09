@@ -1,9 +1,9 @@
 import 'package:demoflu/src/internal/sections/widget_section_ui.dart';
-import 'package:demoflu/src/sections/titled_page_section.dart';
+import 'package:demoflu/src/sections/container_section.dart';
 import 'package:flutter/widgets.dart';
 
-/// Session to display a widget.
-class WidgetSection extends TitledPageSection {
+/// Section to display a widget.
+class WidgetSection extends ContainerSection {
   WidgetSection(
       {required super.title,
       required this.widgetBuilder,

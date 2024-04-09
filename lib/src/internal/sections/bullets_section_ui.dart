@@ -2,7 +2,7 @@ import 'package:demoflu/src/sections/bullets_section.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-/// Widget for bullets session.
+/// Widget for bullets section.
 @internal
 class BulletsSectionUI extends StatelessWidget {
   const BulletsSectionUI({super.key, required this.bullets});

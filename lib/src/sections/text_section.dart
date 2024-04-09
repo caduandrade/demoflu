@@ -1,7 +1,7 @@
 import 'package:demoflu/src/sections/page_section.dart';
 import 'package:flutter/material.dart';
 
-/// Session to display a text.
+/// Section to display a text.
 class TextSection extends PageSection {
   TextSection(this._text, this.iconData);
 

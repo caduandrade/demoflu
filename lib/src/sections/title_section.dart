@@ -1,7 +1,7 @@
 import 'package:demoflu/src/sections/page_section.dart';
 import 'package:flutter/material.dart';
 
-/// Session to display a title.
+/// Section to display a title.
 class TitleSection extends PageSection {
   TitleSection(this.title);
 
