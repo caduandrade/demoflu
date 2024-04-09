@@ -1,4 +1,4 @@
-import 'package:demoflu/src/internal/sections/container_section_ui.dart';
+import 'package:demoflu/src/internal/sections/widgets/titled_widget.dart';
 import 'package:demoflu/src/sections/widget_section.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
@@ -25,7 +25,20 @@ class WidgetSectionUI extends StatelessWidget {
   Widget _container(BuildContext context) {
     return Align(
         alignment: Alignment.centerLeft,
-        child: ContainerSectionUI(
-            child: section.widgetBuilder(context), section: section));
+        child:
+            TitledWidget(title: section.title, child: buildContent(context)));
+  }
+
+  Widget buildContent(BuildContext context) {
+    return Container(
+        padding: section.padding,
+        decoration: BoxDecoration(color: section.background),
+        child: ConstrainedBox(
+            constraints: BoxConstraints(
+                minWidth: section.minWidth,
+                minHeight: section.minHeight,
+                maxWidth: section.maxWidth,
+                maxHeight: section.maxHeight),
+            child: section.widgetBuilder(context)));
   }
 }

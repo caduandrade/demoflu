@@ -105,7 +105,6 @@ abstract class DemoFluPage {
       double minHeight = 0.0,
       double maxHeight = double.infinity,
       double? aspectRatio,
-      bool bordered = true,
       Color? background,
       EdgeInsetsGeometry? padding}) {
     WidgetSection section = WidgetSection(
@@ -117,7 +116,6 @@ abstract class DemoFluPage {
         maxWidth: maxWidth,
         minHeight: minHeight,
         maxHeight: maxHeight,
-        bordered: bordered,
         background: background);
     _sections.add(section);
     return section;
@@ -137,7 +135,6 @@ abstract class DemoFluPage {
     CodeSection section = CodeSection(
         title: title,
         file: file,
-        wrap: wrap,
         loadMode: loadMode,
         mark: mark,
         bordered: bordered,

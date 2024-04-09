@@ -12,8 +12,9 @@ class DemoFluApp {
   DemoFluApp(
       {required String title,
       required List<DemoMenuItem> rootMenus,
-      this.sectionDefaults = const SectionDefaults()})
-      : model = DemoFluModel(title: title, rootMenus: rootMenus);
+      SectionDefaults? sectionDefaults})
+      : model = DemoFluModel(title: title, rootMenus: rootMenus),
+        sectionDefaults = sectionDefaults ?? SectionDefaults();
 
   final DemoFluModel model;
   final PrintNotifier printNotifier = PrintNotifier();
