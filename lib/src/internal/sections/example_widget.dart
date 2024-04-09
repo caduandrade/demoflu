@@ -1,5 +1,5 @@
 import 'package:demoflu/src/internal/sections/titled_widget.dart';
-import 'package:demoflu/src/page.dart';
+import 'package:demoflu/src/sections/widget_section.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 

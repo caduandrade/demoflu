@@ -1,6 +1,13 @@
-import 'dart:collection';
-
-import 'package:flutter/cupertino.dart';
+import 'package:demoflu/src/sections/banner_section.dart';
+import 'package:demoflu/src/sections/bullets_section.dart';
+import 'package:demoflu/src/sections/code_section.dart';
+import 'package:demoflu/src/sections/console_section.dart';
+import 'package:demoflu/src/sections/divider_section.dart';
+import 'package:demoflu/src/sections/page_section.dart';
+import 'package:demoflu/src/sections/space_section.dart';
+import 'package:demoflu/src/sections/text_section.dart';
+import 'package:demoflu/src/sections/title_section.dart';
+import 'package:demoflu/src/sections/widget_section.dart';
 import 'package:flutter/material.dart';
 
 import 'package:meta/meta.dart';
@@ -12,14 +19,21 @@ abstract class DemoFluPage {
 
   /// Creates a session to display a title.
   TitleSection title(String title) {
-    TitleSection section = TitleSection._(title);
+    TitleSection section = TitleSection(title);
     _sections.add(section);
     return section;
   }
 
   /// Creates a session to display a text.
   TextSection text({String text = '', IconData? icon}) {
-    TextSection section = TextSection._(text, icon);
+    TextSection section = TextSection(text, icon);
+    _sections.add(section);
+    return section;
+  }
+
+  /// Creates a space session.
+  SpaceSection space({double height = 24}) {
+    SpaceSection section = SpaceSection(height: height);
     _sections.add(section);
     return section;
   }
@@ -55,7 +69,7 @@ abstract class DemoFluPage {
   /// Create a session to display a banner.
   BannerSection banner(
       {String text = '', Color? background, Color? border, IconData? icon}) {
-    BannerSection section = BannerSection._(
+    BannerSection section = BannerSection(
         text: text,
         background: background ?? Colors.blueGrey[50]!,
         border: border ?? Colors.blueGrey[500]!,
@@ -73,7 +87,7 @@ abstract class DemoFluPage {
 
   /// Create a session to display bullets.
   BulletsSection bulletsSection() {
-    BulletsSection section = BulletsSection._();
+    BulletsSection section = BulletsSection();
     _sections.add(section);
     return section;
   }
@@ -91,7 +105,7 @@ abstract class DemoFluPage {
       bool bordered = true,
       Color? background,
       EdgeInsetsGeometry? padding}) {
-    WidgetSection section = WidgetSection._(
+    WidgetSection section = WidgetSection(
         title: title,
         widgetBuilder: widgetBuilder,
         listenable: listenable,
@@ -147,181 +161,6 @@ abstract class DemoFluPage {
         padding: padding ?? EdgeInsets.all(8));
     _sections.add(section);
     return section;
-  }
-}
-
-/// Base page section class.
-abstract class PageSection {}
-
-/// Base class of sessions that can have a title.
-abstract class TitledPageSection extends PageSection {
-  TitledPageSection(
-      {required this.title,
-      required this.minWidth,
-      required this.maxWidth,
-      required this.minHeight,
-      required this.maxHeight,
-      required this.bordered,
-      required this.background,
-      required this.padding});
-  String? title;
-  EdgeInsetsGeometry? padding;
-  double minWidth;
-  double maxWidth;
-  double minHeight;
-  double maxHeight;
-  double? aspectRatio;
-  bool bordered;
-  Color? background;
-}
-
-/// Session to display a divider.
-class DividerSection extends PageSection {}
-
-/// Session to display a title.
-class TitleSection extends PageSection {
-  TitleSection._(this.title);
-
-  final String title;
-}
-
-/// Session to display a text.
-class TextSection extends PageSection {
-  TextSection._(this._text, this.iconData);
-
-  IconData? iconData;
-
-  String _text;
-  String get text => _text;
-
-  void add(String value) {
-    _text += value;
-  }
-}
-
-/// Session to display bullets.
-class BulletsSection extends PageSection {
-  BulletsSection._() {
-    bullets = UnmodifiableListView(_bullets);
-  }
-
-  List<Bullet> _bullets = [];
-  late List<Bullet> bullets;
-
-  Bullet create({int indent = 0, String? text}) {
-    indent = indent < 0 ? 0 : indent;
-    indent = indent > 3 ? 3 : indent;
-    Bullet bullet = Bullet(indent: indent, text: text ?? '');
-    _bullets.add(bullet);
-    return bullet;
-  }
-}
-
-class Bullet {
-  Bullet({required this.indent, required String text}) : _text = text;
-
-  final int indent;
-  String _text;
-  String get text => _text;
-
-  void add(String value) {
-    _text += value;
-  }
-}
-
-/// Session to display a widget.
-class WidgetSection extends TitledPageSection {
-  WidgetSection._(
-      {required super.title,
-      required this.widgetBuilder,
-      required this.listenable,
-      required super.minWidth,
-      required super.maxWidth,
-      required super.minHeight,
-      required super.maxHeight,
-      required super.bordered,
-      required super.background,
-      required super.padding});
-
-  final WidgetBuilder widgetBuilder;
-  Listenable? listenable;
-}
-
-enum LoadMode {
-  /// Read all code, including marked sections
-  readAll,
-
-  /// Read only the marked code
-  readOnlyMarked,
-
-  /// Ignore the marked code
-  ignoreMarked
-}
-
-/// Session to display a source code.
-class CodeSection extends TitledPageSection {
-  CodeSection(
-      {required super.title,
-      required this.file,
-      required this.wrap,
-      required this.loadMode,
-      required this.mark,
-      required this.discardLastEmptyLine,
-      required this.discardMultipleEmptyLines,
-      bool bordered = true,
-      Color? background,
-      required super.padding})
-      : super(
-            minWidth: 0.0,
-            maxWidth: double.infinity,
-            minHeight: 0.0,
-            maxHeight: double.infinity,
-            bordered: bordered,
-            background: background ?? Colors.grey[100]!);
-
-  final String file;
-  bool wrap;
-  LoadMode loadMode;
-  String? mark;
-  bool discardMultipleEmptyLines;
-  bool discardLastEmptyLine;
-}
-
-/// Session to display a console output.
-class ConsoleSection extends TitledPageSection {
-  ConsoleSection(
-      {required super.title,
-      required this.height,
-      required super.bordered,
-      required super.background,
-      required super.padding})
-      : super(
-            minWidth: 0.0,
-            maxWidth: double.infinity,
-            minHeight: height,
-            maxHeight: height);
-
-  double height;
-}
-
-/// Session to display a banner.
-class BannerSection extends PageSection {
-  BannerSection._(
-      {required String text,
-      required this.background,
-      required this.border,
-      required this.icon})
-      : _text = text;
-
-  Color background;
-  Color border;
-  IconData? icon;
-
-  String _text;
-  String get text => _text;
-
-  void add(String value) {
-    _text += value;
   }
 }
 

@@ -1,4 +1,4 @@
-import 'package:demoflu/src/page.dart';
+import 'package:demoflu/src/sections/bullets_section.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
