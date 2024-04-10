@@ -5,21 +5,21 @@ import 'package:flutter/material.dart';
 class SectionDefaults {
   SectionDefaults(
       {this.widgetBackground,
-      this.spaceHeight = 24,
+      this.sectionBottom = 24,
       Color? codeBackground,
       EdgeInsetsGeometry? codePadding})
       : this.codeBackground = codeBackground ?? Colors.grey[100],
         this.codePadding = codePadding ?? EdgeInsets.all(16);
 
+  /// Bottom gap
+  final double sectionBottom;
+
   /// Widget section background.
   final Color? widgetBackground;
 
   /// Code section background.
-  Color? codeBackground;
+  final Color? codeBackground;
 
   /// Code section padding.
-  EdgeInsetsGeometry? codePadding;
-
-  /// Space height.
-  final double spaceHeight;
+  final EdgeInsetsGeometry? codePadding;
 }

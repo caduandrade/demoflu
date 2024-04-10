@@ -32,7 +32,7 @@ class WidgetSectionUI extends StatelessWidget {
   Widget buildContent(BuildContext context) {
     return Container(
         padding: section.padding,
-        decoration: BoxDecoration(color: section.background),
+        decoration: BoxDecoration(color: section.background, border: section.border.build()),
         child: ConstrainedBox(
             constraints: BoxConstraints(
                 minWidth: section.minWidth,

@@ -4,7 +4,7 @@ import 'package:demoflu/src/page.dart';
 import 'package:demoflu/src/internal/model.dart';
 import 'package:demoflu/src/internal/provider.dart';
 import 'package:demoflu/src/sections/page_section.dart';
-import 'package:demoflu/src/sections/space_section.dart';
+import 'package:demoflu/src/sections_defaults.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
@@ -15,20 +15,26 @@ class DemoFluPageWidget extends StatelessWidget {
 
   Widget build(BuildContext context) {
     DemoFluModel model = DemoFluProvider.modelOf(context);
+    SectionDefaults defaults = DemoFluProvider.sectionDefaultsOf(context);
 
     List<Widget> children = [];
 
     final DemoMenuItem menuItem = model.selectedMenuItem;
-    SpaceSection spaceSection = SpaceSection();
     if (menuItem.page != null) {
       final DemoFluPage page = menuItem.page!();
 
       children.add(BreadcrumbWidget(menuItem: menuItem));
-      for (PageSection section in PageHelper.sectionsFrom(page)) {
-        if (page.autoSpace) {
-          children.add(spaceSection.buildWidget(context));
-        }
+      children.add(SizedBox(height: 24));
+      List<PageSection> sections = PageHelper.sectionsFrom(page);
+      for(int i = 0;i < sections.length; i++) {
+        PageSection section = sections[i];
         children.add(section.buildWidget(context));
+        if(i<sections.length-1) {
+          final double bottom = section.bottom ?? defaults.sectionBottom;
+          if (bottom > 0) {
+            children.add(SizedBox(height: bottom));
+          }
+        }
       }
     }
 

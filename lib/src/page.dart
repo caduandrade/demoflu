@@ -1,10 +1,10 @@
 import 'package:demoflu/src/sections/banner_section.dart';
+import 'package:demoflu/src/sections/borders/section_border.dart';
 import 'package:demoflu/src/sections/bullets_section.dart';
 import 'package:demoflu/src/sections/code_section.dart';
 import 'package:demoflu/src/sections/console_section.dart';
 import 'package:demoflu/src/sections/divider_section.dart';
 import 'package:demoflu/src/sections/page_section.dart';
-import 'package:demoflu/src/sections/space_section.dart';
 import 'package:demoflu/src/sections/text_section.dart';
 import 'package:demoflu/src/sections/title_section.dart';
 import 'package:demoflu/src/sections/widget_section.dart';
@@ -17,9 +17,6 @@ import 'package:meta/meta.dart';
 abstract class DemoFluPage {
   List<PageSection> _sections = [];
 
-  /// Adds a [SpaceSection] between other sections.
-  bool autoSpace = false;
-
   /// Creates a section to display a title.
   TitleSection title(String title) {
     TitleSection section = TitleSection(title);
@@ -30,13 +27,6 @@ abstract class DemoFluPage {
   /// Creates a section to display a text.
   TextSection text({String text = '', IconData? icon}) {
     TextSection section = TextSection(text, icon);
-    _sections.add(section);
-    return section;
-  }
-
-  /// Creates a space section.
-  SpaceSection space({double? height}) {
-    SpaceSection section = SpaceSection(height: height);
     _sections.add(section);
     return section;
   }
@@ -104,7 +94,7 @@ abstract class DemoFluPage {
       double maxWidth = double.infinity,
       double minHeight = 0.0,
       double maxHeight = double.infinity,
-      double? aspectRatio,
+      SectionBorder border = const Borderless(),
       Color? background,
       EdgeInsetsGeometry? padding}) {
     WidgetSection section = WidgetSection(
@@ -116,7 +106,8 @@ abstract class DemoFluPage {
         maxWidth: maxWidth,
         minHeight: minHeight,
         maxHeight: maxHeight,
-        background: background);
+        background: background,
+        border: border);
     _sections.add(section);
     return section;
   }

@@ -1,4 +1,8 @@
 import 'package:demoflu/src/internal/sections/widget_section_ui.dart';
+import 'package:demoflu/src/sections/borders/arrow_down_border.dart';
+import 'package:demoflu/src/sections/borders/bullet_border.dart';
+import 'package:demoflu/src/sections/borders/section_border.dart';
+import 'package:demoflu/src/sections/borders/solid_border.dart';
 import 'package:demoflu/src/sections/page_section.dart';
 import 'package:flutter/widgets.dart';
 
@@ -13,7 +17,8 @@ class WidgetSection extends PageSection {
       required this.minHeight,
       required this.maxHeight,
       required this.background,
-      required this.padding});
+      required this.padding,
+      required this.border});
 
   final WidgetBuilder widgetBuilder;
   Listenable? listenable;
@@ -24,9 +29,27 @@ class WidgetSection extends PageSection {
   double minHeight;
   double maxHeight;
   Color? background;
+  SectionBorder border;
 
   @override
   Widget buildWidget(BuildContext context) {
     return WidgetSectionUI(this);
+  }
+
+  void borderless() {
+    border = Borderless();
+  }
+
+  void bulletBorder() {
+    border = BulletBorder();
+  }
+
+  SolidBorder solidBorder({Color? color}) {
+    border = SolidBorder(color: color);
+    return border as SolidBorder;
+  }
+
+  void arrowDownBorder() {
+    border = ArrowDownBorder();
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
+@internal
 class TitledWidget extends StatelessWidget {
   const TitledWidget({super.key, required this.title, required this.child});
 
