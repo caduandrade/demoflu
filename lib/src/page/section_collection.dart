@@ -33,15 +33,23 @@ mixin SectionCollectionMixin {
   TextSection text(
       {String text = '',
       IconData? icon,
+      String? title,
       double? marginLeft,
       double? marginBottom,
+      SectionBorder? border,
+      Color? background,
+      EdgeInsetsGeometry? padding,
       double maxWidth = double.infinity}) {
     TextSection section = TextSection(
         text: text,
         icon: icon,
         marginLeft: marginLeft,
         marginBottom: marginBottom,
-        maxWidth: maxWidth);
+        maxWidth: maxWidth,
+        border: border,
+        background: background,
+        padding: padding,
+        title: title);
     _sections.add(section);
     return section;
   }

@@ -52,7 +52,7 @@ class ClipboardCopyWidgetState extends State<ClipboardCopyWidget> {
                 child: GestureDetector(
                   onTap: () =>
                       _copyToClipboard(context, widget.codeSupplier!()),
-                  child: const Icon(Icons.content_copy,size: 16),
+                  child: const Icon(Icons.content_copy, size: 16),
                 ))));
   }
 

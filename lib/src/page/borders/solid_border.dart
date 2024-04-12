@@ -3,7 +3,7 @@ import 'package:demoflu/src/page/borders/section_border.dart';
 import 'package:flutter/material.dart';
 
 class SolidBorder extends SectionBorder {
-   const SolidBorder({required this.color});
+  const SolidBorder({required this.color});
 
   final Color color;
 

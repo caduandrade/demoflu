@@ -18,10 +18,10 @@ abstract class StyledSection extends PageSection {
       required this.title,
       required EdgeInsetsGeometry? padding,
       required Color? background,
-      required SectionBorder? border}):
-      _padding=padding,
-        _background=background,
-  _border=border;
+      required SectionBorder? border})
+      : _padding = padding,
+        _background = background,
+        _border = border;
 
   String? title;
 
@@ -35,7 +35,7 @@ abstract class StyledSection extends PageSection {
 
   SectionBorder? _border;
 
-  SectionBorder? border(DemoFluTheme theme) =>_border;
+  SectionBorder? border(DemoFluTheme theme) => _border;
 
   void borderless() {
     _border = null;

@@ -1,14 +1,19 @@
 import 'package:demoflu/src/page/page_section.dart';
+import 'package:demoflu/src/page/styled_section.dart';
 import 'package:flutter/material.dart';
 
 /// Section to display a text.
-class TextSection extends PageSection {
+class TextSection extends StyledSection {
   TextSection(
       {required String text,
       required this.icon,
       required super.marginLeft,
       required super.marginBottom,
-      required super.maxWidth})
+      required super.maxWidth,
+      required super.border,
+      required super.background,
+      required super.padding,
+      required super.title})
       : _text = text;
 
   IconData? icon;
