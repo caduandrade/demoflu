@@ -35,18 +35,18 @@ class CodeSection extends StyledSection {
   }
 
   @override
-  EdgeInsetsGeometry? padding(DemoFluTheme theme) {
-    return theme.codePadding ?? super.padding(theme);
+  EdgeInsetsGeometry? getPaddingFromTheme(DemoFluTheme theme) {
+    return theme.codePadding;
   }
 
   @override
-  SectionBorder? border(DemoFluTheme theme) {
-    return theme.codeBorder ?? super.border(theme);
+  SectionBorder? getBorderFromTheme(DemoFluTheme theme) {
+    return theme.codeBorder;
   }
 
   @override
-  Color? background(DemoFluTheme theme) {
-    return theme.codeBackground ?? super.background(theme);
+  Color? getBackgroundFromTheme(DemoFluTheme theme) {
+    return theme.codeBackground;
   }
 
   Future<String> loadCode() async {

@@ -16,40 +16,37 @@ abstract class StyledSection extends PageSection {
       required super.marginBottom,
       required super.maxWidth,
       required this.title,
-      required EdgeInsetsGeometry? padding,
-      required Color? background,
-      required SectionBorder? border})
-      : _padding = padding,
-        _background = background,
-        _border = border;
+      required this.padding,
+      required this.background,
+      required this.border});
 
   String? title;
 
-  EdgeInsetsGeometry? _padding;
+  EdgeInsetsGeometry? padding;
 
-  EdgeInsetsGeometry? padding(DemoFluTheme theme) => _padding;
+  EdgeInsetsGeometry? getPaddingFromTheme(DemoFluTheme theme) => null;
 
-  Color? _background;
+  Color? background;
 
-  Color? background(DemoFluTheme theme) => _background;
+  Color? getBackgroundFromTheme(DemoFluTheme theme) => null;
 
-  SectionBorder? _border;
+  SectionBorder? border;
 
-  SectionBorder? border(DemoFluTheme theme) => _border;
+  SectionBorder? getBorderFromTheme(DemoFluTheme theme) => null;
 
   void borderless() {
-    _border = null;
+    border = null;
   }
 
   void bulletBorder() {
-    _border = BulletBorder();
+    border = BulletBorder();
   }
 
   void solidBorder({required Color color}) {
-    _border = SolidBorder(color: color);
+    border = SolidBorder(color: color);
   }
 
   void arrowDownBorder() {
-    _border = ArrowDownBorder();
+    border = ArrowDownBorder();
   }
 }

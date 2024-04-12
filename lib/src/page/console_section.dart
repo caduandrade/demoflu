@@ -37,8 +37,8 @@ class ConsoleSection extends StyledSection {
   }
 
   @override
-  SectionBorder? border(DemoFluTheme theme) {
-    return theme.consoleBorder ?? super.border(theme);
+  SectionBorder? getBorderFromTheme(DemoFluTheme theme) {
+    return theme.consoleBorder;
   }
 }
 

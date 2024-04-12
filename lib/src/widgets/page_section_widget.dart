@@ -35,10 +35,14 @@ class PageSectionWidget extends StatelessWidget {
     if (section is StyledSection) {
       StyledSection styledSection = section as StyledSection;
       return Container(
-          padding: styledSection.padding(theme),
+          padding:
+              styledSection.padding ?? styledSection.getPaddingFromTheme(theme),
           decoration: BoxDecoration(
-              color: styledSection.background(theme),
-              border: styledSection.border(theme)?.build()),
+              color: styledSection.background ??
+                  styledSection.getBackgroundFromTheme(theme),
+              border: styledSection.border != null
+                  ? styledSection.border!.build()
+                  : styledSection.getBorderFromTheme(theme)?.build()),
           child: ConstrainedBox(
               constraints: BoxConstraints(
                   minWidth: 0,

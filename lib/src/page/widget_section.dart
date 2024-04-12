@@ -29,8 +29,8 @@ class WidgetSection extends StyledSection {
   }
 
   @override
-  Color? background(DemoFluTheme theme) {
-    return theme.widgetBackground ?? super.background(theme);
+  Color? getBackgroundFromTheme(DemoFluTheme theme) {
+    return theme.widgetBackground;
   }
 }
 
