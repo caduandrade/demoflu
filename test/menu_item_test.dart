@@ -1,4 +1,4 @@
-import 'package:demoflu/src/demo_menu_item.dart';
+import 'package:demoflu/src/menu_item.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

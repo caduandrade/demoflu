@@ -2,7 +2,9 @@
 
 * Improving console, code and widget session settings. 
 * `SectionDefaults` class to define a default sections values.
-* Borders for widget section.
+* Special borders for sections.
+* Section group.
+* Sections with margin.
 
 ## 2.0.0
 

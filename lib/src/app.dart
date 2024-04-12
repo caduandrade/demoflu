@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:demoflu/demoflu.dart';
-import 'package:demoflu/src/internal/app_widget.dart';
-import 'package:demoflu/src/internal/model.dart';
-import 'package:demoflu/src/internal/provider.dart';
-import 'package:demoflu/src/internal/print_notifier.dart';
+import 'package:demoflu/src/model.dart';
+import 'package:demoflu/src/provider.dart';
+import 'package:demoflu/src/print_notifier.dart';
+import 'package:demoflu/src/widgets/app_widget.dart';
 import 'package:flutter/material.dart';
 
 /// DemoFlu bootstrap.
@@ -12,13 +12,13 @@ class DemoFluApp {
   DemoFluApp(
       {required String title,
       required List<DemoMenuItem> rootMenus,
-      SectionDefaults? sectionDefaults})
+      DemoFluTheme? theme})
       : model = DemoFluModel(title: title, rootMenus: rootMenus),
-        sectionDefaults = sectionDefaults ?? SectionDefaults();
+        theme = theme ?? DemoFluTheme();
 
   final DemoFluModel model;
   final PrintNotifier printNotifier = PrintNotifier();
-  final SectionDefaults sectionDefaults;
+  final DemoFluTheme theme;
 
   void run() async {
     runZonedGuarded<Future<void>>(() async {
@@ -27,7 +27,7 @@ class DemoFluApp {
       runApp(DemoFluProvider(
           model: model,
           printNotifier: printNotifier,
-          sectionDefaults: sectionDefaults,
+          theme: theme,
           child: DemoFluAppWidget()));
     }, (error, stackTrace) {
       print('Error: $error');
