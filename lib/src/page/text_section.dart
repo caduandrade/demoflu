@@ -1,4 +1,3 @@
-import 'package:demoflu/src/page/page_section.dart';
 import 'package:demoflu/src/page/styled_section.dart';
 import 'package:flutter/material.dart';
 

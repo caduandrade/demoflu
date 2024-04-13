@@ -38,8 +38,24 @@ abstract class StyledSection extends PageSection {
     border = null;
   }
 
-  void bulletBorder() {
-    border = BulletBorder();
+  void bulletBorder(
+      {double top = 0,
+      double diameter = 10,
+      double iconWeight = .8,
+      double shiftIconX = 0,
+      double shiftIconY = 0,
+      IconData? icon,
+      required Color color,
+      double thickness = 2}) {
+    border = BulletBorder(
+        top: top,
+        diameter: diameter,
+        icon: icon,
+        iconWeight: iconWeight,
+        shiftIconX: shiftIconX,
+        shiftIconY: shiftIconY,
+        color: color,
+        thickness: thickness);
   }
 
   void solidBorder({required Color color}) {
