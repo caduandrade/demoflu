@@ -9,6 +9,7 @@ class BulletBorder extends SectionBorder {
       required double iconWeight,
       required this.icon,
       required this.color,
+      required this.iconColor,
       required this.shiftIconY,
       required this.shiftIconX,
       required this.thickness}) {
@@ -42,6 +43,8 @@ class BulletBorder extends SectionBorder {
 
   Color color;
 
+  Color iconColor;
+
   double thickness;
 
   @override
@@ -51,6 +54,7 @@ class BulletBorder extends SectionBorder {
       iconWeight: iconWeight,
       diameter: diameter,
       color: color,
+      iconColor: iconColor,
       shiftIconX: shiftIconX,
       shiftIconY: shiftIconY,
       thickness: thickness);
@@ -61,6 +65,7 @@ class _BulletBorderUI extends BoxBorder {
       {required double top,
       required this.icon,
       required this.color,
+      required this.iconColor,
       required this.diameter,
       required this.iconWeight,
       required this.shiftIconX,
@@ -81,6 +86,8 @@ class _BulletBorderUI extends BoxBorder {
   final double shiftIconY;
 
   final Color color;
+
+  final Color iconColor;
 
   final double diameter;
 
@@ -118,7 +125,7 @@ class _BulletBorderUI extends BoxBorder {
       double iconSize = diameter * iconWeight;
       final TextStyle textStyle = TextStyle(
         inherit: false,
-        color: Colors.white,
+        color: iconColor,
         fontSize: iconSize,
         fontFamily: icon.fontFamily,
         package: icon.fontPackage,
@@ -147,6 +154,7 @@ class _BulletBorderUI extends BoxBorder {
         diameter: math.max(0.0, diameter * t),
         color: color,
         icon: icon,
+        iconColor: iconColor,
         iconWeight: iconWeight,
         shiftIconX: shiftIconX * t,
         shiftIconY: shiftIconY * t,

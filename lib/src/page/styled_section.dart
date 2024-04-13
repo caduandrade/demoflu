@@ -46,11 +46,13 @@ abstract class StyledSection extends PageSection {
       double shiftIconY = 0,
       IconData? icon,
       required Color color,
+      Color? iconColor,
       double thickness = 2}) {
     border = BulletBorder(
         top: top,
         diameter: diameter,
         icon: icon,
+        iconColor: iconColor ?? color,
         iconWeight: iconWeight,
         shiftIconX: shiftIconX,
         shiftIconY: shiftIconY,
