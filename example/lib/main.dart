@@ -1,14 +1,16 @@
 import 'package:demoflu/demoflu.dart';
+import 'package:flutter/widgets.dart';
 
 void main() {
-  DemoFluApp(title: 'Example', rootMenus: [_getStarted]).run();
+  DemoFluApp app = DemoFluApp(title: 'Example', rootMenus: _rootMenus);
+  app.run();
 }
 
-DemoMenuItem get _getStarted =>
-    DemoMenuItem('Get started', page: () => GetStartedPage());
+List<DemoMenuItem> _rootMenus = [DemoMenuItem('My page', page: () => MyPage())];
 
-class GetStartedPage extends DemoFluPage {
-  GetStartedPage() {
+class MyPage extends DemoFluPage {
+  @override
+  void initialize(BuildContext context) {
     text(text: 'Hello');
   }
 }

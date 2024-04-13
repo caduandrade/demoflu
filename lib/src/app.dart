@@ -12,22 +12,26 @@ class DemoFluApp {
   DemoFluApp(
       {required String title,
       required List<DemoMenuItem> rootMenus,
-      DemoFluTheme? theme})
-      : model = DemoFluModel(title: title, rootMenus: rootMenus),
-        theme = theme ?? DemoFluTheme();
+      DemoFluTheme? theme,
+      MacroFactory? macroFactory})
+      : _model = DemoFluModel(title: title, rootMenus: rootMenus),
+        _theme = theme ?? DemoFluTheme(),
+        macro = macroFactory ?? MacroFactory();
 
-  final DemoFluModel model;
-  final PrintNotifier printNotifier = PrintNotifier();
-  final DemoFluTheme theme;
+  final DemoFluModel _model;
+  final PrintNotifier _printNotifier = PrintNotifier();
+  final DemoFluTheme _theme;
+  final MacroFactory macro;
 
   void run() async {
     runZonedGuarded<Future<void>>(() async {
       WidgetsFlutterBinding.ensureInitialized();
-      await model.initializeHighlighter();
+      await _model.initializeHighlighter();
       runApp(DemoFluProvider(
-          model: model,
-          printNotifier: printNotifier,
-          theme: theme,
+          model: _model,
+          printNotifier: _printNotifier,
+          theme: _theme,
+          macroFactory: macro,
           child: DemoFluAppWidget()));
     }, (error, stackTrace) {
       print('Error: $error');
@@ -35,7 +39,7 @@ class DemoFluApp {
     }, zoneSpecification: ZoneSpecification(
         print: (Zone self, ZoneDelegate parent, Zone zone, String line) {
       parent.print(zone, line);
-      printNotifier.update(line);
+      _printNotifier.update(line);
     }));
   }
 }

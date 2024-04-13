@@ -1,3 +1,4 @@
+import 'package:demoflu/src/macro.dart';
 import 'package:demoflu/src/model.dart';
 import 'package:demoflu/src/print_notifier.dart';
 import 'package:demoflu/src/theme.dart';
@@ -12,6 +13,7 @@ class DemoFluProvider extends InheritedWidget {
     required this.model,
     required this.printNotifier,
     required this.theme,
+    required this.macroFactory,
     required super.child,
   });
 
@@ -20,6 +22,8 @@ class DemoFluProvider extends InheritedWidget {
   final PrintNotifier printNotifier;
 
   final DemoFluTheme theme;
+
+  final MacroFactory macroFactory;
 
   @override
   bool updateShouldNotify(DemoFluProvider oldWidget) => false;
@@ -46,5 +50,10 @@ class DemoFluProvider extends InheritedWidget {
   static DemoFluTheme themeOf(BuildContext context) {
     DemoFluProvider provider = _of(context);
     return provider.theme;
+  }
+
+  static MacroFactory macroFactoryOf(BuildContext context) {
+    DemoFluProvider provider = _of(context);
+    return provider.macroFactory;
   }
 }

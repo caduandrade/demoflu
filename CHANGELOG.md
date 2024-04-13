@@ -1,10 +1,12 @@
 ## 2.1.0
 
 * Improving console, code and widget session settings. 
-* `SectionDefaults` class to define a default sections values.
+* `DemoFluTheme` class.
 * Special borders for sections.
 * Section group.
 * Sections with margin.
+* Sections of the page need to be initialized in the initialize method and no longer in the constructor.
+* Macros
 
 ## 2.0.0
 
