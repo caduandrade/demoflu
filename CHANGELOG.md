@@ -6,7 +6,8 @@
 * Section group.
 * Sections with margin.
 * Sections of the page need to be initialized in the initialize method and no longer in the constructor.
-* Macros
+* Macros.
+* Title sections has been renamed to Heading section.
 
 ## 2.0.0
 

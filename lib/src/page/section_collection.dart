@@ -130,9 +130,15 @@ mixin SectionCollectionMixin {
   DividerSection divider(
       {double? marginLeft,
       double? marginBottom,
-      double maxWidth = double.infinity}) {
+      double maxWidth = double.infinity,
+      double? thickness,
+      Color? color}) {
     DividerSection section = DividerSection(
-        marginLeft: marginLeft, marginBottom: marginBottom, maxWidth: maxWidth);
+        marginLeft: marginLeft,
+        marginBottom: marginBottom,
+        maxWidth: maxWidth,
+        color: color,
+        thickness: thickness);
     _sections.add(section);
     return section;
   }
