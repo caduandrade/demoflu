@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-@deprecated
 @internal
 abstract class ConstrainedBaseWidget extends StatelessWidget {
   const ConstrainedBaseWidget.withMaxHeight(

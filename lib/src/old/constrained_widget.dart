@@ -2,7 +2,6 @@ import 'package:demoflu/src/old/constrained_base_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-@deprecated
 @internal
 class ConstrainedWidget extends ConstrainedBaseWidget {
   ConstrainedWidget.withMaxHeight(
