@@ -1,3 +1,4 @@
+import 'package:demoflu/src/macro.dart';
 import 'package:demoflu/src/page/page_section.dart';
 import 'package:demoflu/src/provider.dart';
 import 'package:demoflu/src/theme.dart';
@@ -23,5 +24,13 @@ class DividerSection extends PageSection {
         height: thickness,
         color: color ?? theme.dividerColor,
         thickness: thickness);
+  }
+
+  @override
+  void runMacro({required dynamic id, required BuildContext context}) {
+    MacroFactory macroFactory = DemoFluProvider.macroFactoryOf(context);
+    DividerMacro macro =
+        MacroFactoryHelper.getMacro<DividerMacro>(id, 'Divider', macroFactory);
+    macro(context, this);
   }
 }

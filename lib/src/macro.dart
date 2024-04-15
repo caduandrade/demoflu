@@ -70,49 +70,43 @@ class MacroFactory {
 typedef PageMacro = void Function(BuildContext context, DemoFluPage page);
 
 /// Macro for group section.
-typedef GroupMacro = PageSectionGroup Function(
-    BuildContext context, DemoFluPage page);
+typedef GroupMacro = void Function(
+    BuildContext context, PageSectionGroup section);
 
 /// Macro for heading section.
-typedef HeadingMacro = HeadingSection Function(
-    BuildContext context, DemoFluPage page);
+typedef HeadingMacro = void Function(
+    BuildContext context, HeadingSection section);
 
 /// Macro for text section.
-typedef TextMacro = TextSection Function(
-    BuildContext context, DemoFluPage page);
+typedef TextMacro = void Function(BuildContext context, TextSection section);
 
 /// Macro for bullets section.
-typedef BulletsMacro = BulletsSection Function(
-    BuildContext context, DemoFluPage page);
+typedef BulletsMacro = void Function(
+    BuildContext context, BulletsSection section);
 
 /// Macro for divider section.
-typedef DividerMacro = DividerSection Function(
-    BuildContext context, DemoFluPage page);
+typedef DividerMacro = void Function(
+    BuildContext context, DividerSection section);
 
 /// Macro for code section.
-typedef CodeMacro = CodeSection Function(
-    BuildContext context, DemoFluPage page);
+typedef CodeMacro = void Function(BuildContext context, CodeSection section);
 
 /// Macro for divider section.
-typedef ConsoleMacro = ConsoleSection Function(
-    BuildContext context, DemoFluPage page);
+typedef ConsoleMacro = void Function(
+    BuildContext context, ConsoleSection section);
 
 /// Macro for widget section.
-typedef WidgetMacro = WidgetSection Function(
-    BuildContext context, DemoFluPage page);
+typedef WidgetMacro = void Function(
+    BuildContext context, WidgetSection section);
 
 /// Macro for banner section.
-typedef BannerMacro = BannerSection Function(
-    BuildContext context, DemoFluPage page);
+typedef BannerMacro = void Function(
+    BuildContext context, BannerSection section);
 
 @internal
 class MacroFactoryHelper {
-  MacroFactoryHelper(this.factory);
-
-  final MacroFactory? factory;
-
-  T getMacro<T>(dynamic id, String type) {
-    dynamic macro = factory?._macros[id];
+  static T getMacro<T>(dynamic id, String type, MacroFactory factory) {
+    dynamic macro = factory._macros[id];
     if (!(macro is T)) {
       throw ArgumentError.value(id, 'id', '${type} macro not found for id.');
     }

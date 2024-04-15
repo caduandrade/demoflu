@@ -1,3 +1,4 @@
+import 'package:demoflu/src/macro.dart';
 import 'package:demoflu/src/model.dart';
 import 'package:demoflu/src/page/borders/section_border.dart';
 import 'package:demoflu/src/page/styled_section.dart';
@@ -23,7 +24,7 @@ class CodeSection extends StyledSection {
       required super.marginBottom,
       required super.maxWidth});
 
-  final String file;
+  String file;
   LoadMode loadMode;
   String? mark;
   bool discardMultipleEmptyLines;
@@ -32,6 +33,14 @@ class CodeSection extends StyledSection {
   @override
   Widget buildContent(BuildContext context) {
     return _CodeSectionWidget(section: this);
+  }
+
+  @override
+  void runMacro({required dynamic id, required BuildContext context}) {
+    MacroFactory macroFactory = DemoFluProvider.macroFactoryOf(context);
+    CodeMacro macro =
+        MacroFactoryHelper.getMacro<CodeMacro>(id, 'Code', macroFactory);
+    macro(context, this);
   }
 
   @override

@@ -1,4 +1,6 @@
+import 'package:demoflu/src/macro.dart';
 import 'package:demoflu/src/page/styled_section.dart';
+import 'package:demoflu/src/provider.dart';
 import 'package:demoflu/src/theme.dart';
 import 'package:flutter/widgets.dart';
 
@@ -20,12 +22,20 @@ class WidgetSection extends StyledSection {
   double minHeight;
   double maxHeight;
 
-  final WidgetBuilder widgetBuilder;
+  WidgetBuilder widgetBuilder;
   Listenable? listenable;
 
   @override
   Widget buildContent(BuildContext context) {
     return _Widget(this);
+  }
+
+  @override
+  void runMacro({required dynamic id, required BuildContext context}) {
+    MacroFactory macroFactory = DemoFluProvider.macroFactoryOf(context);
+    WidgetMacro macro =
+        MacroFactoryHelper.getMacro<WidgetMacro>(id, 'Widget', macroFactory);
+    macro(context, this);
   }
 
   @override

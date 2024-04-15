@@ -1,3 +1,4 @@
+import 'package:demoflu/src/macro.dart';
 import 'package:demoflu/src/page/borders/section_border.dart';
 import 'package:demoflu/src/page/styled_section.dart';
 import 'package:demoflu/src/print_notifier.dart';
@@ -20,7 +21,9 @@ class ConsoleSection extends StyledSection {
   }
 
   double _height = 0;
+
   double get height => _height;
+
   set height(double value) {
     _height = value >= 0 ? value : 0;
   }
@@ -34,6 +37,14 @@ class ConsoleSection extends StyledSection {
   @override
   Widget buildContent(BuildContext context) {
     return _ConsoleSectionWidget(section: this);
+  }
+
+  @override
+  void runMacro({required dynamic id, required BuildContext context}) {
+    MacroFactory macroFactory = DemoFluProvider.macroFactoryOf(context);
+    ConsoleMacro macro =
+        MacroFactoryHelper.getMacro<ConsoleMacro>(id, 'Console', macroFactory);
+    macro(context, this);
   }
 
   @override
@@ -61,7 +72,7 @@ class _ConsoleSectionWidget extends StatelessWidget {
   Widget _listView(BuildContext context) {
     PrintNotifier printNotifier = DemoFluProvider.printNotifierOf(context);
     return ListView.builder(
-        shrinkWrap: true,
+        prototypeItem: Text('?'),
         itemBuilder: _itemBuilder,
         itemCount: printNotifier.values.length);
   }

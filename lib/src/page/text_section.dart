@@ -1,4 +1,6 @@
+import 'package:demoflu/src/macro.dart';
 import 'package:demoflu/src/page/styled_section.dart';
+import 'package:demoflu/src/provider.dart';
 import 'package:flutter/material.dart';
 
 /// Section to display a text.
@@ -35,5 +37,13 @@ class TextSection extends StyledSection {
                   padding: EdgeInsets.only(right: 8), child: Icon(icon!))));
     }
     return SelectableText.rich(TextSpan(children: children));
+  }
+
+  @override
+  void runMacro({required dynamic id, required BuildContext context}) {
+    MacroFactory macroFactory = DemoFluProvider.macroFactoryOf(context);
+    TextMacro macro =
+        MacroFactoryHelper.getMacro<TextMacro>(id, 'Text', macroFactory);
+    macro(context, this);
   }
 }

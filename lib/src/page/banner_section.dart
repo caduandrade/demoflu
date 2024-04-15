@@ -1,4 +1,6 @@
+import 'package:demoflu/src/macro.dart';
 import 'package:demoflu/src/page/page_section.dart';
+import 'package:demoflu/src/provider.dart';
 import 'package:flutter/material.dart';
 
 /// Section to display a banner.
@@ -32,6 +34,14 @@ class BannerSection extends PageSection {
         background: background,
         border: border,
         icon: icon);
+  }
+
+  @override
+  void runMacro({required dynamic id, required BuildContext context}) {
+    MacroFactory macroFactory = DemoFluProvider.macroFactoryOf(context);
+    BannerMacro macro =
+        MacroFactoryHelper.getMacro<BannerMacro>(id, 'Banner', macroFactory);
+    macro(context, this);
   }
 }
 

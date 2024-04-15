@@ -33,6 +33,9 @@ abstract class PageSection {
   double get maxHeight => double.infinity;
   double maxWidth;
 
+  /// Runs a macro.
+  void runMacro({required dynamic id, required BuildContext context});
+
   /// Builds the widget for this section content.
   Widget buildContent(BuildContext context);
 }

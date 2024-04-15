@@ -1,4 +1,6 @@
+import 'package:demoflu/src/macro.dart';
 import 'package:demoflu/src/page/page_section.dart';
+import 'package:demoflu/src/provider.dart';
 import 'package:flutter/material.dart';
 
 /// Section to display a title.
@@ -9,7 +11,7 @@ class HeadingSection extends PageSection {
       required super.maxWidth,
       required this.text});
 
-  final String text;
+  String text;
 
   @override
   Widget buildContent(BuildContext context) {
@@ -21,5 +23,13 @@ class HeadingSection extends PageSection {
           .merge(TextStyle(fontWeight: FontWeight.bold));
     }
     return Text(text, style: style);
+  }
+
+  @override
+  void runMacro({required dynamic id, required BuildContext context}) {
+    MacroFactory macroFactory = DemoFluProvider.macroFactoryOf(context);
+    HeadingMacro macro =
+        MacroFactoryHelper.getMacro<HeadingMacro>(id, 'Heading', macroFactory);
+    macro(context, this);
   }
 }

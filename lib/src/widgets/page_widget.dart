@@ -1,4 +1,3 @@
-import 'package:demoflu/src/macro.dart';
 import 'package:demoflu/src/menu_item.dart';
 import 'package:demoflu/src/page/page.dart';
 import 'package:demoflu/src/model.dart';
@@ -21,8 +20,6 @@ class DemoFluPageWidget extends StatelessWidget {
     final DemoMenuItem menuItem = model.selectedMenuItem;
     if (menuItem.page != null) {
       final DemoFluPage page = menuItem.page!();
-      MacroFactory macroFactory = DemoFluProvider.macroFactoryOf(context);
-      DemoFluPageHelper.setMacroFactory(page, macroFactory);
       page.initialize(context);
       children.add(BreadcrumbWidget(menuItem: menuItem));
       children.add(SizedBox(height: 24));

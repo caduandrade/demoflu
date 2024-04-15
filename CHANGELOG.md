@@ -1,3 +1,10 @@
+## 2.2.0
+
+* Macros
+  * Behavior change. The macro stopped returning the section and started receiving it.
+* `WidgetSection`
+  * Allow to change the `widgetBuilder`.
+
 ## 2.1.0
 
 * Improving console, code and widget session settings. 

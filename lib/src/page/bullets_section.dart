@@ -1,6 +1,8 @@
 import 'dart:collection';
 
+import 'package:demoflu/src/macro.dart';
 import 'package:demoflu/src/page/styled_section.dart';
+import 'package:demoflu/src/provider.dart';
 import 'package:flutter/material.dart';
 
 /// Section to display bullets.
@@ -30,6 +32,14 @@ class BulletsSection extends StyledSection {
   @override
   Widget buildContent(BuildContext context) {
     return _BulletsSectionWidget(bullets: bullets);
+  }
+
+  @override
+  void runMacro({required dynamic id, required BuildContext context}) {
+    MacroFactory macroFactory = DemoFluProvider.macroFactoryOf(context);
+    BulletsMacro macro =
+        MacroFactoryHelper.getMacro<BulletsMacro>(id, 'Bullets', macroFactory);
+    macro(context, this);
   }
 }
 
