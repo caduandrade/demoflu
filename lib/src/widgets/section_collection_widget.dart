@@ -36,7 +36,8 @@ class SectionCollectionWidget extends StatelessWidget {
       }
       children.add(child);
     }
+
     return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch, children: children);
+        crossAxisAlignment: CrossAxisAlignment.start, children: children);
   }
 }

@@ -1,17 +1,26 @@
 import 'dart:math' as math;
 import 'package:demoflu/src/page/borders/section_border.dart';
+import 'package:demoflu/src/provider.dart';
+import 'package:demoflu/src/theme.dart';
 import 'package:flutter/material.dart';
 
 class ArrowDownBorder extends SectionBorder {
+  ArrowDownBorder({this.color});
+
+  Color? color;
+
   @override
-  BoxBorder? build() => _ArrowDownBorder();
+  BoxBorder? build(BuildContext context) {
+    DemoFluTheme theme = DemoFluProvider.themeOf(context);
+    return _ArrowDownBorder(color: color ?? theme.arrowBorderColor);
+  }
 }
 
 class _ArrowDownBorder extends BoxBorder {
-  _ArrowDownBorder({double left = 10, double arrowHeight = 10, Color? color})
+  _ArrowDownBorder(
+      {double left = 10, double arrowHeight = 10, required this.color})
       : left = math.max(0, left),
-        arrowHeight = math.max(0, arrowHeight),
-        color = color ?? Colors.grey[500]!;
+        arrowHeight = math.max(0, arrowHeight);
 
   @override
   final BorderSide bottom = BorderSide.none;

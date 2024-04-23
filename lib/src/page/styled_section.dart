@@ -45,14 +45,14 @@ abstract class StyledSection extends PageSection {
       double shiftIconX = 0,
       double shiftIconY = 0,
       IconData? icon,
-      required Color color,
+      Color? color,
       Color? iconColor,
       double thickness = 2}) {
     border = BulletBorder(
         top: top,
         diameter: diameter,
         icon: icon,
-        iconColor: iconColor ?? color,
+        iconColor: iconColor,
         iconWeight: iconWeight,
         shiftIconX: shiftIconX,
         shiftIconY: shiftIconY,
@@ -60,11 +60,11 @@ abstract class StyledSection extends PageSection {
         thickness: thickness);
   }
 
-  void solidBorder({required Color color}) {
+  void solidBorder({Color? color}) {
     border = SolidBorder(color: color);
   }
 
-  void arrowDownBorder() {
-    border = ArrowDownBorder();
+  void arrowDownBorder({Color? color}) {
+    border = ArrowDownBorder(color: color);
   }
 }

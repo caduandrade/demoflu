@@ -1,7 +1,14 @@
+## 2.3.0
+
+* `PageSectionGroup`
+  * bug fix: was always using the full width.
+* Borders
+  * Allow setting theme color. 
+
 ## 2.2.0
 
-* Macros
-  * Behavior change. The macro stopped returning the section and started receiving it.
+* Changing macro behavior
+  * The macro stopped returning the section and started receiving it.
 * `WidgetSection`
   * Allow to change the `widgetBuilder`.
 

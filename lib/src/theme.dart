@@ -6,11 +6,17 @@ import 'package:flutter/material.dart';
 const Color _grey100 = Color(0xFFF5F5F5);
 const Color _grey200 = Color(0xFFEEEEEE);
 const Color _grey300 = Color(0xFFE0E0E0);
+const Color _grey400 = Color(0xFFBDBDBD);
+const Color _grey800 = Color(0xFF424242);
 
 /// Provides storage for default theme.
 class DemoFluTheme {
   DemoFluTheme(
-      {double sectionMarginLeft = 0,
+      {this.bulletsBorderColor = _grey400,
+      this.bulletsBorderIconColor = _grey800,
+      this.arrowBorderColor = _grey400,
+      this.solidBorderColor = _grey400,
+      double sectionMarginLeft = 0,
       double sectionMarginBottom = 24,
       this.dividerColor = _grey300,
       this.dividerThickness = 1,
@@ -21,6 +27,18 @@ class DemoFluTheme {
       this.widgetBackground})
       : this.sectionMarginLeft = math.max(0, sectionMarginLeft),
         this.sectionMarginBottom = math.max(0, sectionMarginBottom);
+
+  /// Bullets border color
+  final Color bulletsBorderColor;
+
+  /// Bullets border icon color
+  final Color bulletsBorderIconColor;
+
+  /// Arrow border color
+  final Color arrowBorderColor;
+
+  /// Solid border color
+  final Color solidBorderColor;
 
   /// Section margin left
   final double sectionMarginLeft;

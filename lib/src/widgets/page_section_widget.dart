@@ -14,11 +14,6 @@ class PageSectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-        alignment: Alignment.centerLeft, child: _titledWidget(context));
-  }
-
-  Widget _titledWidget(BuildContext context) {
     if (section is StyledSection) {
       String? title = (section as StyledSection).title;
       if (title != null) {
@@ -41,8 +36,8 @@ class PageSectionWidget extends StatelessWidget {
               color: styledSection.background ??
                   styledSection.getBackgroundFromTheme(theme),
               border: styledSection.border != null
-                  ? styledSection.border!.build()
-                  : styledSection.getBorderFromTheme(theme)?.build()),
+                  ? styledSection.border!.build(context)
+                  : styledSection.getBorderFromTheme(theme)?.build(context)),
           child: ConstrainedBox(
               constraints: BoxConstraints(
                   minWidth: 0,

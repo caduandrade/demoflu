@@ -151,7 +151,8 @@ mixin SectionCollectionMixin {
       SectionBorder? border,
       Color? background,
       EdgeInsetsGeometry? padding,
-      double maxWidth = double.infinity}) {
+      double maxWidth = double.infinity,
+      double spacing = 4}) {
     BulletsSection section = BulletsSection(
         title: title,
         marginLeft: marginLeft,
@@ -159,7 +160,8 @@ mixin SectionCollectionMixin {
         padding: padding,
         border: border,
         background: background,
-        maxWidth: maxWidth);
+        maxWidth: maxWidth,
+        spacing: spacing);
     _sections.add(section);
     return section;
   }

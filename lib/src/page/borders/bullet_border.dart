@@ -1,5 +1,7 @@
 import 'dart:math' as math;
 import 'package:demoflu/src/page/borders/section_border.dart';
+import 'package:demoflu/src/provider.dart';
+import 'package:demoflu/src/theme.dart';
 import 'package:flutter/material.dart';
 
 class BulletBorder extends SectionBorder {
@@ -41,23 +43,26 @@ class BulletBorder extends SectionBorder {
 
   IconData? icon;
 
-  Color color;
+  Color? color;
 
-  Color iconColor;
+  Color? iconColor;
 
   double thickness;
 
   @override
-  BoxBorder? build() => _BulletBorderUI(
-      top: top,
-      icon: icon,
-      iconWeight: iconWeight,
-      diameter: diameter,
-      color: color,
-      iconColor: iconColor,
-      shiftIconX: shiftIconX,
-      shiftIconY: shiftIconY,
-      thickness: thickness);
+  BoxBorder? build(BuildContext context) {
+    DemoFluTheme theme = DemoFluProvider.themeOf(context);
+    return _BulletBorderUI(
+        top: top,
+        icon: icon,
+        iconWeight: iconWeight,
+        diameter: diameter,
+        color: color ?? theme.bulletsBorderColor,
+        iconColor: iconColor ?? theme.bulletsBorderIconColor,
+        shiftIconX: shiftIconX,
+        shiftIconY: shiftIconY,
+        thickness: thickness);
+  }
 }
 
 class _BulletBorderUI extends BoxBorder {

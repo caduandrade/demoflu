@@ -1,14 +1,15 @@
 import 'package:demoflu/demoflu.dart';
-import 'package:demoflu/src/page/borders/section_border.dart';
+import 'package:demoflu/src/provider.dart';
 import 'package:flutter/material.dart';
 
 class SolidBorder extends SectionBorder {
-  const SolidBorder({required this.color});
+  const SolidBorder({this.color});
 
-  final Color color;
+  final Color? color;
 
   @override
-  BoxBorder? build() {
-    return Border.all(color: color, width: 1);
+  BoxBorder? build(BuildContext context) {
+    DemoFluTheme theme = DemoFluProvider.themeOf(context);
+    return Border.all(color: color ?? theme.solidBorderColor, width: 1);
   }
 }
