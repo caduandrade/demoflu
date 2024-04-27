@@ -1,5 +1,6 @@
 import 'package:demoflu/src/macro.dart';
 import 'package:demoflu/src/model.dart';
+import 'package:demoflu/src/page/code_cache.dart';
 import 'package:demoflu/src/print_notifier.dart';
 import 'package:demoflu/src/theme.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class DemoFluProvider extends InheritedWidget {
     required this.printNotifier,
     required this.theme,
     required this.macroFactory,
+    required this.codeCache,
     required super.child,
   });
 
@@ -24,6 +26,8 @@ class DemoFluProvider extends InheritedWidget {
   final DemoFluTheme theme;
 
   final MacroFactory macroFactory;
+
+  final CodeCache codeCache;
 
   @override
   bool updateShouldNotify(DemoFluProvider oldWidget) => false;
@@ -55,5 +59,10 @@ class DemoFluProvider extends InheritedWidget {
   static MacroFactory macroFactoryOf(BuildContext context) {
     DemoFluProvider provider = _of(context);
     return provider.macroFactory;
+  }
+
+  static CodeCache codeCacheOf(BuildContext context) {
+    DemoFluProvider provider = _of(context);
+    return provider.codeCache;
   }
 }

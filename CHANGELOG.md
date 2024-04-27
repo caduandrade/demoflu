@@ -3,6 +3,7 @@
 * Keeping page state.
 * `DemoFluPage`
   * The `initialize` method has been changed to `buildSections`.
+* Cache to load code.
 
 ## 2.3.0
 

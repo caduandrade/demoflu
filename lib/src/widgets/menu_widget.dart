@@ -1,5 +1,6 @@
 import 'package:demoflu/src/menu_item.dart';
 import 'package:demoflu/src/model.dart';
+import 'package:demoflu/src/page/code_cache.dart';
 import 'package:demoflu/src/provider.dart';
 import 'package:demoflu/src/print_notifier.dart';
 import 'package:flutter/material.dart';
@@ -157,6 +158,9 @@ class _MenuItemWidgetState extends State<_MenuItemWidget> {
     }
 
     if (widget.menuItem.page != null) {
+      CodeCache codeCache = DemoFluProvider.codeCacheOf(context);
+      codeCache.clearCache();
+
       DemoFluModel model = DemoFluProvider.modelOf(context);
       model.selectedMenuItem = widget.menuItem;
     }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:demoflu/demoflu.dart';
 import 'package:demoflu/src/model.dart';
+import 'package:demoflu/src/page/code_cache.dart';
 import 'package:demoflu/src/provider.dart';
 import 'package:demoflu/src/print_notifier.dart';
 import 'package:demoflu/src/widgets/app_widget.dart';
@@ -22,6 +23,7 @@ class DemoFluApp {
   final PrintNotifier _printNotifier = PrintNotifier();
   final DemoFluTheme _theme;
   final MacroFactory macro;
+  final CodeCache _codeCache = CodeCache();
 
   void run() async {
     runZonedGuarded<Future<void>>(() async {
@@ -32,6 +34,7 @@ class DemoFluApp {
           printNotifier: _printNotifier,
           theme: _theme,
           macroFactory: macro,
+          codeCache: _codeCache,
           child: DemoFluAppWidget()));
     }, (error, stackTrace) {
       print('Error: $error');
