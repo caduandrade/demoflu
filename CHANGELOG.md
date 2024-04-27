@@ -1,3 +1,9 @@
+## 2.4.0
+
+* Keeping page state.
+* `DemoFluPage`
+  * The `initialize` method has been changed to `buildSections`.
+
 ## 2.3.0
 
 * `PageSectionGroup`

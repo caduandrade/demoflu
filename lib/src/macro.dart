@@ -4,7 +4,6 @@ import 'package:demoflu/src/page/code_section.dart';
 import 'package:demoflu/src/page/console_section.dart';
 import 'package:demoflu/src/page/divider_section.dart';
 import 'package:demoflu/src/page/heading_section.dart';
-import 'package:demoflu/src/page/page.dart';
 import 'package:demoflu/src/page/page_section_group.dart';
 import 'package:demoflu/src/page/text_section.dart';
 import 'package:demoflu/src/page/widget_section.dart';
@@ -14,11 +13,6 @@ import 'package:meta/meta.dart';
 /// The macro factory
 class MacroFactory {
   final Map<dynamic, dynamic> _macros = {};
-
-  /// Adds a page macro.
-  void page(dynamic id, PageMacro macro) {
-    _macros[id] = macro;
-  }
 
   /// Adds a group macro.
   void group(dynamic id, GroupMacro macro) {
@@ -65,9 +59,6 @@ class MacroFactory {
     _macros[id] = macro;
   }
 }
-
-/// Macro for page.
-typedef PageMacro = void Function(BuildContext context, DemoFluPage page);
 
 /// Macro for group section.
 typedef GroupMacro = void Function(

@@ -1,15 +1,19 @@
 import 'package:demoflu/src/page/page.dart';
+import 'package:flutter/widgets.dart';
 
 typedef PageBuilder = DemoFluPage Function();
 
 /// Represents a menu item in the app menu.
 class DemoMenuItem {
-  DemoMenuItem(this.name, {this.page, List<DemoMenuItem> children = const []}) {
+  DemoMenuItem(this.name, {this.page, List<DemoMenuItem> children = const []})
+      : key = GlobalKey(debugLabel: name) {
     for (DemoMenuItem child in children) {
       _children.add(child);
       child._parent = this;
     }
   }
+
+  final GlobalKey key;
 
   /// The menu name.
   final String name;

@@ -5,6 +5,7 @@ export 'src/macro.dart' hide MacroFactoryHelper;
 export 'src/menu_item.dart';
 export 'src/theme.dart';
 export 'src/page/page.dart';
+export 'src/page/page_sections.dart';
 export 'src/page/page_section_group.dart';
 export 'src/page/banner_section.dart';
 export 'src/page/console_section.dart';

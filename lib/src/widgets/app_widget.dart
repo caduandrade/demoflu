@@ -45,6 +45,7 @@ class DemoFluAppWidget extends StatelessWidget {
         builder: (BuildContext context, Widget? child) {
           return LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
+            DemoFluModel model = DemoFluProvider.modelOf(context);
             double menuWidth = 300;
 
             Widget menu = ConstrainedBox(
@@ -56,9 +57,17 @@ class DemoFluAppWidget extends StatelessWidget {
             if (constraints.maxWidth > menuWidth) {
               body = Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [menu, Expanded(child: DemoFluPageWidget())]);
+                  children: [
+                    menu,
+                    Expanded(
+                        child: DemoFluPageWidget(
+                            key: model.selectedMenuItem.key,
+                            menuItem: model.selectedMenuItem))
+                  ]);
             } else {
-              body = DemoFluPageWidget();
+              body = DemoFluPageWidget(
+                  key: model.selectedMenuItem.key,
+                  menuItem: model.selectedMenuItem);
             }
             return body;
           });
