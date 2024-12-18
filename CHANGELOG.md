@@ -1,3 +1,6 @@
+* `CodeSection`
+  * Allow to discard all DemoFlu marks.
+
 ## 2.4.0
 
 * Keeping page state.

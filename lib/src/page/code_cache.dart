@@ -12,6 +12,7 @@ class CodeCache {
       {required String file,
       required LoadMode loadMode,
       required String? mark,
+      required bool discardMarks,
       required bool discardMultipleEmptyLines,
       required bool discardLastEmptyLine}) async {
     List<String> code;
@@ -34,6 +35,13 @@ class CodeCache {
         code = _removeStringsBetweenStartAndEnd(
             list: code, start: markStart, end: markEnd);
       }
+    }
+    if (discardMarks) {
+      code = code.where((line) {
+        line = line.trim();
+        return !(line.startsWith('//@demoflu_start:') ||
+            line.startsWith('//@demoflu_end:'));
+      }).toList();
     }
     if (discardMultipleEmptyLines) {
       int i = 0;

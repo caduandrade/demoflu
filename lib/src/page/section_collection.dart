@@ -204,6 +204,7 @@ mixin SectionCollectionMixin {
       String? mark,
       bool discardMultipleEmptyLines = true,
       bool discardLastEmptyLine = true,
+      bool discardMarks = false,
       SectionBorder? border,
       Color? background,
       EdgeInsetsGeometry? padding,
@@ -218,6 +219,7 @@ mixin SectionCollectionMixin {
         border: border,
         background: background,
         padding: padding,
+        discardMarks: discardMarks,
         discardLastEmptyLine: discardLastEmptyLine,
         discardMultipleEmptyLines: discardMultipleEmptyLines,
         maxWidth: maxWidth);

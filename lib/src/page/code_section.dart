@@ -17,6 +17,7 @@ class CodeSection extends StyledSection {
       required this.mark,
       required this.discardLastEmptyLine,
       required this.discardMultipleEmptyLines,
+      required this.discardMarks,
       required super.border,
       required super.background,
       required super.padding,
@@ -29,6 +30,7 @@ class CodeSection extends StyledSection {
   String? mark;
   bool discardMultipleEmptyLines;
   bool discardLastEmptyLine;
+  bool discardMarks;
 
   @override
   Widget buildContent(BuildContext context) {
@@ -82,6 +84,7 @@ class _CodeSectionWidget extends StatelessWidget {
         file: section.file,
         loadMode: section.loadMode,
         mark: section.mark,
+        discardMarks: section.discardMarks,
         discardMultipleEmptyLines: section.discardMultipleEmptyLines,
         discardLastEmptyLine: section.discardLastEmptyLine);
   }
