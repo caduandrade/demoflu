@@ -5,5 +5,5 @@ import 'package:flutter/material.dart';
 /// Use different methods to create page according to your needs.
 abstract class DemoFluPage {
   /// Builds the page sections.
-  PageSections buildSections(BuildContext context);
+  void buildSections(BuildContext context, PageSections sections);
 }

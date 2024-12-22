@@ -32,7 +32,8 @@ class DemoFluPageState extends State<DemoFluPageWidget> {
   Widget build(BuildContext context) {
     List<Widget> children = [];
     if (_page != null) {
-      PageSections sections = _page!.buildSections(context);
+      PageSections sections = PageSections();
+      _page!.buildSections(context, sections);
       children.add(BreadcrumbWidget(menuItem: widget.menuItem));
       children.add(SizedBox(height: 24));
       children.add(SectionCollectionWidget(collection: sections));

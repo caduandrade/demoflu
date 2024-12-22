@@ -2,6 +2,7 @@ import 'package:demoflu/src/menu_item.dart';
 import 'package:demoflu/src/model.dart';
 import 'package:demoflu/src/print_notifier.dart';
 import 'package:demoflu/src/provider.dart';
+import 'package:demoflu/src/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
@@ -15,6 +16,7 @@ class BreadcrumbWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DemoFluModel model = DemoFluProvider.modelOf(context);
+    DemoFluTheme theme = DemoFluProvider.themeOf(context);
 
     List<Widget> children = [];
     DemoMenuItem? currentMenuItem = menuItem;
@@ -27,10 +29,10 @@ class BreadcrumbWidget extends StatelessWidget {
         children.insert(
             0,
             Text(currentMenuItem.name,
-                style: TextStyle(fontWeight: FontWeight.bold)));
+                style: TextStyle(color: theme.textColor, fontWeight: FontWeight.bold)));
       } else {
         if (currentMenuItem.page == null) {
-          children.insert(0, Text(currentMenuItem.name));
+          children.insert(0, Text(currentMenuItem.name,style: TextStyle(color: theme.textColor)));
         } else {
           final DemoMenuItem targetMenuItem = currentMenuItem;
           children.insert(

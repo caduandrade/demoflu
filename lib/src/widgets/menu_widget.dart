@@ -3,6 +3,7 @@ import 'package:demoflu/src/model.dart';
 import 'package:demoflu/src/page/code_cache.dart';
 import 'package:demoflu/src/provider.dart';
 import 'package:demoflu/src/print_notifier.dart';
+import 'package:demoflu/src/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
@@ -22,6 +23,7 @@ class MenuWidgetState extends State<MenuWidget> {
   @override
   Widget build(BuildContext context) {
     DemoFluModel model = DemoFluProvider.modelOf(context);
+    DemoFluTheme theme = DemoFluProvider.themeOf(context);
 
     List<Widget> children = [];
     for (DemoMenuItem menuItem in model.fetchMenuItems()) {
@@ -36,7 +38,7 @@ class MenuWidgetState extends State<MenuWidget> {
               children: children,
               crossAxisAlignment: CrossAxisAlignment.stretch)),
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: theme.appBackground,
           border:
               Border(right: BorderSide(color: Colors.grey[300]!, width: 2))),
     );

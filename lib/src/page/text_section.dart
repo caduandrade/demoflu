@@ -1,10 +1,11 @@
 import 'package:demoflu/src/macro.dart';
 import 'package:demoflu/src/page/styled_section.dart';
+import 'package:demoflu/src/page/text_section_mixin.dart';
 import 'package:demoflu/src/provider.dart';
 import 'package:flutter/material.dart';
 
 /// Section to display a text.
-class TextSection extends StyledSection {
+class TextSection extends StyledSection with TextSectionMixin {
   TextSection(
       {required String text,
       required this.icon,
@@ -14,21 +15,16 @@ class TextSection extends StyledSection {
       required super.border,
       required super.background,
       required super.padding,
-      required super.title})
-      : _text = text;
-
-  IconData? icon;
-
-  String _text;
-  String get text => _text;
-
-  void add(String value) {
-    _text += value;
+      required super.title}) {
+    if (text.isNotEmpty) {
+      this.text.add(TextSpan(text: text));
+    }
   }
+  IconData? icon;
 
   @override
   Widget buildContent(BuildContext context) {
-    List<InlineSpan> children = [TextSpan(text: text)];
+    List<InlineSpan> children = [TextSpan(children: text)];
     if (icon != null) {
       children.insert(
           0,

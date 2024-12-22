@@ -12,13 +12,11 @@ class MyPage extends DemoFluPage {
   final ValueNotifier<int> _count = ValueNotifier(0);
 
   @override
-  PageSections buildSections(BuildContext context) {
-    PageSections sections = PageSections();
+  void buildSections(BuildContext context, PageSections sections) {
     sections.text(text: 'Hello');
     sections.widget((context) => ElevatedButton(
         onPressed: () => _count.value++, child: const Text('Increment')));
     sections.widget((context) => Text('Count: ${_count.value}'),
         listenable: _count);
-    return sections;
   }
 }

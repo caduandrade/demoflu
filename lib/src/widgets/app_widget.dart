@@ -1,5 +1,6 @@
 import 'package:demoflu/src/model.dart';
 import 'package:demoflu/src/provider.dart';
+import 'package:demoflu/src/theme.dart';
 import 'package:demoflu/src/widgets/logo.dart';
 import 'package:demoflu/src/widgets/menu_widget.dart';
 import 'package:demoflu/src/widgets/page_widget.dart';
@@ -12,18 +13,19 @@ class DemoFluAppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DemoFluModel model = DemoFluProvider.modelOf(context);
+    DemoFluTheme theme = DemoFluProvider.themeOf(context);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: model.title,
         theme: ThemeData(
             textTheme: Theme.of(context).textTheme.apply(fontSizeFactor: 1.2),
-            scaffoldBackgroundColor: Colors.white),
+            scaffoldBackgroundColor: theme.appBackground),
         home: Scaffold(
             appBar: AppBar(
-                title: Text(model.title),
+                title: Text(model.title, style: TextStyle(color: theme.textColor)),
                 scrolledUnderElevation: 0,
                 shadowColor: Colors.black,
-                backgroundColor: Colors.white,
+                backgroundColor: theme.appBackground,
                 shape: Border(
                     bottom: BorderSide(color: Colors.grey[300]!, width: 2)),
                 elevation: 0,

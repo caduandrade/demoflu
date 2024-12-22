@@ -1,5 +1,6 @@
 * `CodeSection`
   * Allow to discard all DemoFlu marks.
+  * Allows bold subtext.
 
 ## 2.4.0
 

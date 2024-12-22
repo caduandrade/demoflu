@@ -1,10 +1,11 @@
 import 'package:demoflu/src/macro.dart';
 import 'package:demoflu/src/page/page_section.dart';
+import 'package:demoflu/src/page/text_section_mixin.dart';
 import 'package:demoflu/src/provider.dart';
 import 'package:flutter/material.dart';
 
 /// Section to display a banner.
-class BannerSection extends PageSection {
+class BannerSection extends PageSection with TextSectionMixin {
   BannerSection(
       {required super.marginLeft,
       required super.marginBottom,
@@ -12,25 +13,20 @@ class BannerSection extends PageSection {
       required String text,
       required this.background,
       required this.border,
-      required this.icon})
-      : _text = text;
+      required this.icon}) {
+    if (text.isNotEmpty) {
+      this.text.add(TextSpan(text: text));
+    }
+  }
 
   Color background;
   Color border;
   IconData? icon;
 
-  String _text;
-
-  String get text => _text;
-
-  void add(String value) {
-    _text += value;
-  }
-
   @override
   Widget buildContent(BuildContext context) {
     return _BannerSectionWidget(
-        text: TextSpan(text: text),
+        text: TextSpan(children: text),
         background: background,
         border: border,
         icon: icon);
