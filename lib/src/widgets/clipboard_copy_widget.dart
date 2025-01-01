@@ -6,10 +6,10 @@ import 'package:meta/meta.dart';
 @internal
 class ClipboardCopyWidget extends StatefulWidget {
   const ClipboardCopyWidget(
-      {Key? key, required this.codeSupplier, required this.child})
+      {Key? key,  required this.code, required this.child})
       : super(key: key);
 
-  final CodeSupplier? codeSupplier;
+  final String code;
   final Widget child;
 
   @override
@@ -23,9 +23,6 @@ class ClipboardCopyWidgetState extends State<ClipboardCopyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.codeSupplier == null) {
-      return widget.child;
-    }
     return MouseRegion(
         onEnter: (event) => _setHover(true),
         onExit: (event) => _setHover(false),
@@ -51,7 +48,7 @@ class ClipboardCopyWidgetState extends State<ClipboardCopyWidget> {
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
                   onTap: () =>
-                      _copyToClipboard(context, widget.codeSupplier!()),
+                      _copyToClipboard(context, widget.code),
                   child: const Icon(Icons.content_copy, size: 16),
                 ))));
   }

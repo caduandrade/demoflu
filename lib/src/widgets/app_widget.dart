@@ -22,7 +22,8 @@ class DemoFluAppWidget extends StatelessWidget {
             scaffoldBackgroundColor: theme.appBackground),
         home: Scaffold(
             appBar: AppBar(
-                title: Text(model.title, style: TextStyle(color: theme.textColor)),
+                title:
+                    Text(model.title, style: TextStyle(color: theme.textColor)),
                 scrolledUnderElevation: 0,
                 shadowColor: Colors.black,
                 backgroundColor: theme.appBackground,
@@ -47,7 +48,6 @@ class DemoFluAppWidget extends StatelessWidget {
         builder: (BuildContext context, Widget? child) {
           return LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
-            DemoFluModel model = DemoFluProvider.modelOf(context);
             double menuWidth = 300;
 
             Widget menu = ConstrainedBox(
@@ -59,20 +59,20 @@ class DemoFluAppWidget extends StatelessWidget {
             if (constraints.maxWidth > menuWidth) {
               body = Row(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    menu,
-                    Expanded(
-                        child: DemoFluPageWidget(
-                            key: model.selectedMenuItem.key,
-                            menuItem: model.selectedMenuItem))
-                  ]);
+                  children: [menu, Expanded(child: _buildPageArea(context))]);
             } else {
-              body = DemoFluPageWidget(
-                  key: model.selectedMenuItem.key,
-                  menuItem: model.selectedMenuItem);
+              body = _buildPageArea(context);
             }
             return body;
           });
         });
+  }
+
+  Widget _buildPageArea(BuildContext context) {
+    DemoFluModel model = DemoFluProvider.modelOf(context);
+    List<Widget> children = [];
+    children.add(Positioned.fill(child: DemoFluPageWidget(
+        key: model.selectedMenuItem.key, menuItem: model.selectedMenuItem)));
+     return Stack(children: children);
   }
 }

@@ -260,4 +260,14 @@ class SectionCollectionHelper {
   static addSectionOn(PageSection section, SectionCollectionMixin collection) {
     collection._sections.add(section);
   }
+
+  static List<CodeSection> codeSectionsOf(SectionCollectionMixin collection) {
+    List<CodeSection> list =[];
+    for(PageSection section in collection._sections){
+      if(section is CodeSection) {
+        list.add(section);
+      }
+    }
+    return list;
+  }
 }

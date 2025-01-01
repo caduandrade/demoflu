@@ -14,7 +14,7 @@ export 'src/page/heading_section.dart';
 export 'src/page/text_section.dart';
 export 'src/page/bullets_section.dart';
 export 'src/page/widget_section.dart';
-export 'src/page/code_section.dart';
+export 'src/page/code_section.dart' hide CodeSectionHelper;
 export 'src/page/borders/section_border.dart';
 export 'src/page/borders/solid_border.dart';
 export 'src/page/borders/bullet_border.dart';

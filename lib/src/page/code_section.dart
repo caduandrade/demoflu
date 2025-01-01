@@ -1,12 +1,12 @@
 import 'package:demoflu/src/macro.dart';
 import 'package:demoflu/src/model.dart';
 import 'package:demoflu/src/page/borders/section_border.dart';
-import 'package:demoflu/src/page/code_cache.dart';
 import 'package:demoflu/src/page/styled_section.dart';
 import 'package:demoflu/src/provider.dart';
 import 'package:demoflu/src/theme.dart';
 import 'package:demoflu/src/widgets/clipboard_copy_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:meta/meta.dart';
 
 /// Section to display a source code.
 class CodeSection extends StyledSection {
@@ -31,6 +31,13 @@ class CodeSection extends StyledSection {
   bool discardMultipleEmptyLines;
   bool discardLastEmptyLine;
   bool discardMarks;
+  String? _code;
+  String get code  {
+    if(_code==null) {
+      throw StateError('Cache is not loaded.');
+    }
+    return _code!;
+  }
 
   @override
   Widget buildContent(BuildContext context) {
@@ -78,35 +85,19 @@ class _CodeSectionWidget extends StatelessWidget {
 
   final CodeSection section;
 
-  Future<String> _load(BuildContext context) async {
-    CodeCache codeCache = DemoFluProvider.codeCacheOf(context);
-    return codeCache.load(
-        file: section.file,
-        loadMode: section.loadMode,
-        mark: section.mark,
-        discardMarks: section.discardMarks,
-        discardMultipleEmptyLines: section.discardMultipleEmptyLines,
-        discardLastEmptyLine: section.discardLastEmptyLine);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<String>(
-        future: _load(context), // a previously-obtained Future<String> or null
-        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-          if (snapshot.hasData) {
-            String code = snapshot.data!;
-            DemoFluModel model = DemoFluProvider.modelOf(context);
-            return ClipboardCopyWidget(
-                codeSupplier: () => code,
-                child: SelectableText.rich(model.highlighter.highlight(code),
-                    style: TextStyle(fontFamily: 'code')));
-          } else if (snapshot.hasError) {
-            return Center(
-                child: Text('Unable to load ${section.file}',
-                    style: TextStyle(color: Colors.red[900])));
-          }
-          return Center(child: Text('Loading...'));
-        });
+    DemoFluModel model = DemoFluProvider.modelOf(context);
+    return  ClipboardCopyWidget(
+        code: section.code,
+        child: SelectableText.rich(model.highlighter.highlight(section.code),
+            style: TextStyle(fontFamily: 'code')));
+  }
+}
+
+@internal
+class CodeSectionHelper {
+  static void setCode({required CodeSection section, required String code}) {
+    section._code= code;
   }
 }
