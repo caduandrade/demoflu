@@ -72,7 +72,7 @@ class DemoFluAppWidget extends StatelessWidget {
   Widget _buildPageArea(BuildContext context) {
     DemoFluModel model = DemoFluProvider.modelOf(context);
     List<Widget> children = [];
-    children.add(Positioned.fill(child: DemoFluPageWidget(menuItem: model.selectedMenuItem)));
+    children.add(Positioned.fill(key: model.selectedMenuItem.key, child: DemoFluPageWidget(menuItem: model.selectedMenuItem)));
     if(model.link!=null){
       children.add(Positioned.fill(child: LinkWidget(link:model.link!)));
     }

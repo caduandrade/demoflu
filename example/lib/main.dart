@@ -19,7 +19,44 @@ class MyPage extends DemoFluPage {
     sections.widget((context)=> const TextField());
     sections.widget((context) => Text('Count: ${_count.value}'),
         listenable: _count).linkToCode(source: "lib/main.dart");
+    sections.widget((context)=>const MyWidget());
+    sections.code("lib/main.dart");
   }
 }
 
+class MyWidget extends StatefulWidget {
+  const MyWidget({super.key});
+
+  @override
+  State<StatefulWidget> createState() =>MyWidgetState();
+
+}
+
+class MyWidgetState extends State<MyWidget> {
+
+  @override
+  void initState() {
+    print('initState');
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant MyWidget oldWidget) {
+    print('didUpdateWidget');
+    super.didUpdateWidget(oldWidget);
+  }
+
+  int _value = 1;
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(onPressed: _inc, child: Text('$_value'));
+  }
+
+  void _inc(){
+    setState(() {
+      _value++;
+    });
+  }
+
+}
 

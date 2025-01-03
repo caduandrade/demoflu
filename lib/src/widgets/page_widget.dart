@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 /// Widget for page.
 @internal
 class DemoFluPageWidget extends StatefulWidget {
-   DemoFluPageWidget({required this.menuItem}):super(key:menuItem.key);
+   DemoFluPageWidget({required this.menuItem});
 
   final DemoMenuItem menuItem;
 
@@ -39,7 +39,6 @@ class DemoFluPageState extends State<DemoFluPageWidget> {
       List<String> codeFiles =
           SectionCollectionHelper.codeFilesOf(sections);
       return FutureBuilder<_LoadStatus>(
-          key: ValueKey<int>(sections.hashCode),
           future: _load(context, codeFiles),
           builder: (BuildContext context, AsyncSnapshot<_LoadStatus> snapshot) {
             if (snapshot.hasData) {
@@ -97,9 +96,6 @@ class DemoFluPageState extends State<DemoFluPageWidget> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: children))));
   }
-
-
-
 }
 
 class _LoadStatus {
