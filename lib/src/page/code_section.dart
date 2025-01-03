@@ -1,6 +1,8 @@
+import 'package:demoflu/src/link.dart';
 import 'package:demoflu/src/macro.dart';
 import 'package:demoflu/src/model.dart';
 import 'package:demoflu/src/page/borders/section_border.dart';
+import 'package:demoflu/src/page/code_cache.dart';
 import 'package:demoflu/src/page/styled_section.dart';
 import 'package:demoflu/src/provider.dart';
 import 'package:demoflu/src/theme.dart';
@@ -31,13 +33,6 @@ class CodeSection extends StyledSection {
   bool discardMultipleEmptyLines;
   bool discardLastEmptyLine;
   bool discardMarks;
-  String? _code;
-  String get code  {
-    if(_code==null) {
-      throw StateError('Cache is not loaded.');
-    }
-    return _code!;
-  }
 
   @override
   Widget buildContent(BuildContext context) {
@@ -66,6 +61,7 @@ class CodeSection extends StyledSection {
   Color? getBackgroundFromTheme(DemoFluTheme theme) {
     return theme.codeBackground;
   }
+
 }
 
 enum LoadMode {
@@ -88,16 +84,15 @@ class _CodeSectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DemoFluModel model = DemoFluProvider.modelOf(context);
+    CodeCache codeCache = DemoFluProvider.codeCacheOf(context);
+    String rawCode = codeCache.getRawCodeFrom(file: section.file);
+    String code = codeCache.process(rawCode: rawCode, loadMode: section.loadMode, mark: section.mark, discardMarks: section.discardMarks,
+        discardMultipleEmptyLines: section.discardMultipleEmptyLines, discardLastEmptyLine: section.discardLastEmptyLine);
     return  ClipboardCopyWidget(
-        code: section.code,
-        child: SelectableText.rich(model.highlighter.highlight(section.code),
+        code: code,
+        child: SelectableText.rich(model.highlighter.highlight(code),
             style: TextStyle(fontFamily: 'code')));
   }
 }
 
-@internal
-class CodeSectionHelper {
-  static void setCode({required CodeSection section, required String code}) {
-    section._code= code;
-  }
-}
+

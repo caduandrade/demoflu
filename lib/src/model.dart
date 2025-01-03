@@ -1,4 +1,5 @@
 import 'package:demoflu/demoflu.dart';
+import 'package:demoflu/src/link.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
@@ -34,6 +35,16 @@ class DemoFluModel extends ChangeNotifier {
   set selectedMenuItem(DemoMenuItem value) {
     if (_selectedMenuItem != value) {
       _selectedMenuItem = value;
+      _link = null;
+      notifyListeners();
+    }
+  }
+
+  DemoFluLink? _link;
+  DemoFluLink? get link => _link;
+  set link(DemoFluLink? value) {
+    if (_link != value) {
+      _link = value;
       notifyListeners();
     }
   }

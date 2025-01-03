@@ -1,6 +1,8 @@
+import 'package:demoflu/src/link.dart';
 import 'package:demoflu/src/page/banner_section.dart';
 import 'package:demoflu/src/page/borders/section_border.dart';
 import 'package:demoflu/src/page/console_section.dart';
+import 'package:demoflu/src/page/styled_section.dart';
 import 'package:demoflu/src/page/text_section.dart';
 import 'package:demoflu/src/page/bullets_section.dart';
 import 'package:demoflu/src/page/code_section.dart';
@@ -261,11 +263,16 @@ class SectionCollectionHelper {
     collection._sections.add(section);
   }
 
-  static List<CodeSection> codeSectionsOf(SectionCollectionMixin collection) {
-    List<CodeSection> list =[];
+  static List<String> codeFilesOf(SectionCollectionMixin collection) {
+    List<String> list =[];
     for(PageSection section in collection._sections){
       if(section is CodeSection) {
-        list.add(section);
+        list.add(section.file);
+      } else if (section is StyledSection){
+        DemoFluLink? link = section.link;
+        if(link!=null) {
+          list.add(link.file);
+        }
       }
     }
     return list;

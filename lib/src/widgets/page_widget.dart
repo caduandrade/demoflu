@@ -1,6 +1,5 @@
 import 'package:demoflu/demoflu.dart';
 import 'package:demoflu/src/page/code_cache.dart';
-import 'package:demoflu/src/page/code_section.dart';
 import 'package:demoflu/src/page/section_collection.dart';
 import 'package:demoflu/src/provider.dart';
 import 'package:demoflu/src/widgets/breadcrumb.dart';
@@ -11,7 +10,7 @@ import 'package:meta/meta.dart';
 /// Widget for page.
 @internal
 class DemoFluPageWidget extends StatefulWidget {
-  const DemoFluPageWidget({required this.menuItem, super.key});
+   DemoFluPageWidget({required this.menuItem}):super(key:menuItem.key);
 
   final DemoMenuItem menuItem;
 
@@ -21,6 +20,7 @@ class DemoFluPageWidget extends StatefulWidget {
 
 class DemoFluPageState extends State<DemoFluPageWidget> {
   late DemoFluPage? _page;
+  double _offset =0;
 
   @override
   void initState() {
@@ -30,21 +30,21 @@ class DemoFluPageState extends State<DemoFluPageWidget> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     if (_page != null) {
       PageSections sections = PageSections();
       _page!.buildSections(context, sections);
-      List<CodeSection> codeSections =
-          SectionCollectionHelper.codeSectionsOf(sections);
-
+      List<String> codeFiles =
+          SectionCollectionHelper.codeFilesOf(sections);
       return FutureBuilder<_LoadStatus>(
-          future: _load(context,
-              codeSections), // a previously-obtained Future<String> or null
+          key: ValueKey<int>(sections.hashCode),
+          future: _load(context, codeFiles),
           builder: (BuildContext context, AsyncSnapshot<_LoadStatus> snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data!.success) {
-                return _buildPageContent(sections:sections);
+                return _buildPageContent(sections: sections);
               } else {
                 return Center(
                     child: Text('Unable to load ${snapshot.data!.errorFile!}',
@@ -58,30 +58,23 @@ class DemoFluPageState extends State<DemoFluPageWidget> {
             return Center(child: Text('Loading...'));
           });
     }
-    return _buildPageContent(sections:null);
+    return _buildPageContent( sections: null);
   }
 
   Future<_LoadStatus> _load(
-      BuildContext context, List<CodeSection> codeSections) async {
+      BuildContext context, List<String> codeFiles) async {
     CodeCache codeCache = DemoFluProvider.codeCacheOf(context);
-    for (CodeSection section in codeSections) {
+    for (String file in codeFiles) {
       try {
-        String code = await codeCache.load(
-            file: section.file,
-            loadMode: section.loadMode,
-            mark: section.mark,
-            discardMarks: section.discardMarks,
-            discardMultipleEmptyLines: section.discardMultipleEmptyLines,
-            discardLastEmptyLine: section.discardLastEmptyLine);
-        CodeSectionHelper.setCode(section: section, code: code);
+        await codeCache.load(file: file);
       } catch (e) {
-        return _LoadStatus(errorFile: section.file);
+        return _LoadStatus(errorFile: file);
       }
     }
     return _LoadStatus(errorFile: null);
   }
 
-  Widget _buildPageContent({required PageSections? sections}) {
+  Widget _buildPageContent({ required PageSections? sections}) {
     List<Widget> children = [];
     if (sections != null) {
       children.add(BreadcrumbWidget(menuItem: widget.menuItem));
@@ -89,13 +82,24 @@ class DemoFluPageState extends State<DemoFluPageWidget> {
       children.add(SectionCollectionWidget(collection: sections));
     }
 
-    return SingleChildScrollView(
-        child: Padding(
+    return NotificationListener<ScrollNotification>(
+        onNotification: (ScrollNotification pos) {
+          if(pos is ScrollEndNotification) {
+            _offset=pos.metrics.pixels;
+          }
+          return false;
+        }, child:
+      SingleChildScrollView(
+      controller: ScrollController(initialScrollOffset: _offset),
+               child: Padding(
             padding: EdgeInsets.fromLTRB(32, 16, 32, 32),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: children)));
+                children: children))));
   }
+
+
+
 }
 
 class _LoadStatus {

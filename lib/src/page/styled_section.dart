@@ -1,3 +1,4 @@
+import 'package:demoflu/src/link.dart';
 import 'package:demoflu/src/page/borders/arrow_down_border.dart';
 import 'package:demoflu/src/page/borders/bullet_border.dart';
 import 'package:demoflu/src/page/borders/section_border.dart';
@@ -21,6 +22,9 @@ abstract class StyledSection extends PageSection {
       required this.border});
 
   String? title;
+
+  DemoFluLink? _link;
+  DemoFluLink? get link=>_link;
 
   EdgeInsetsGeometry? padding;
 
@@ -66,5 +70,10 @@ abstract class StyledSection extends PageSection {
 
   void arrowDownBorder({Color? color}) {
     border = ArrowDownBorder(color: color);
+  }
+
+
+  void linkToCode({required String source}){
+    _link=DemoFluLink(title: 'Full source code', file: source);
   }
 }

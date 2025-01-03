@@ -1,3 +1,5 @@
+import 'package:demoflu/src/link.dart';
+import 'package:demoflu/src/model.dart';
 import 'package:demoflu/src/page/page_section.dart';
 import 'package:demoflu/src/page/styled_section.dart';
 import 'package:demoflu/src/provider.dart';
@@ -15,14 +17,36 @@ class PageSectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (section is StyledSection) {
-      String? title = (section as StyledSection).title;
-      if (title != null) {
+      StyledSection styledSection = section as StyledSection;
+      String? title = styledSection.title;
+      DemoFluLink? link = styledSection.link;
+      if (title != null || link != null) {
+        List<Widget> children = [];
+        if (title != null) {
+          children.add(Text(title));
+        }
+        children.add(_styledWidget(context));
+        if (link != null) {
+          children.add(_link(context,link));
+        }
         return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [Text(title), _styledWidget(context)]);
+            children: children);
       }
     }
     return _styledWidget(context);
+  }
+
+  Widget _link(BuildContext context, DemoFluLink link){
+    DemoFluModel model = DemoFluProvider.modelOf(context);
+    return TextButton.icon(
+      onPressed: () =>model.link=link,
+      icon: Icon(Icons.code),
+      label: Text("View source code"),
+      style: TextButton.styleFrom(
+        foregroundColor: Colors.blue,
+      )
+    );
   }
 
   Widget _styledWidget(BuildContext context) {

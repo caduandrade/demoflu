@@ -1,27 +1,43 @@
 import 'package:demoflu/src/page/code_section.dart';
 import 'package:flutter/services.dart';
+import 'package:meta/meta.dart';
 
+@internal
 class CodeCache {
+  /// fila / raw code
   Map<String, String> _cache = {};
 
   void clearCache() {
     _cache.clear();
   }
 
-  Future<String> load(
-      {required String file,
+  Future<void> load(
+      {required String file}) async {
+    String? rawCode = _cache[file];
+    if (rawCode == null) {
+      rawCode = await rootBundle.loadString(file);
+      _cache[file] = rawCode;
+    }
+  }
+
+  String getRawCodeFrom(
+      {required String file})  {
+    String? rawCode = _cache[file];
+    if (rawCode == null) {
+      throw StateError('Cache is not loaded: $file');
+    }
+    return rawCode;
+  }
+
+  String process(
+      {required String rawCode,
       required LoadMode loadMode,
       required String? mark,
       required bool discardMarks,
       required bool discardMultipleEmptyLines,
-      required bool discardLastEmptyLine}) async {
+      required bool discardLastEmptyLine}) {
     List<String> code;
-    String? fullCode = _cache[file];
-    if (fullCode == null) {
-      fullCode = await rootBundle.loadString(file);
-      _cache[file] = fullCode;
-    }
-    code = fullCode.split('\n');
+    code = rawCode.split('\n');
     String? markStart, markEnd;
     if (mark != null) {
       markStart = '//@demoflu_start:' + mark;

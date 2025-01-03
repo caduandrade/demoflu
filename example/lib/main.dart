@@ -16,7 +16,10 @@ class MyPage extends DemoFluPage {
     sections.text(text: 'Hello');
     sections.widget((context) => ElevatedButton(
         onPressed: () => _count.value++, child: const Text('Increment')));
+    sections.widget((context)=> const TextField());
     sections.widget((context) => Text('Count: ${_count.value}'),
-        listenable: _count);
+        listenable: _count).linkToCode(source: "lib/main.dart");
   }
 }
+
+

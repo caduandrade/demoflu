@@ -16,8 +16,6 @@ class ClipboardCopyWidget extends StatefulWidget {
   State<StatefulWidget> createState() => ClipboardCopyWidgetState();
 }
 
-typedef CodeSupplier = String Function();
-
 class ClipboardCopyWidgetState extends State<ClipboardCopyWidget> {
   bool _hover = false;
 

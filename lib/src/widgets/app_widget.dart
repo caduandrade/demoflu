@@ -1,6 +1,7 @@
 import 'package:demoflu/src/model.dart';
 import 'package:demoflu/src/provider.dart';
 import 'package:demoflu/src/theme.dart';
+import 'package:demoflu/src/widgets/link_widget.dart';
 import 'package:demoflu/src/widgets/logo.dart';
 import 'package:demoflu/src/widgets/menu_widget.dart';
 import 'package:demoflu/src/widgets/page_widget.dart';
@@ -71,8 +72,10 @@ class DemoFluAppWidget extends StatelessWidget {
   Widget _buildPageArea(BuildContext context) {
     DemoFluModel model = DemoFluProvider.modelOf(context);
     List<Widget> children = [];
-    children.add(Positioned.fill(child: DemoFluPageWidget(
-        key: model.selectedMenuItem.key, menuItem: model.selectedMenuItem)));
+    children.add(Positioned.fill(child: DemoFluPageWidget(menuItem: model.selectedMenuItem)));
+    if(model.link!=null){
+      children.add(Positioned.fill(child: LinkWidget(link:model.link!)));
+    }
      return Stack(children: children);
   }
 }
