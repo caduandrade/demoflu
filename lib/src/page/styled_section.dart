@@ -73,7 +73,7 @@ abstract class StyledSection extends PageSection {
   }
 
 
-  void linkToCode({required String source}){
-    _link=DemoFluLink(title: 'Full source code', file: source);
+  void linkToSource({required String file}){
+    _link=DemoFluLink(title: 'Full source code', file: file);
   }
 }

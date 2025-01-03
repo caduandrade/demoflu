@@ -18,7 +18,7 @@ class MyPage extends DemoFluPage {
         onPressed: () => _count.value++, child: const Text('Increment')));
     sections.widget((context)=> const TextField());
     sections.widget((context) => Text('Count: ${_count.value}'),
-        listenable: _count).linkToCode(source: "lib/main.dart");
+        listenable: _count).linkToSource(source: "lib/main.dart");
     sections.widget((context)=>const MyWidget());
     sections.code("lib/main.dart");
   }
