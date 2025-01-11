@@ -4,7 +4,7 @@ import 'package:demoflu/src/page/borders/solid_border.dart';
 import 'package:flutter/material.dart';
 
 const Color _grey100 = Color(0xFFF5F5F5);
-const Color _grey200 = Color(0xFFEEEEEE);
+// const Color _grey200 = Color(0xFFEEEEEE);
 const Color _grey300 = Color(0xFFE0E0E0);
 const Color _grey400 = Color(0xFFBDBDBD);
 const Color _grey800 = Color(0xFF424242);

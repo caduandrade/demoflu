@@ -3,7 +3,6 @@ import 'package:demoflu/src/link.dart';
 import 'package:demoflu/src/model.dart';
 import 'package:demoflu/src/page/code_cache.dart';
 import 'package:demoflu/src/provider.dart';
-import 'package:demoflu/src/theme.dart';
 import 'package:flutter/material.dart';
 
 class LinkWidget extends StatelessWidget {

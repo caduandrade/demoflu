@@ -3,6 +3,8 @@
 * `CodeSection`
   * Allow to discard all DemoFlu marks.
   * Allows bold subtext.
+* `WidgetSection`
+  * Adding link feature to show full source code page. 
 
 ## 2.4.0
 

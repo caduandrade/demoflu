@@ -21,7 +21,6 @@ class MyPage extends DemoFluPage {
         .widget((context) => Text('Count: ${_count.value}'), listenable: _count)
         .linkToSource(file: "lib/main.dart");
     sections.widget((context) => const MyWidget());
-    sections.code("lib/main.dart");
   }
 }
 
@@ -35,12 +34,14 @@ class MyWidget extends StatefulWidget {
 class MyWidgetState extends State<MyWidget> {
   @override
   void initState() {
+    // ignore: avoid_print
     print('initState');
     super.initState();
   }
 
   @override
   void didUpdateWidget(covariant MyWidget oldWidget) {
+    // ignore: avoid_print
     print('didUpdateWidget');
     super.didUpdateWidget(oldWidget);
   }
