@@ -42,7 +42,6 @@ class LinkWidget extends StatelessWidget {
   }
 
   Widget _copyButton(BuildContext context) {
-    DemoFluModel model = DemoFluProvider.modelOf(context);
     return IconButton(
         onPressed: () => _copyToClipboard(context),
         icon: Icon(Icons.content_copy, color: Colors.blue));
