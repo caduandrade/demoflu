@@ -40,7 +40,7 @@ class ClipboardCopyWidgetState extends State<ClipboardCopyWidget> {
         message: 'Copy to clipboard',
         child: Container(
             padding: EdgeInsets.all(4),
-            color: Colors.white.withOpacity(.7),
+            color: Colors.white.withValues(alpha: .7),
             child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(

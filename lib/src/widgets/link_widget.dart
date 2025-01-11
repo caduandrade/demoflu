@@ -4,6 +4,7 @@ import 'package:demoflu/src/model.dart';
 import 'package:demoflu/src/page/code_cache.dart';
 import 'package:demoflu/src/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class LinkWidget extends StatelessWidget {
   const LinkWidget({super.key, required this.link});
@@ -43,8 +44,23 @@ class LinkWidget extends StatelessWidget {
   Widget _copyButton(BuildContext context) {
     DemoFluModel model = DemoFluProvider.modelOf(context);
     return IconButton(
-        onPressed: () => model.link = null,
+        onPressed: () => _copyToClipboard(context),
         icon: Icon(Icons.content_copy, color: Colors.blue));
+  }
+
+  Future<void> _copyToClipboard(BuildContext context) async {
+    CodeCache codeCache = DemoFluProvider.codeCacheOf(context);
+    String rawCode = codeCache.getRawCodeFrom(file: link.file);
+    String code = codeCache.process(
+        rawCode: rawCode,
+        loadMode: LoadMode.readAll,
+        mark: null,
+        discardMarks: true,
+        discardMultipleEmptyLines: true,
+        discardLastEmptyLine: true);
+    await Clipboard.setData(ClipboardData(text: code));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Copied to clipboard'), duration: Duration(seconds: 2)));
   }
 
   Widget _body(BuildContext context) {
