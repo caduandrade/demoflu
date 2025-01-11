@@ -24,7 +24,7 @@ abstract class StyledSection extends PageSection {
   String? title;
 
   DemoFluLink? _link;
-  DemoFluLink? get link=>_link;
+  DemoFluLink? get link => _link;
 
   EdgeInsetsGeometry? padding;
 
@@ -72,8 +72,7 @@ abstract class StyledSection extends PageSection {
     border = ArrowDownBorder(color: color);
   }
 
-
-  void linkToSource({required String file}){
-    _link=DemoFluLink(title: 'Full source code', file: file);
+  void linkToSource({required String file}) {
+    _link = DemoFluLink(title: 'Full source code', file: file);
   }
 }

@@ -61,7 +61,6 @@ class CodeSection extends StyledSection {
   Color? getBackgroundFromTheme(DemoFluTheme theme) {
     return theme.codeBackground;
   }
-
 }
 
 enum LoadMode {
@@ -86,13 +85,16 @@ class _CodeSectionWidget extends StatelessWidget {
     DemoFluModel model = DemoFluProvider.modelOf(context);
     CodeCache codeCache = DemoFluProvider.codeCacheOf(context);
     String rawCode = codeCache.getRawCodeFrom(file: section.file);
-    String code = codeCache.process(rawCode: rawCode, loadMode: section.loadMode, mark: section.mark, discardMarks: section.discardMarks,
-        discardMultipleEmptyLines: section.discardMultipleEmptyLines, discardLastEmptyLine: section.discardLastEmptyLine);
-    return  ClipboardCopyWidget(
+    String code = codeCache.process(
+        rawCode: rawCode,
+        loadMode: section.loadMode,
+        mark: section.mark,
+        discardMarks: section.discardMarks,
+        discardMultipleEmptyLines: section.discardMultipleEmptyLines,
+        discardLastEmptyLine: section.discardLastEmptyLine);
+    return ClipboardCopyWidget(
         code: code,
         child: SelectableText.rich(model.highlighter.highlight(code),
             style: TextStyle(fontFamily: 'code')));
   }
 }
-
-

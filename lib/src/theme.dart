@@ -19,8 +19,8 @@ class DemoFluTheme {
       this.bulletsBorderIconColor = _grey800,
       this.arrowBorderColor = _grey400,
       this.solidBorderColor = _grey400,
-        this.appBackground=_defaultAppBackground,
-        this.textColor=_defaultTextColor,
+      this.appBackground = _defaultAppBackground,
+      this.textColor = _defaultTextColor,
       double sectionMarginLeft = 0,
       double sectionMarginBottom = 24,
       this.dividerColor = _grey300,
@@ -34,7 +34,6 @@ class DemoFluTheme {
         this.sectionMarginBottom = math.max(0, sectionMarginBottom);
 
   final Color appBackground;
-
 
   final Color textColor;
 

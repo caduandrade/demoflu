@@ -27,26 +27,24 @@ class PageSectionWidget extends StatelessWidget {
         }
         children.add(_styledWidget(context));
         if (link != null) {
-          children.add(_link(context,link));
+          children.add(_link(context, link));
         }
         return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: children);
+            crossAxisAlignment: CrossAxisAlignment.start, children: children);
       }
     }
     return _styledWidget(context);
   }
 
-  Widget _link(BuildContext context, DemoFluLink link){
+  Widget _link(BuildContext context, DemoFluLink link) {
     DemoFluModel model = DemoFluProvider.modelOf(context);
     return TextButton.icon(
-      onPressed: () =>model.link=link,
-      icon: Icon(Icons.code),
-      label: Text("View source code"),
-      style: TextButton.styleFrom(
-        foregroundColor: Colors.blue,
-      )
-    );
+        onPressed: () => model.link = link,
+        icon: Icon(Icons.code),
+        label: Text("View source code"),
+        style: TextButton.styleFrom(
+          foregroundColor: Colors.blue,
+        ));
   }
 
   Widget _styledWidget(BuildContext context) {

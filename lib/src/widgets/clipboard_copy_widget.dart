@@ -5,8 +5,7 @@ import 'package:meta/meta.dart';
 /// Stacks an icon for copying to the clipboard on top of a widget.
 @internal
 class ClipboardCopyWidget extends StatefulWidget {
-  const ClipboardCopyWidget(
-      {Key? key,  required this.code, required this.child})
+  const ClipboardCopyWidget({Key? key, required this.code, required this.child})
       : super(key: key);
 
   final String code;
@@ -45,8 +44,7 @@ class ClipboardCopyWidgetState extends State<ClipboardCopyWidget> {
             child: MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
-                  onTap: () =>
-                      _copyToClipboard(context, widget.code),
+                  onTap: () => _copyToClipboard(context, widget.code),
                   child: const Icon(Icons.content_copy, size: 16),
                 ))));
   }

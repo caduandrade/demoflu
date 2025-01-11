@@ -29,10 +29,14 @@ class BreadcrumbWidget extends StatelessWidget {
         children.insert(
             0,
             Text(currentMenuItem.name,
-                style: TextStyle(color: theme.textColor, fontWeight: FontWeight.bold)));
+                style: TextStyle(
+                    color: theme.textColor, fontWeight: FontWeight.bold)));
       } else {
         if (currentMenuItem.page == null) {
-          children.insert(0, Text(currentMenuItem.name,style: TextStyle(color: theme.textColor)));
+          children.insert(
+              0,
+              Text(currentMenuItem.name,
+                  style: TextStyle(color: theme.textColor)));
         } else {
           final DemoMenuItem targetMenuItem = currentMenuItem;
           children.insert(

@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 /// Widget for page.
 @internal
 class DemoFluPageWidget extends StatefulWidget {
-   DemoFluPageWidget({required this.menuItem});
+  DemoFluPageWidget({required this.menuItem});
 
   final DemoMenuItem menuItem;
 
@@ -20,7 +20,7 @@ class DemoFluPageWidget extends StatefulWidget {
 
 class DemoFluPageState extends State<DemoFluPageWidget> {
   late DemoFluPage? _page;
-  double _offset =0;
+  double _offset = 0;
 
   @override
   void initState() {
@@ -30,14 +30,12 @@ class DemoFluPageState extends State<DemoFluPageWidget> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     if (_page != null) {
       PageSections sections = PageSections();
       _page!.buildSections(context, sections);
-      List<String> codeFiles =
-          SectionCollectionHelper.codeFilesOf(sections);
+      List<String> codeFiles = SectionCollectionHelper.codeFilesOf(sections);
       return FutureBuilder<_LoadStatus>(
           future: _load(context, codeFiles),
           builder: (BuildContext context, AsyncSnapshot<_LoadStatus> snapshot) {
@@ -57,7 +55,7 @@ class DemoFluPageState extends State<DemoFluPageWidget> {
             return Center(child: Text('Loading...'));
           });
     }
-    return _buildPageContent( sections: null);
+    return _buildPageContent(sections: null);
   }
 
   Future<_LoadStatus> _load(
@@ -73,7 +71,7 @@ class DemoFluPageState extends State<DemoFluPageWidget> {
     return _LoadStatus(errorFile: null);
   }
 
-  Widget _buildPageContent({ required PageSections? sections}) {
+  Widget _buildPageContent({required PageSections? sections}) {
     List<Widget> children = [];
     if (sections != null) {
       children.add(BreadcrumbWidget(menuItem: widget.menuItem));
@@ -83,18 +81,18 @@ class DemoFluPageState extends State<DemoFluPageWidget> {
 
     return NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification pos) {
-          if(pos is ScrollEndNotification) {
-            _offset=pos.metrics.pixels;
+          if (pos is ScrollEndNotification) {
+            _offset = pos.metrics.pixels;
           }
           return false;
-        }, child:
-      SingleChildScrollView(
-      controller: ScrollController(initialScrollOffset: _offset),
-               child: Padding(
-            padding: EdgeInsets.fromLTRB(32, 16, 32, 32),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: children))));
+        },
+        child: SingleChildScrollView(
+            controller: ScrollController(initialScrollOffset: _offset),
+            child: Padding(
+                padding: EdgeInsets.fromLTRB(32, 16, 32, 32),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: children))));
   }
 }
 

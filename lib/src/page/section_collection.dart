@@ -264,13 +264,13 @@ class SectionCollectionHelper {
   }
 
   static List<String> codeFilesOf(SectionCollectionMixin collection) {
-    List<String> list =[];
-    for(PageSection section in collection._sections){
-      if(section is CodeSection) {
+    List<String> list = [];
+    for (PageSection section in collection._sections) {
+      if (section is CodeSection) {
         list.add(section.file);
-      } else if (section is StyledSection){
+      } else if (section is StyledSection) {
         DemoFluLink? link = section.link;
-        if(link!=null) {
+        if (link != null) {
           list.add(link.file);
         }
       }

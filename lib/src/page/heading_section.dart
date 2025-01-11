@@ -20,9 +20,8 @@ class HeadingSection extends PageSection {
     TextStyle? style;
     TextTheme textTheme = Theme.of(context).textTheme;
     if (textTheme.bodyMedium != null) {
-      style = textTheme.bodyMedium!
-          .apply(fontSizeFactor: 1.5)
-          .merge(TextStyle(color: theme.textColor, fontWeight: FontWeight.bold));
+      style = textTheme.bodyMedium!.apply(fontSizeFactor: 1.5).merge(
+          TextStyle(color: theme.textColor, fontWeight: FontWeight.bold));
     }
     return Text(text, style: style);
   }

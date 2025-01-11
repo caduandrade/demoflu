@@ -11,8 +11,7 @@ class CodeCache {
     _cache.clear();
   }
 
-  Future<void> load(
-      {required String file}) async {
+  Future<void> load({required String file}) async {
     String? rawCode = _cache[file];
     if (rawCode == null) {
       rawCode = await rootBundle.loadString(file);
@@ -20,8 +19,7 @@ class CodeCache {
     }
   }
 
-  String getRawCodeFrom(
-      {required String file})  {
+  String getRawCodeFrom({required String file}) {
     String? rawCode = _cache[file];
     if (rawCode == null) {
       throw StateError('Cache is not loaded: $file');

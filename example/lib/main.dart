@@ -16,10 +16,11 @@ class MyPage extends DemoFluPage {
     sections.text(text: 'Hello');
     sections.widget((context) => ElevatedButton(
         onPressed: () => _count.value++, child: const Text('Increment')));
-    sections.widget((context)=> const TextField());
-    sections.widget((context) => Text('Count: ${_count.value}'),
-        listenable: _count).linkToSource(source: "lib/main.dart");
-    sections.widget((context)=>const MyWidget());
+    sections.widget((context) => const TextField());
+    sections
+        .widget((context) => Text('Count: ${_count.value}'), listenable: _count)
+        .linkToSource(file: "lib/main.dart");
+    sections.widget((context) => const MyWidget());
     sections.code("lib/main.dart");
   }
 }
@@ -28,12 +29,10 @@ class MyWidget extends StatefulWidget {
   const MyWidget({super.key});
 
   @override
-  State<StatefulWidget> createState() =>MyWidgetState();
-
+  State<StatefulWidget> createState() => MyWidgetState();
 }
 
 class MyWidgetState extends State<MyWidget> {
-
   @override
   void initState() {
     print('initState');
@@ -52,11 +51,9 @@ class MyWidgetState extends State<MyWidget> {
     return TextButton(onPressed: _inc, child: Text('$_value'));
   }
 
-  void _inc(){
+  void _inc() {
     setState(() {
       _value++;
     });
   }
-
 }
-
